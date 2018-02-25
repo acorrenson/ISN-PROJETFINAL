@@ -1,4 +1,4 @@
-
+// TILE CLASS
 class Tile {
   PImage texture;
   int x;
@@ -16,17 +16,17 @@ class Tile {
 
   // get center x and y
   int cx() {
-    return (int) this.x + this.texture.width/2;
+    return (int) this.x + bw/2;
   }
 
   int cy() {
-    return (int) this.y + this.texture.height/4;
+    return (int) this.y + bh/4;
   }
 }
 
+// MAP CLASS
 class Map {
-  // all tiles
-  Tile[][] array;
+  Tile[][] array; // all tiles
   int w; // map width
   int h; // map height
   int selectedX; // actual selected tile X
@@ -37,19 +37,20 @@ class Map {
     this.w = w;
     this.h = h;
   }
-
+  
+  // fill the array with tiles
   void load() {
     for (int i = 0; i < this.array.length; i++) {
       for (int j = 0; j < this.array[0].length; j++) {
         /* - get x and y - */
         // offset X for even rows (evenNumber%2 = 0)
-        int x = j * b.width + i%2 * (b.width/2);
-        int y = i * (b.height/4) + b.height/4;
+        int x = j * bw + i%2 * (bw/2);
+        int y = i * (bh/4) + bh/4;
         this.array[i][j] = new Tile(x, y, 0);
       }
     }
   }
-
+  
   void draw() {
     for (int i = 0; i < this.array.length; i++) {
       for (int j = 0; j < this.array[0].length; j++) {
@@ -64,9 +65,9 @@ class Map {
   void select() {
     for (int i = 0; i < this.array.length; i++) {
       for (int j = 0; j < this.array[0].length; j++) {
-        int x = this.array[i][j].x + b.width/2;
-        int y = this.array[i][j].y + b.height/4;
-        if (dist(mouseX, mouseY, x, y) <= b.width/4) {
+        int x = this.array[i][j].x + bw/2;
+        int y = this.array[i][j].y + bh/4;
+        if (dist(mouseX, mouseY, x, y) <= bw/4) {
           this.selectedX = j;
           this.selectedY = i;
         }

@@ -1,15 +1,21 @@
-// block texture
-PImage b;
-
 // new map
 Map map = new Map(9, 10);
 
 // all textures for blocks
-PImage[] blocks = new PImage[1];
+PImage[] blocks;// = new PImage[1];
+
+// blocks values
+int bw; // block's width
+int bh; // block's height
+int bn; // number of blocks
 
 void setup() {
+  // assets settings
+  bw = 64;
+  bh = 64;
+  bn = 1;
+  
   // load assets
-  b = loadImage("images/baseBlock.png");
   loadBlocks();
   
   // window settings
