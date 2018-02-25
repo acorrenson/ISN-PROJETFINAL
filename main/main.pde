@@ -1,27 +1,26 @@
+// block texture
+PImage b;
 
-PImage b = new PImage();
-
-// index of the selected tile
-int sx = 0;
-int sy = 0;
+// new map
+Map map = new Map(9, 10);
+PImage[] blocks = new PImage[1];
 
 void setup() {
   // load assets
   b = loadImage("images/baseBlock.png");
+  loadBlocks();
   
   // window settings
   size(640, 640);
   surface.setResizable(true);
+  map.load();
 }
 
 void draw() {
   background(0);
-  // fix number of block according to width
-  drawBlocks((int) width/b.width-1, (int) 2*height/b.height);
-  drawSelected();
+  map.draw();
 }
 
 void mousePressed() {
-  // select a tile on click event
-  click((int) width/b.width - 1, (int) 2*height/b.height);
+  map.select();
 }
