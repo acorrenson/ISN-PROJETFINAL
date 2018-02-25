@@ -3,6 +3,8 @@ PImage b;
 
 // new map
 Map map = new Map(9, 10);
+
+// all textures for blocks
 PImage[] blocks = new PImage[1];
 
 void setup() {
