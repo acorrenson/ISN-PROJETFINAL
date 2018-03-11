@@ -65,8 +65,8 @@ class Map {
   void select() {
     for (int i = 0; i < this.array.length; i++) {
       for (int j = 0; j < this.array[0].length; j++) {
-        int x = this.array[i][j].x + bw/2;
-        int y = this.array[i][j].y + bh/4;
+        int x = this.array[i][j].cx();
+        int y = this.array[i][j].cy();
         if (dist(mouseX, mouseY, x, y) <= bw/4) {
           this.selectedX = j;
           this.selectedY = i;
