@@ -2,10 +2,11 @@
 State actualState;
 
 void setup() {
-
-  size(200, 200);
+  size(480, 640);
   enterState(new combat_1());
-
 }
 
-void draw() {}
+void draw() {
+  actualState.update();
+  actualState.render();
+}
