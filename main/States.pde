@@ -39,6 +39,50 @@ class State {
       println("error saving datas for state" + this.name, e);
     }
   }
+  
+  // récupérer une donnée de type String
+  // field = nom du champs dans lequel est stoquée la donnée
+  String gS(String field) {
+    try {
+      return this.data.getString(field);
+    } 
+    catch(Exception e) {
+      println("could'nt get field " + field + " in datas", e);
+    }
+    return "undefined";
+  }
+  
+  // récupérer une donnée de type Int
+  // field = nom du champs dans lequel est stoquée la donnée
+  int gI(String field) {
+    try {
+      return this.data.getInt(field);
+    } 
+    catch(Exception e) {
+      println("could'nt get field " + field + " in datas", e);
+    }
+    return 0;
+  }
+  
+  // modifier une donnée de type Int
+  void sI(String field, int toSet) {
+    try {
+      this.data.setInt(field, toSet);
+    } 
+    catch(Exception e) {
+      println("could'nt set field " + field + " in datas", e);
+    }
+  }
+  
+  // modifier une donnée de type String
+  void sS(String field, String toSet) {
+    try {
+      this.data.setString(field, toSet);
+    } 
+    catch(Exception e) {
+      println("could'nt set field " + field + " in datas", e);
+    }
+  }
 
   void update() {
     // Mise à jour des données
@@ -68,8 +112,11 @@ class combat_1 extends State {
   }
 
   void load() {
-    // test de loadData();
-    actualState.loadData();
+    // test de loadData()
+    this.loadData();
+    
+    // test de sS()
+    this.sS("test", "bye bye world");
   }
 
   void update() {
@@ -84,5 +131,9 @@ class combat_1 extends State {
     background(0);
     fill(255);
     rect(this.PlayerX, height/2, 10, 10);
+    
+    // test de gS() -> affiche le contenu du champ "test"
+    // inscrit dans datas/combat_1.json
+    text(this.gS("test"), 20, 20);
   }
 }
