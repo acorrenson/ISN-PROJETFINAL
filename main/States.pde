@@ -18,25 +18,25 @@ class State {
 
   // charger des données (name.json)
   void loadData() {
-    println("loading datas for state " + this.name + " ...");
+    println("loading datas for state \'" + this.name + "\'...");
     try {
       this.data = loadJSONObject(getDataUrl(this.name));
       println("successfully loaded\n");
     } 
     catch(Exception e) {
-      println("error loading datas for state" + this.name, e);
+      println("error loading datas for state \'" + this.name + "\'", e + "\n");
     }
   }
 
   // sauvegarder les données (name.json)
   void saveData() {
-    println("saving datas for state " + this.name + " ...");
+    println("saving datas for state \'" + this.name + "\'...");
     try {
       saveJSONObject(this.data, getSavesUrl(this.name));
       println("successfully saved\n");
     } 
     catch (Exception e) {
-      println("error saving datas for state" + this.name, e);
+      println("error saving datas for state" + this.name, e + "\n");
     }
   }
   
@@ -47,7 +47,7 @@ class State {
       return this.data.getString(field);
     } 
     catch(Exception e) {
-      println("could'nt get field " + field + " in datas", e);
+      println("could'nt get field '" + field + "' in datas", e + "\n");
     }
     return "undefined";
   }
@@ -59,7 +59,7 @@ class State {
       return this.data.getInt(field);
     } 
     catch(Exception e) {
-      println("could'nt get field " + field + " in datas", e);
+      println("could'nt get field '" + field + "' in datas", e);
     }
     return 0;
   }
@@ -70,7 +70,7 @@ class State {
       this.data.setInt(field, toSet);
     } 
     catch(Exception e) {
-      println("could'nt set field " + field + " in datas", e);
+      println("could'nt set field '" + field + "' in datas", e);
     }
   }
   
@@ -80,7 +80,7 @@ class State {
       this.data.setString(field, toSet);
     } 
     catch(Exception e) {
-      println("could'nt set field " + field + " in datas", e);
+      println("could'nt set field '" + field + "' in datas", e);
     }
   }
 
@@ -107,7 +107,7 @@ class combat_1 extends State {
   int PlayerX;
 
   combat_1() {
-    super("combat_1");
+    super("combat_2");
     this.PlayerX = 0;
   }
 
@@ -134,6 +134,6 @@ class combat_1 extends State {
     
     // test de gS() -> affiche le contenu du champ "test"
     // inscrit dans datas/combat_1.json
-    text(this.gS("test"), 20, 20);
+    //text(this.gS("test"), 20, 20);
   }
 }
