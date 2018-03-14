@@ -59,7 +59,7 @@ class State {
       return this.data.getInt(field);
     } 
     catch(Exception e) {
-      println("could'nt get field '" + field + "' in datas", e);
+      println("could'nt get field '" + field + "' in datas", e + "\n");
     }
     return 0;
   }
@@ -70,7 +70,7 @@ class State {
       this.data.setInt(field, toSet);
     } 
     catch(Exception e) {
-      println("could'nt set field '" + field + "' in datas", e);
+      println("could'nt set field '" + field + "' in datas", e + "\n");
     }
   }
   
@@ -80,7 +80,7 @@ class State {
       this.data.setString(field, toSet);
     } 
     catch(Exception e) {
-      println("could'nt set field '" + field + "' in datas", e);
+      println("could'nt set field '" + field + "' in datas", e + "\n");
     }
   }
 
