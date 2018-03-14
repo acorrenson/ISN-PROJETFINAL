@@ -1,4 +1,4 @@
-// Classe représentant un état du jeu
+  // Classe représentant un état du jeu
 /*
   Un état peut être une cinématique,
  un combat, un menu etc
