@@ -1,8 +1,6 @@
+
 // Classe représentant un état du jeu
-/*
-  Un état peut être une cinématique,
- un combat, un menu etc
- */
+
 class State {
   String name;
   JSONObject data;
@@ -17,69 +15,82 @@ class State {
   }
 
   void loadData() {
-    println("loading datas for state \'" + this.name + "\'...");
+    // Chargement des données du State (en JSON)
+    println("> Loading datas for state '" + this.name + "'...");
     try {
       this.data = loadJSONObject(getDataUrl(this.name));
-      println("successfully loaded\n");
+      println("> Successfully loaded\n");
     } 
     catch(Exception e) {
-      println("error loading datas for state \'" + this.name + "\'", e + "\n");
+      println("> Error loading datas for state '" + this.name + "'", e + "\n");
     }
   }
 
-  // sauvegarder les données (name.json)
   void saveData() {
-    println("saving datas for state \'" + this.name + "\'...");
+    // Sauvegarde des données du State (en JSON)
+    println("> Saving datas for state '" + this.name + "'...");
     try {
       saveJSONObject(this.data, getSavesUrl(this.name));
-      println("successfully saved\n");
+      println("> Successfully saved\n");
     } 
     catch (Exception e) {
-      println("error saving datas for state" + this.name, e + "\n");
+      println("> Error saving datas for state" + this.name, e + "\n");
     }
   }
   
-  // récupérer une donnée de type String
-  // field = nom du champs dans lequel est stoquée la donnée
   String gS(String field) {
+    /*
+      Récupérer des données (String)
+      - filed : id de la donnée (String)
+    */
     try {
       return this.data.getString(field);
     } 
     catch(Exception e) {
-      println("could'nt get field '" + field + "' in datas", e + "\n");
+      println("> Could'nt get field '" + field + "' in datas", e + "\n");
     }
     return "undefined";
   }
   
-  // récupérer une donnée de type Int
-  // field = nom du champs dans lequel est stoquée la donnée
   int gI(String field) {
+    /*
+      Récupérer des données (Int)
+       - filed : id de la donnée (String)
+    */
     try {
       return this.data.getInt(field);
     } 
     catch(Exception e) {
-      println("could'nt get field '" + field + "' in datas", e + "\n");
+      println("> Could'nt get field '" + field + "' in datas", e + "\n");
     }
     return 0;
   }
   
-  // modifier une donnée de type Int
-  void sI(String field, int toSet) {
-    try {
-      this.data.setInt(field, toSet);
-    } 
-    catch(Exception e) {
-      println("could'nt set field '" + field + "' in datas", e + "\n");
-    }
-  }
-  
-  // modifier une donnée de type String
   void sS(String field, String toSet) {
+    /*
+      Sauvegarder une donnée (String)
+       - filed : id de la donnée (String)
+       - toSet : nouveau contenu (String)
+    */
     try {
       this.data.setString(field, toSet);
     } 
     catch(Exception e) {
-      println("could'nt set field '" + field + "' in datas", e + "\n");
+      println("> Could'nt set field '" + field + "' in datas", e + "\n");
+    }
+  }
+  
+  void sI(String field, int toSet) {
+    /*
+      Sauvegarder une donnée (Int)
+       - filed : id de la donnée (String)
+       - toSet : nouveau contenu (Int)
+    */
+    try {
+      this.data.setInt(field, toSet);
+    } 
+    catch(Exception e) {
+      println("> Could'nt set field '" + field + "' in datas", e + "\n");
     }
   }
 
@@ -96,11 +107,13 @@ class State {
   }
 }
 
-// Exemple de State
-/* 
+
+/*
+ Exemple de State:
  Cet état de test affiche un carré blanc qui
  navigue en boucle de Gauche à Droite
- */
+*/
+
 class combat_1 extends State {
 
   int PlayerX;

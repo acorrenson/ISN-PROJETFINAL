@@ -1,5 +1,7 @@
-// changer d'état
+
+
 void enterState(State newState) {
+  // Changement d'état
   actualState = newState;
   actualState.load();
 }
