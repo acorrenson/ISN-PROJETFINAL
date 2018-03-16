@@ -40,7 +40,7 @@ class State {
     }
   }
   
-  String data_getString(String field) {
+  String getAString(String field) {
     /*
       Récupérer des données (String)
       - filed : id de la donnée (String)
@@ -54,7 +54,7 @@ class State {
     return "undefined";
   }
   
-  int data_getInt(String field) {
+  int getAInt(String field) {
     /*
       Récupérer des données (Int)
        - filed : id de la donnée (String)
@@ -68,7 +68,7 @@ class State {
     return 0;
   }
   
-  void data_setString(String field, String toSet) {
+  void setAString(String field, String toSet) {
     /*
       Sauvegarder une donnée (String)
        - filed : id de la donnée (String)
@@ -82,7 +82,7 @@ class State {
     }
   }
   
-  void data_setInt(String field, int toSet) {
+  void setAInt(String field, int toSet) {
     /*
       Sauvegarder une donnée (Int)
        - filed : id de la donnée (String)
@@ -130,7 +130,7 @@ class combat_1 extends State {
     this.loadData();
     
     // test de data_setString()
-    this.data_setString("test", "bye bye world");
+    this.setAString("test", "bye bye world");
   }
 
   void update() {
