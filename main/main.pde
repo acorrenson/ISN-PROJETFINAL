@@ -4,17 +4,19 @@ State actualState;
 void setup() {
   size(480, 640);
   
-  // nouveau state pour tester
+  // Nouveau State
   actualState = new combat_1();
   
-  // définir l'état actuel
+  // Définir le State actuel
   enterState(actualState);
   
-  // test de saveData();
+  // Test de saveData();
   actualState.saveData();
 }
 
 void draw() {
+  
   actualState.update();
   actualState.render();
+  
 }
