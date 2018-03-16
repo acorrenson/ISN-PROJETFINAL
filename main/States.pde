@@ -1,5 +1,7 @@
 
-// Classe représentant un état du jeu
+/*
+  Classes représentant un état du jeu
+*/
 
 class State {
   String name;
@@ -38,7 +40,7 @@ class State {
     }
   }
   
-  String gS(String field) {
+  String data_getString(String field) {
     /*
       Récupérer des données (String)
       - filed : id de la donnée (String)
@@ -52,7 +54,7 @@ class State {
     return "undefined";
   }
   
-  int gI(String field) {
+  int data_getInt(String field) {
     /*
       Récupérer des données (Int)
        - filed : id de la donnée (String)
@@ -66,7 +68,7 @@ class State {
     return 0;
   }
   
-  void sS(String field, String toSet) {
+  void data_setString(String field, String toSet) {
     /*
       Sauvegarder une donnée (String)
        - filed : id de la donnée (String)
@@ -80,7 +82,7 @@ class State {
     }
   }
   
-  void sI(String field, int toSet) {
+  void data_setInt(String field, int toSet) {
     /*
       Sauvegarder une donnée (Int)
        - filed : id de la donnée (String)
@@ -110,8 +112,8 @@ class State {
 
 /*
  Exemple de State:
- Cet état de test affiche un carré blanc qui
- navigue en boucle de Gauche à Droite
+   Cet état de test affiche un carré blanc qui
+   navigue en boucle de Gauche à Droite
 */
 
 class combat_1 extends State {
@@ -127,8 +129,8 @@ class combat_1 extends State {
     // test de loadData()
     this.loadData();
     
-    // test de sS()
-    this.sS("test", "bye bye world");
+    // test de data_setString()
+    this.data_setString("test", "bye bye world");
   }
 
   void update() {
@@ -143,9 +145,5 @@ class combat_1 extends State {
     background(0);
     fill(255);
     rect(this.PlayerX, height/2, 10, 10);
-    
-    // test de gS() -> affiche le contenu du champ "test"
-    // inscrit dans datas/combat_1.json
-    //text(this.gS("test"), 20, 20);
   }
 }

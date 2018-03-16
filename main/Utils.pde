@@ -1,4 +1,7 @@
 
+/*
+  Fonctions utiles
+*/
 
 void enterState(State newState) {
   // Changement d'état
@@ -6,12 +9,12 @@ void enterState(State newState) {
   actualState.load();
 }
 
-// renvoie l'url complète d'un fichier json (/datas)
 String getDataUrl(String fileName) {
+  // Renvoie l'url complète d'un fichier json (/datas)
   return "datas/" + fileName + ".json";
 }
 
-// renvoie l'url complète d'un fichier json (/saves)
 String getSavesUrl(String fileName) {
+  // Renvoie l'url complète d'un fichier json (/saves)
   return "saves/" + fileName + ".json";
 }
