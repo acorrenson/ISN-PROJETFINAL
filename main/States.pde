@@ -16,7 +16,6 @@ class State {
     // Chargement des données nécessaire au fonctionnement du State
   }
 
-  // charger des données (name.json)
   void loadData() {
     println("loading datas for state \'" + this.name + "\'...");
     try {
@@ -107,7 +106,7 @@ class combat_1 extends State {
   int PlayerX;
 
   combat_1() {
-    super("combat_2");
+    super("combat_1");
     this.PlayerX = 0;
   }
 
