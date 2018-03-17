@@ -1,28 +1,34 @@
 
-/*
-  Classe représentant une unité
-*/
+// Objet contenant tous les types d'unités (JSON)
+JSONObject JSONUnits;
+// List contenant toutes les unités placées
+ArrayList<Unit> placedUnits = new ArrayList<Unit>();
 
-// TODO : Ajouter une liste d'unités ! Ont doit savoir à l'avance le nb d'unités
+// TODO : Ajouter les positions de l'unité !
 
 class Unit {
 
   /*
-    - lives : points de vie restant
-    - damages : points de dégat
-    - moves : déplacement (en nombre de case)
+    - lives : points de vie restants
+    - damages : points de dégât
+    - moves : déplacement (en nombre de cases)
     - side : camp de l'unité (1 : alliée, 2 : ennemie)
-    - image : index du tableaux des images correspondant à la sprite de l'unité
+    - textures : objet indiquant les index des textures de l'unité dans le tableau des images
   */
   
-  int lives, damages, moves, side, image;
+  String name;
+  int lives, damages, moves, side;
+  JSONObject textures;
   
-  Unit(int lives, int damages, int moves, int side, int image) {
+  Unit(JSONObject unitDatas, int side) {
   
-    this.lives = lives; this.damages = damages;
-    this.moves = moves;
     this.side = side;
-    this.image = image;
+    this.lives = unitDatas.getInt("lives");
+    this.damages = unitDatas.getInt("damages");
+    this.moves = unitDatas.getInt("moves");
+    this.textures = unitDatas.getJSONArray("textures").getJSONObject(0);
+    
+    placedUnits.add(this);
   
   }
 
