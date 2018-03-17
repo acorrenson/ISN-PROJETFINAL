@@ -131,6 +131,7 @@ class Combat extends State {
   Combat(String name) {
     super(name);
     this.placedUnit = new ArrayList<Unit>();
+    this.mapState = new int[10][10];
   }
 
   void load() {
@@ -142,7 +143,7 @@ class Combat extends State {
     this.setAString("test", "bye bye world");
 
     // test de createUnit
-    this.createUnit("Matelot", 0);
+    this.createUnit("Matelot", 0, 5, 5);
     println("pv d'un matelot : ", this.placedUnit.get(0).lives, "\n");
   }
 
