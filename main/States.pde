@@ -20,7 +20,7 @@ class State {
     // Chargement des données du State (en JSON)
     println("> Loading datas for state '" + this.name + "'...");
     try {
-      this.data = loadJSONObject(getDataUrl(this.name));
+      this.data = loadJSONObject(getStateUrl(this.name));
       println("> Successfully loaded\n");
     } 
     catch(Exception e) {
@@ -32,7 +32,7 @@ class State {
     // Sauvegarde des données du State (en JSON)
     println("> Saving datas for state '" + this.name + "'...");
     try {
-      saveJSONObject(this.data, getSavesUrl(this.name));
+      saveJSONObject(this.data, getSaveUrl(this.name));
       println("> Successfully saved\n");
     } 
     catch (Exception e) {

@@ -9,12 +9,22 @@ void enterState(State newState) {
   actualState.load();
 }
 
-String getDataUrl(String fileName) {
-  // Renvoie l'url complète d'un fichier json (/datas)
-  return "datas/" + fileName + ".json";
+String getStateUrl(String fileName) {
+  // Renvoie l'url d'un fichier contenant les données d'un State (JSON)
+  return "data/states/" + fileName + ".json";
 }
 
-String getSavesUrl(String fileName) {
-  // Renvoie l'url complète d'un fichier json (/saves)
-  return "saves/" + fileName + ".json";
+String getSaveUrl(String fileName) {
+  // Renvoie l'url d'un fichier de sauvegarde (JSON)
+  return "data/saves/" + fileName + ".json";
+}
+
+String getImageUrl(String fileName, String fileExt) {
+  // Renvoie l'url d'un fichier image
+  return "data/images/" + fileName + "." + fileExt;
+}
+
+String getSoundUrl(String fileName, String fileExt) {
+  // Renvoie l'url d'un fichier son
+  return "data/sounds/" + fileName + "." + fileExt;
 }
