@@ -1,10 +1,10 @@
 
 /*
-  Classes représentant un état du jeu
+Classes représentant un état du jeu
 */
 
 class State {
-  
+
   String name;
   JSONObject data;
 
@@ -15,6 +15,11 @@ class State {
 
   void load() {
     // Chargement des données nécessaire au fonctionnement du State
+    /*
+    Cette méthode est appellée
+    au moment de l'entré dans l'état
+    par la fonction enterState()
+    */
   }
 
   void loadData() {
@@ -42,62 +47,62 @@ class State {
   }
   
   String getAString(String field) {
-    /*
+      /*
       Récupérer des données (String)
       - filed : id de la donnée (String)
-    */
-    try {
-      return this.data.getString(field);
-    } 
-    catch(Exception e) {
-      println("> Could'nt get field '" + field + "' in datas", e + "\n");
+      */
+      try {
+        return this.data.getString(field);
+      } 
+      catch(Exception e) {
+        println("> Could'nt get field '" + field + "' in datas", e + "\n");
+      }
+      return "undefined";
     }
-    return "undefined";
-  }
-  
-  int getAInt(String field) {
-    /*
-      Récupérer des données (Int)
-       - filed : id de la donnée (String)
-    */
-    try {
-      return this.data.getInt(field);
-    } 
-    catch(Exception e) {
-      println("> Could'nt get field '" + field + "' in datas", e + "\n");
-    }
-    return 0;
-  }
-  
-  void setAString(String field, String toSet) {
-    /*
-      Sauvegarder une donnée (String)
-       - filed : id de la donnée (String)
-       - toSet : nouveau contenu (String)
-    */
-    try {
-      this.data.setString(field, toSet);
-    } 
-    catch(Exception e) {
-      println("> Could'nt set field '" + field + "' in datas", e + "\n");
-    }
-  }
-  
-  void setAInt(String field, int toSet) {
-    /*
-      Sauvegarder une donnée (Int)
-       - filed : id de la donnée (String)
-       - toSet : nouveau contenu (Int)
-    */
-    try {
-      this.data.setInt(field, toSet);
-    } 
-    catch(Exception e) {
-      println("> Could'nt set field '" + field + "' in datas", e + "\n");
-    }
-  }
 
-  void update() {
+    int getAInt(String field) {
+      /*
+      Récupérer des données (Int)
+      - filed : id de la donnée (String)
+      */
+      try {
+        return this.data.getInt(field);
+      } 
+      catch(Exception e) {
+        println("> Could'nt get field '" + field + "' in datas", e + "\n");
+      }
+      return 0;
+    }
+
+    void setAString(String field, String toSet) {
+      /*
+      Sauvegarder une donnée (String)
+      - filed : id de la donnée (String)
+      - toSet : nouveau contenu (String)
+      */
+      try {
+        this.data.setString(field, toSet);
+      } 
+      catch(Exception e) {
+        println("> Could'nt set field '" + field + "' in datas", e + "\n");
+      }
+    }
+
+    void setAInt(String field, int toSet) {
+      /*
+      Sauvegarder une donnée (Int)
+      - filed : id de la donnée (String)
+      - toSet : nouveau contenu (Int)
+      */
+      try {
+        this.data.setInt(field, toSet);
+      } 
+      catch(Exception e) {
+        println("> Could'nt set field '" + field + "' in datas", e + "\n");
+      }
+    }
+
+    void update() {
     // Mise à jour des données
   }
 
@@ -112,51 +117,48 @@ class State {
 
 
 /*
- Exemple de State:
-   Cet état de test affiche un carré blanc qui
-   navigue en boucle de Gauche à Droite
+Class combat dérivée de State
 */
 
-class combat extends State {
+class Combat extends State {
 
-  int PlayerX;
-
+  // contient les unités placées
   ArrayList<Unit> placedUnit;
 
-  combat() {
-    super("combat_1");
-    this.PlayerX = 0;
+  // contient l'état actuel de la map
+  int[][] mapState;
+
+  Combat(String name) {
+    super(name);
     this.placedUnit = new ArrayList<Unit>();
   }
 
   void load() {
+
     // test de loadData()
     this.loadData();
     
-    // test de data_setString()
+    // test de setAString()
     this.setAString("test", "bye bye world");
 
     // test de createUnit
     this.createUnit("Matelot", 0);
-    println(this.placedUnit.get(0).lives);
+    println("pv d'un matelot : ", this.placedUnit.get(0).lives, "\n");
   }
 
-  void createUnit(String name, int side) {
+  void createUnit(String name, int side, int x, int y) {
     // Simplifie la création d'une unité
     this.placedUnit.add(new Unit(JSONUnits.getJSONObject(name), side));
+    this.mapState[y][x] = side;
+    // TODO : vérifier la possibilité de créer l'unité
   }
 
   void update() {
-    if (this.PlayerX < width) {
-      this.PlayerX += 5;
-    } else {
-      this.PlayerX = 0;
-    }
+    // boucle d'actualisation
   }
 
   void render() {
+    // affichage (60 fps)
     background(0);
-    fill(255);
-    rect(this.PlayerX, height/2, 10, 10);
   }
 }

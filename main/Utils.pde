@@ -8,23 +8,11 @@ void loadUnits() {
   JSONUnits = loadJSONObject("data/units.json");
 }
 
-void createUnit(String name, int side) {
-  // Simplifie la création d'une unité
-  new Unit(JSONUnits.getJSONObject(name), side);
-}
 
 void enterState(State newState) {
   // Changement d'état
   actualState = newState;
   actualState.load();
-}
-
-void debugs() {
-
-  // Nothing but chickens here ...
-  createUnit("Matelot", 0);
-  println(placedUnits.get(0).lives);
-
 }
 
 String getStateUrl(String fileName) {
