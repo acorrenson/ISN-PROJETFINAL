@@ -1,2 +1,2 @@
-./build-tmp
-./main/*.autosave
+main/build-tmp
+main/*.autosave
