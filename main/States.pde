@@ -117,13 +117,16 @@ class State {
    navigue en boucle de Gauche à Droite
 */
 
-class combat_1 extends State {
+class combat extends State {
 
   int PlayerX;
 
-  combat_1() {
+  ArrayList<Unit> placedUnit;
+
+  combat() {
     super("combat_1");
     this.PlayerX = 0;
+    this.placedUnit = new ArrayList<Unit>();
   }
 
   void load() {
@@ -132,6 +135,15 @@ class combat_1 extends State {
     
     // test de data_setString()
     this.setAString("test", "bye bye world");
+
+    // test de createUnit
+    this.createUnit("Matelot", 0);
+    println(this.placedUnit.get(0).lives);
+  }
+
+  void createUnit(String name, int side) {
+    // Simplifie la création d'une unité
+    this.placedUnit.add(new Unit(JSONUnits.getJSONObject(name), side));
   }
 
   void update() {
