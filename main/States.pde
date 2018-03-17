@@ -47,20 +47,20 @@ class State {
   }
   
   String getAString(String field) {
-      /*
-      Récupérer des données (String)
-      - filed : id de la donnée (String)
-      */
-      try {
-        return this.data.getString(field);
-      } 
-      catch(Exception e) {
-        println("> Could'nt get field '" + field + "' in datas", e + "\n");
-      }
-      return "undefined";
+    /*
+    Récupérer des données (String)
+    - filed : id de la donnée (String)
+    */
+    try {
+      return this.data.getString(field);
+    } 
+    catch(Exception e) {
+      println("> Could'nt get field '" + field + "' in datas", e + "\n");
     }
+    return "undefined";
+  }
 
-    int getAInt(String field) {
+  int getAInt(String field) {
       /*
       Récupérer des données (Int)
       - filed : id de la donnée (String)
@@ -122,16 +122,12 @@ Class combat dérivée de State
 
 class Combat extends State {
 
-  // contient les unités placées
-  ArrayList<Unit> placedUnit;
-
   // contient l'état actuel de la map
-  int[][] mapState;
+  Unit[][] map;
 
   Combat(String name) {
     super(name);
-    this.placedUnit = new ArrayList<Unit>();
-    this.mapState = new int[10][10];
+    this.map = new Unit[10][10];
   }
 
   void load() {
@@ -142,16 +138,31 @@ class Combat extends State {
     // test de setAString()
     this.setAString("test", "bye bye world");
 
-    // test de createUnit
-    this.createUnit("Matelot", 0, 5, 5);
-    println("pv d'un matelot : ", this.placedUnit.get(0).lives, "\n");
+    // test de createUnit en position 5 5
+    createUnit("Matelot", 0, 5, 5);
+    println("pv d'un matelot : ", this.map[5][5].lives);
+
+    // test de isOccuped (TRUE)
+    println(this.isOccuped(5, 5));
+    createUnit("Matelot", 0, 5, 5);
+
   }
 
   void createUnit(String name, int side, int x, int y) {
     // Simplifie la création d'une unité
-    this.placedUnit.add(new Unit(JSONUnits.getJSONObject(name), side));
-    this.mapState[y][x] = side;
-    // TODO : vérifier la possibilité de créer l'unité
+    if(!this.isOccuped(x, y)) {
+      Unit NewUnit = new Unit(JSONUnits.getJSONObject(name), side);   
+      this.map[y][x] = NewUnit;
+    } else {
+      println(x, y, "est déjà occupée\n");
+    }
+  }
+
+  boolean isOccuped(int x, int y) {
+    if(this.map[y][x] == null) {
+      return false;
+    }
+    return true;
   }
 
   void update() {
