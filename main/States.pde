@@ -4,6 +4,7 @@
 */
 
 class State {
+  
   String name;
   JSONObject data;
 
