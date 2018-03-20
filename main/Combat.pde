@@ -73,6 +73,7 @@
   }
 
   void selectCard() {
+    // selectionner une carte dans le tableau
     for(int i = 0; i < this.cards.length; i++) {
       Card c = this.cards[i];
       if(c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
@@ -83,10 +84,10 @@
   }
 
   void unselectCard() {
-    int newX = (int) mouseX/64 - 2;
-    int newY = (int) mouseY/64 - 2;
+    
+    int[] newPos = this.returnIndex();
 
-    if(newX >= 0 && newX < 4 && newY >= 0 && newY < 6 && this.createUnit("Matelot", 0, newX, newY)) {
+    if(newPos[0] >= 0 && this.createUnit("Matelot", 0, newPos[0], newPos[1])) {
       this.cards[this.selectedCard] = null;
       this.selectedCard = -1;
     } else {
@@ -122,7 +123,10 @@
   }
 
   int[] returnIndex() {
-  
+    // renvoie les index de la case ciblée avec la souris
+    // si celle ci pointe dans le plateau.
+
+    // -1 = code d'erreur -> la souris ne pointe pas une case
     int[] result = {-1, -1};
     
     int newX = mouseX - 128, newY = mouseY - 128;
@@ -134,7 +138,7 @@
       
     }
     
-    return result;    
+    return result;
   
   }
 }

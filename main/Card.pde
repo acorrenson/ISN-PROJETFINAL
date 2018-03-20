@@ -9,9 +9,7 @@ class Card {
   int h;
   int unit;
 
-  boolean show; // montrer l'image ou non
   boolean selected; // carte séléctionnée ou non
-  boolean placed;
 
   int clickW; // position du clique de la souris dans la carte
   int clickH;
@@ -26,7 +24,6 @@ class Card {
 
     this.w = 50;
     this.h = 100;
-    this.placed = false;
   }
 
   void select() {
@@ -38,7 +35,6 @@ class Card {
   void reset() {
     this.x = this.initX;
     this.y = this.initY;
-    this.placed = false;
     this.selected = false;
   }
 
