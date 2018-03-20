@@ -4,7 +4,7 @@
 
 class Combat extends State {
 
-  // contient l'état actuel de la map
+  // Contenue du plateau
   Unit[][] map;
 
   Combat(String name) {

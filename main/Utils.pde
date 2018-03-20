@@ -20,9 +20,9 @@ String getStateUrl(String fileName) {
   return "data/states/" + fileName + ".json";
 }
 
-String getSaveUrl(String fileName) {
-  // Renvoie l'url d'un fichier de sauvegarde (JSON)
-  return "data/saves/" + fileName + ".json";
+String getSaveUrl() {
+  // Renvoie l'url du fichier de sauvegarde (JSON)
+  return "data/save.json";
 }
 
 String getImageUrl(String fileName) {

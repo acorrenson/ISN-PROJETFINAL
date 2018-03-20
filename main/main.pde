@@ -13,8 +13,6 @@ void setup() {
   // Définir le State actuel
   enterState(actualState);
   
-  // Test de saveData();
-  actualState.saveData();
 }
 
 void draw() {

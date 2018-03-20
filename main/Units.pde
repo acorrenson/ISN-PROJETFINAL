@@ -10,22 +10,22 @@ class Unit {
     - maxLives : points de vie maximums
     - damages : points de dégât
     - moves : déplacement (en nombre de cases)
-    - side : camp de l'unité (1 : alliée, 2 : ennemie)
+    - faction : camp de l'unité (1 : alliée, 2 : ennemie)
     - textures : objet indiquant les index des textures de l'unité dans le tableau des images
   */
   
   String name;
-  int lives, maxLives, damages, moves, side;
+  int lives, maxLives, damages, moves, faction;
   JSONObject textures;
   
-  Unit(JSONObject unitDatas, int side) {
+  Unit(JSONObject unitDatas, int faction) {
     
-    this.side = side;
+    this.faction = faction;
     this.maxLives = unitDatas.getInt("lives");
     this.lives = this.maxLives;
     this.damages = unitDatas.getInt("damages");
     this.moves = unitDatas.getInt("moves");
-    this.textures = unitDatas.getJSONArray("textures").getJSONObject(0);
+    this.textures = unitDatas.getJSONArray("textures").getJSONObject(this.faction);
     // this.textures = unitDatas.getJSONObject("textures").getJSONObject("myFaction");
   }
 

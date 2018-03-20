@@ -16,9 +16,9 @@ class State {
   void load() {
     // Chargement des données nécessaire au fonctionnement du State
     /*
-    Cette méthode est appellée
-    au moment de l'entré dans l'état
-    par la fonction enterState()
+      Cette méthode est appellée
+      au moment de l'entré dans l'état
+      par la fonction enterState()
     */
   }
 
@@ -34,22 +34,22 @@ class State {
     }
   }
 
-  void saveData() {
+  //void saveData() {
     // Sauvegarde des données du State (en JSON)
-    println("> Saving datas for state '" + this.name + "'...");
-    try {
-      saveJSONObject(this.data, getSaveUrl(this.name));
-      println("> Successfully saved\n");
-    } 
-    catch (Exception e) {
-      println("> Error saving datas for state" + this.name, e + "\n");
-    }
-  }
+    //println("> Saving datas for state '" + this.name + "'...");
+    //try {
+      //saveJSONObject(this.data, getSaveUrl(this.name));
+      //println("> Successfully saved\n");
+    //} 
+    //catch (Exception e) {
+      //println("> Error saving datas for state" + this.name, e + "\n");
+    //}
+  //}
   
   String getAString(String field) {
     /*
-    Récupérer des données (String)
-    - filed : id de la donnée (String)
+      Récupérer des données (String)
+      - filed : id de la donnée (String)
     */
     try {
       return this.data.getString(field);
@@ -62,8 +62,8 @@ class State {
 
   int getAInt(String field) {
     /*
-    Récupérer des données (Int)
-    - filed : id de la donnée (String)
+      Récupérer des données (Int)
+      - filed : id de la donnée (String)
     */
     try {
       return this.data.getInt(field);
@@ -76,9 +76,9 @@ class State {
 
   void setAString(String field, String toSet) {
     /*
-    Sauvegarder une donnée (String)
-    - filed : id de la donnée (String)
-    - toSet : nouveau contenu (String)
+      Sauvegarder une donnée (String)
+      - filed : id de la donnée (String)
+      - toSet : nouveau contenu (String)
     */
     try {
       this.data.setString(field, toSet);
@@ -90,9 +90,9 @@ class State {
 
   void setAInt(String field, int toSet) {
     /*
-    Sauvegarder une donnée (Int)
-    - filed : id de la donnée (String)
-    - toSet : nouveau contenu (Int)
+      Sauvegarder une donnée (Int)
+      - filed : id de la donnée (String)
+      - toSet : nouveau contenu (Int)
     */
     try {
       this.data.setInt(field, toSet);
