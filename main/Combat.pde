@@ -56,9 +56,7 @@ class Combat extends State {
   }
 
   int[] returnIndex() {
-
     int[] result = new int[2];
-
     return result;
   }
 }
