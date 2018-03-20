@@ -2,7 +2,7 @@
 State actualState;
 
 void setup() {
-  size(480, 640);
+  size(576, 640);
   
   // Loads
   loadUnits();
@@ -19,4 +19,5 @@ void draw() {
   
   actualState.update();
   actualState.render();
+
 }

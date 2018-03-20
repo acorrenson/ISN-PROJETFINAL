@@ -47,7 +47,7 @@ class Combat extends State {
 
   void createCards() {
     for(int i = 0; i < this.cards.length; i++) {
-      this.cards[i] = new Card(i * 60 + 50, 200, 0);
+      this.cards[i] = new Card(i * 60 + 50, 500, 0);
     }
   }
 
@@ -73,7 +73,7 @@ class Combat extends State {
     // tester le placement des cartes
     for(int i = 0; i < this.cards.length; i++) {
       if(this.cards[i] != null) {
-        this.cards[i].place(0, 0, height, width);
+        this.cards[i].place(64, 64, 448, 448);
       }
     }
   }
@@ -87,6 +87,9 @@ class Combat extends State {
   void render() {
     // affichage (60 fps)
     background(0);
+    stroke(255);
+    noFill();
+    rect(64, 64, 448, 448);
     this.renderCards();
   }
 
