@@ -1,6 +1,6 @@
 /*
   Class combat dérivée de State
-*/
+ */
 
 class Combat extends State {
 
@@ -47,22 +47,18 @@ class Combat extends State {
     // affichage (60 fps)
     background(0);
   }
-  
+
   boolean isOccuped(int x, int y) {
     if (this.map[y][x] == null) {
       return false;
     }
     return true;
   }
-  
-  int[] returnIndex() {
-  
-    int[] result = new int[2];
-    
-    return result;
-  
-  }
-  
-}
-}
 
+  int[] returnIndex() {
+
+    int[] result = new int[2];
+
+    return result;
+  }
+}
