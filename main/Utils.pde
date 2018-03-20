@@ -8,10 +8,6 @@ void loadUnits() {
   JSONUnits = loadJSONObject("data/units.json");
 }
 
-void createUnit(String name, int side) {
-  // Simplifie la création d'une unité
-  new Unit(JSONUnits.getJSONObject(name), side);
-}
 
 void enterState(State newState) {
   // Changement d'état
@@ -19,22 +15,14 @@ void enterState(State newState) {
   actualState.load();
 }
 
-void debugs() {
-
-  // Nothing but chickens here ...
-  createUnit("Matelot", 0);
-  println(placedUnits.get(0).lives);
-
-}
-
 String getStateUrl(String fileName) {
   // Renvoie l'url d'un fichier contenant les données d'un State (JSON)
   return "data/states/" + fileName + ".json";
 }
 
-String getSaveUrl(String fileName) {
-  // Renvoie l'url d'un fichier de sauvegarde (JSON)
-  return "data/saves/" + fileName + ".json";
+String getSaveUrl() {
+  // Renvoie l'url du fichier de sauvegarde (JSON)
+  return "data/save.json";
 }
 
 String getImageUrl(String fileName) {

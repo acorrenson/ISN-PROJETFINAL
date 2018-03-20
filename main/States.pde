@@ -4,7 +4,7 @@
 */
 
 class State {
-  
+
   String name;
   JSONObject data;
 
@@ -15,6 +15,11 @@ class State {
 
   void load() {
     // Chargement des données nécessaire au fonctionnement du State
+    /*
+      Cette méthode est appellée
+      au moment de l'entré dans l'état
+      par la fonction enterState()
+    */
   }
 
   void loadData() {
@@ -29,17 +34,17 @@ class State {
     }
   }
 
-  void saveData() {
+  //void saveData() {
     // Sauvegarde des données du State (en JSON)
-    println("> Saving datas for state '" + this.name + "'...");
-    try {
-      saveJSONObject(this.data, getSaveUrl(this.name));
-      println("> Successfully saved\n");
-    } 
-    catch (Exception e) {
-      println("> Error saving datas for state" + this.name, e + "\n");
-    }
-  }
+    //println("> Saving datas for state '" + this.name + "'...");
+    //try {
+      //saveJSONObject(this.data, getSaveUrl(this.name));
+      //println("> Successfully saved\n");
+    //} 
+    //catch (Exception e) {
+      //println("> Error saving datas for state" + this.name, e + "\n");
+    //}
+  //}
   
   String getAString(String field) {
     /*
@@ -54,11 +59,11 @@ class State {
     }
     return "undefined";
   }
-  
+
   int getAInt(String field) {
     /*
       Récupérer des données (Int)
-       - filed : id de la donnée (String)
+      - filed : id de la donnée (String)
     */
     try {
       return this.data.getInt(field);
@@ -68,12 +73,12 @@ class State {
     }
     return 0;
   }
-  
+
   void setAString(String field, String toSet) {
     /*
       Sauvegarder une donnée (String)
-       - filed : id de la donnée (String)
-       - toSet : nouveau contenu (String)
+      - filed : id de la donnée (String)
+      - toSet : nouveau contenu (String)
     */
     try {
       this.data.setString(field, toSet);
@@ -82,12 +87,12 @@ class State {
       println("> Could'nt set field '" + field + "' in datas", e + "\n");
     }
   }
-  
+
   void setAInt(String field, int toSet) {
     /*
       Sauvegarder une donnée (Int)
-       - filed : id de la donnée (String)
-       - toSet : nouveau contenu (Int)
+      - filed : id de la donnée (String)
+      - toSet : nouveau contenu (Int)
     */
     try {
       this.data.setInt(field, toSet);
@@ -107,44 +112,5 @@ class State {
 
   void leave() {
     // Changement de State
-  }
-}
-
-
-/*
- Exemple de State:
-   Cet état de test affiche un carré blanc qui
-   navigue en boucle de Gauche à Droite
-*/
-
-class combat_1 extends State {
-
-  int PlayerX;
-
-  combat_1() {
-    super("combat_1");
-    this.PlayerX = 0;
-  }
-
-  void load() {
-    // test de loadData()
-    this.loadData();
-    
-    // test de data_setString()
-    this.setAString("test", "bye bye world");
-  }
-
-  void update() {
-    if (this.PlayerX < width) {
-      this.PlayerX += 5;
-    } else {
-      this.PlayerX = 0;
-    }
-  }
-
-  void render() {
-    background(0);
-    fill(255);
-    rect(this.PlayerX, height/2, 10, 10);
   }
 }

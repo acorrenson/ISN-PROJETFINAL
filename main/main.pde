@@ -8,16 +8,11 @@ void setup() {
   loadUnits();
   
   // Nouveau State
-  actualState = new combat_1();
+  actualState = new Combat("combat_1");
   
   // Définir le State actuel
   enterState(actualState);
   
-  // Test de saveData();
-  actualState.saveData();  
-  
-  // Affichage d'informations de debug
-  debugs();
 }
 
 void draw() {
