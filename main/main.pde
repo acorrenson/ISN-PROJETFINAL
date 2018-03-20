@@ -2,7 +2,7 @@
 State actualState;
 
 void setup() {
-  size(576, 640);
+  size(512, 640);
   
   // Loads
   loadUnits();

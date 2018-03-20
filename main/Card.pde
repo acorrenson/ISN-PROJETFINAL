@@ -26,6 +26,7 @@ class Card {
 
     this.w = 50;
     this.h = 100;
+    this.placed = false;
   }
 
   // déplacement d'une cate (drag)
@@ -42,24 +43,24 @@ class Card {
     }
   }
 
-  int[] place(int aX, int aY, int aW, int aH) {
-    if (!mousePressed) {
+  void place(int aX, int aY, int aW, int aH) {
+    if (!mousePressed && this.selected) {
       this.selected = false;
       // si on relache dans la zonne autorisée (plateau)
       if ( mouseX >= aX && mouseX <= (aX + aW)
         && mouseY >= aY && mouseY <= (aY + aH)) {
         this.placed = true;
-        int newUnitX = mouseX;
-        int newUnitY = mouseY;
-        int[] coords = {newUnitX, newUnitY};
-        return coords;
       } else {
-        this.x = this.initX;
-        this.y = this.initY;
+        this.reset();
       }
     }
-    int[] error = {404};
-    return error;
+  }
+
+  void reset() {
+    this.x = this.initX;
+    this.y = this.initY;
+    this.placed = false;
+    this.selected = false;
   }
 
   void render() {
