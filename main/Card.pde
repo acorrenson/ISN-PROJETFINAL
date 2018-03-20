@@ -29,31 +29,10 @@ class Card {
     this.placed = false;
   }
 
-  // déplacement d'une cate (drag)
-  void move() {
-    if (mousePressed && (collide(mouseX, mouseY, this.x, this.y, this.w, this.h) || this.selected )) {
-      // si souris pressé + (souris dans la carte OU carte déja séléctionnée)
-      if (!this.selected) {
-        this.clickW = mouseX - this.x;
-        this.clickH = mouseY - this.y;
-        this.selected = true;
-      }
-      this.x = mouseX - this.clickW;
-      this.y = mouseY - this.clickH;
-    }
-  }
-
-  void place(int aX, int aY, int aW, int aH) {
-    if (!mousePressed && this.selected) {
-      this.selected = false;
-      // si on relache dans la zonne autorisée (plateau)
-      if ( mouseX >= aX && mouseX <= (aX + aW)
-        && mouseY >= aY && mouseY <= (aY + aH)) {
-        this.placed = true;
-      } else {
-        this.reset();
-      }
-    }
+  void select() {
+    this.selected = true;
+    this.clickW = mouseX - this.x;
+    this.clickH = mouseY - this.y;
   }
 
   void reset() {
@@ -65,6 +44,10 @@ class Card {
 
   void render() {
     fill(255);
-    rect(this.x, this.y, this.w, this.h);
+    if(!this.selected) {
+      rect(this.x, this.y, this.w, this.h);
+    } else {
+      rect(mouseX - this.clickW, mouseY - this.clickH, this.w, this.h);
+    }
   }
 }

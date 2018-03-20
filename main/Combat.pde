@@ -7,13 +7,13 @@
   // Contenue du plateau
   Unit[][] map;
   Card[] cards;
-  // boolean cardSelected;
+  int selectedCard;
 
   Combat(String name) {
     super(name);
     this.map = new Unit[6][4];
     this.cards = new Card[4];
-    // this.cardSelected = false;
+    this.selectedCard = -1;
   }
 
   void load() {
@@ -50,6 +50,7 @@
   }
 
   void createCards() {
+    // remplire les cartes
     for(int i = 0; i < this.cards.length; i++) {
       this.cards[i] = new Card(i * 60 + 50, 500, 0);
     }
@@ -58,18 +59,7 @@
   void renderCards() {
     // afficher les cartes
     for(int i = 0; i < this.cards.length; i++) {
-      if(this.cards[i] != null) {
-        this.cards[i].render();
-      }
-    }
-  }
-
-  void moveCards() {
-    // déplacer les cartes
-    for(int i = 0; i < this.cards.length; i++) {
-      if(this.cards[i] != null) {
-        this.cards[i].move();
-      }
+      if(this.cards[i] != null) this.cards[i].render();
     }
   }
 
@@ -84,33 +74,36 @@
     }
   }
 
-  void placeCards() {
-    // tester le placement des cartes
+  void selectCard() {
     for(int i = 0; i < this.cards.length; i++) {
-      if(this.cards[i] != null) {
-        this.cards[i].place(128, 128, 256, 384);
-        int x = mouseX;
-        int y = mouseY;
-        if(this.cards[i].placed) {
-          int newX = (int) x/64 - 2;
-          int newY = (int) y/64 - 2;
-          // créer la nouvelle unité
-          boolean success = this.createUnit("Matelot", 0, newX, newY);
-          // détruire la carte ou la reset
-          if(success) {
-            this.cards[i] = null;
-          } else {
-            this.cards[i].reset();
-          }
-        }
+      Card c = this.cards[i];
+      if(c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
+        this.selectedCard = i;
+        c.select();
       }
+    }
+  }
+
+  void unselectCard() {
+    int newX = (int) mouseX/64 - 2;
+    int newY = (int) mouseY/64 - 2;
+
+    if(newX >= 0 && newX < 4 && newY >= 0 && newY < 6 && this.createUnit("Matelot", 0, newX, newY)) {
+      this.cards[this.selectedCard] = null;
+      this.selectedCard = -1;
+    } else {
+      this.cards[this.selectedCard].reset();
+      this.selectedCard = -1;
     }
   }
 
   void update() {
     // boucle d'actualisation
-    this.moveCards();
-    this.placeCards();
+    if(mousePressed && this.selectedCard == -1) {
+      this.selectCard();
+    } else if (!mousePressed && this.selectedCard != -1) {
+      this.unselectCard();
+    }
   }
 
   void render() {
