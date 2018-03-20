@@ -1,6 +1,6 @@
 /*
-Class combat dérivée de State
- */
+  Class combat dérivée de State
+*/
 
 class Combat extends State {
 

@@ -1,6 +1,6 @@
 
 /*
-Classes représentant un état du jeu
+  Classes représentant un état du jeu
 */
 
 class State {
