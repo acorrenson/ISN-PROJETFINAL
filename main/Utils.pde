@@ -15,6 +15,13 @@ void enterState(State newState) {
   actualState.load();
 }
 
+boolean collide(int x, int y, int x2, int y2, int w, int h) {
+  if( x >= x2 && x <= (x2 + w) && y >= y2 && y <= (y2 + h)) {
+    return true;
+  }
+  return false;
+}
+
 String getStateUrl(String fileName) {
   // Renvoie l'url d'un fichier contenant les données d'un State (JSON)
   return "data/states/" + fileName + ".json";
