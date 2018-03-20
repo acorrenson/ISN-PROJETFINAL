@@ -32,7 +32,7 @@ class Combat extends State {
   void createUnit(String name, int side, int x, int y) {
     // Simplifie la création d'une unité
     if (!this.isOccuped(x, y)) {
-      Unit NewUnit = new Unit(JSONUnits.getJSONObject(name), side);   
+      Unit NewUnit = new Unit(JSONUnits.getJSONObject(name), side); 
       this.map[y][x] = NewUnit;
     } else {
       println(x, y, "est déjà occupée\n");
