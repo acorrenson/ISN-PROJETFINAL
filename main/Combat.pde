@@ -9,24 +9,13 @@ class Combat extends State {
 
   Combat(String name) {
     super(name);
-    this.map = new Unit[10][10];
+    this.map = new Unit[4][6];
   }
 
   void load() {
 
-    // test de loadData()
-    this.loadData();
-
-    // test de setAString()
-    this.setAString("test", "bye bye world");
-
-    // test de createUnit en position 5 5
-    createUnit("Matelot", 0, 5, 5);
-    println("pv d'un matelot : ", this.map[5][5].lives);
-
-    // test de isOccuped (TRUE)
-    println(this.isOccuped(5, 5));
-    createUnit("Matelot", 0, 5, 5);
+    // Chargement des données relative au combat
+    
   }
 
   void createUnit(String name, int side, int x, int y) {
@@ -57,12 +46,19 @@ class Combat extends State {
   
   int[] returnIndex() {
   
-    int[] result = new int[2];
+    int[] result = {-1, -1};
     
-    return result;
+    int newX = mouseX - 128, newY = mouseY - 128;
+    
+    if ( newX >= 0 && newX <= 255 && newY >= 0 && newY <= 384 ) {
+    
+      result[0] = int( newX / sqrSize );
+      result[1] = int( newY / sqrSize );
+      
+    }
+    
+    return result;    
   
   }
   
 }
-}
-

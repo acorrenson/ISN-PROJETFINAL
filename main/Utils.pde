@@ -1,5 +1,12 @@
 
 /*
+  Variables utiles
+*/
+
+int sqrSize = 64;
+
+
+/*
   Fonctions utiles
 */
 
