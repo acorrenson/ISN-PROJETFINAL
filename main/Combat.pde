@@ -17,7 +17,6 @@
   }
 
   void load() {
-
     // test de loadData()
     this.loadData();
 
@@ -34,7 +33,6 @@
 
     // test des cartes
     this.createCards();
-
   }
 
   boolean createUnit(String name, int side, int x, int y) {
@@ -124,7 +122,19 @@
   }
 
   int[] returnIndex() {
-    int[] result = new int[2];
-    return result;
+  
+    int[] result = {-1, -1};
+    
+    int newX = mouseX - 128, newY = mouseY - 128;
+    
+    if ( newX >= 0 && newX <= 255 && newY >= 0 && newY <= 384 ) {
+    
+      result[0] = int( newX / sqrSize );
+      result[1] = int( newY / sqrSize );
+      
+    }
+    
+    return result;    
+  
   }
 }
