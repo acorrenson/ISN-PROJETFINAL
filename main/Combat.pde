@@ -7,11 +7,13 @@
   // Contenue du plateau
   Unit[][] map;
   Card[] cards;
+  // boolean cardSelected;
 
   Combat(String name) {
     super(name);
     this.map = new Unit[6][4];
     this.cards = new Card[4];
+    // this.cardSelected = false;
   }
 
   void load() {
