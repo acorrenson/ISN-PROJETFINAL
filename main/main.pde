@@ -1,6 +1,5 @@
 
 State actualState;
-Card c = new Card(10, 10, 0);
 
 void setup() {
   size(512, 640);
@@ -20,5 +19,5 @@ void draw() {
   
   actualState.update();
   actualState.render();
-  
+
 }
