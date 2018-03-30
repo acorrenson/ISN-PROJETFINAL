@@ -18,15 +18,13 @@ class Unit {
   int lives, maxLives, damages, moves, faction;
   JSONObject textures;
   
-  Unit(JSONObject unitDatas, int faction) {
-    
+  Unit(JSONObject unitDatas, int faction, String name) {
+    this.name = name;
     this.faction = faction;
     this.maxLives = unitDatas.getInt("lives");
     this.lives = this.maxLives;
     this.damages = unitDatas.getInt("damages");
     this.moves = unitDatas.getInt("moves");
     this.textures = unitDatas.getJSONArray("textures").getJSONObject(this.faction);
-    // this.textures = unitDatas.getJSONObject("textures").getJSONObject("myFaction");
   }
-
 }

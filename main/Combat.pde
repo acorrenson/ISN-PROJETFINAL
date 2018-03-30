@@ -1,8 +1,8 @@
 /*
   Class combat dérivée de State
-  */
+*/
 
-  class Combat extends State {
+class Combat extends State {
 
   // Contenue du plateau
   Unit[][] map;
@@ -24,8 +24,8 @@
     this.setAString("test", "bye bye world");
 
     // test de createUnit en position 5 5
-    this.createUnit("Matelot", 0, 0, 0);
-    println("pv d'un matelot : ", this.map[0][0].lives);
+    this.createUnit("Cuisinier", 0, 0, 0);
+    println("pv d'un Cuisinier : ", this.map[0][0].lives);
 
     // test de isOccuped (TRUE)
     println(this.isOccuped(0, 0));
@@ -38,7 +38,7 @@
   boolean createUnit(String name, int side, int x, int y) {
     // Simplifie la création d'une unité
     if (!this.isOccuped(x, y)) {
-      Unit NewUnit = new Unit(JSONUnits.getJSONObject(name), side); 
+      Unit NewUnit = new Unit(JSONUnits.getJSONObject(name), side, name); 
       this.map[y][x] = NewUnit;
       return true;
     } else {
@@ -67,6 +67,8 @@
         if(this.isOccuped(j, i)) {
           fill(255, 0, 0);
           rect(128 + j * 64, 128  + i * 64, 64, 64);
+          fill(255);
+          text(this.map[i][j].name, 128 + j * 64 + 20, 128  + i * 64 + 20);
         }
       }
     }
