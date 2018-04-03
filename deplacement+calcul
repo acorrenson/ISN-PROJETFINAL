@@ -1,0 +1,108 @@
+PImage fond, clone;
+int xU, yU;
+boolean select, doubleSelect, avancer;
+int move=2;
+int caseVisee;
+int position = 1;
+int[] colonne1 = 
+{
+  0, 1, 0, 0, 0, 0
+}
+;
+
+void setup() {
+  size(480, 640);
+  fond =loadImage("planISN.png"); //Relier valeur et image
+  clone =loadImage("clone1.png");
+  xU=192;
+  yU=384;
+  select=false;
+  avancer=false;
+}
+
+void draw() {
+  affichage();
+  calcul();
+  selection();
+  avancer();
+}
+
+
+void calcul() {
+  if (select==true) {
+    fill(200, 0, 0, 150);        //case en rouge
+    rect(xU, yU, 64, 64);
+
+
+    int variable = 0;                //calcul de la case visée
+    int caseCible = 0;
+    variable = (position + move);
+
+   // caseCible = colonne1[variable];
+
+      int caseTrouvee = 0;
+      boolean caseFind = false;
+      for (int i = position; i<=move || caseFind == false; i++) {
+        int newCaseCible;
+        newCaseCible = colonne1[i];
+        if (newCaseCible!=0) {
+          caseTrouvee = (i-position);
+          caseFind = true;
+        }
+        else {
+          caseTrouvee = (i-position);
+        }
+        
+      }
+      caseVisee = caseTrouvee;
+      
+    fill(0, 0, 200, 150);        //case visée en bleue
+    rect(xU, yU - (64 * caseVisee), 64, 64);
+  }
+  image(clone, xU, yU, 64, 64); //unité
+}
+
+
+
+void affichage() {
+  image(fond, 0, 0); //fond
+  image(fond, 30, 384, 64, 64); //bouton "avancer"
+}
+
+void selection() {
+  if (mousePressed==true) {
+    if (select==false) {
+      select=collide(mouseX, mouseY, xU, yU, 64, 64);
+    }
+    if (select) {
+      avancer=collide(mouseX, mouseY, 30, 384, 64, 64);
+    }
+  }
+}
+
+
+void avancer() {
+  if (avancer) {
+    int variable = 0;
+    variable = position;
+    colonne1[variable] = 0;
+    println(position);
+    position = (position + move);
+    colonne1[position] = 1;
+    println(position);
+
+    yU = yU - (64 * move);
+    avancer=false;
+    select=false;
+    printArray(colonne1);
+  }
+}
+
+
+boolean collide(int x, int y, int x2, int y2, int w, int h) {
+  if ( x >= x2 && x <= (x2 + w) && y >= y2 && y <= (y2 + h)) {
+    return true;
+  }
+  return false;
+}
+
