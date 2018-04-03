@@ -9,15 +9,35 @@ int cardWidth = 68;
 int cardHeight = 120;
 
 // Liste contenant toutes les images du jeu
-ArrayList<PImage> assets;
+ArrayList<PImage> assets = new ArrayList<PImage>();
 
 /*
   Fonctions utiles
 */
 
+void loadAssets() {
+  
+  println("> Loading assets ...");
+  
+  PImage tmp;
+  for (int i = 0; i <= 5; i ++) {
+  
+    tmp = loadImage("data/images/units/ally_" + str(i) + ".png");
+    assets.add( tmp );
+    tmp = loadImage("data/images/units/enemy_" + str(i) + ".png");
+    assets.add( tmp );
+    
+  }
+  
+  println("< Success");
+
+}
+
 void loadUnits() {
   // Charge les différents types d'unités (JSON)
+  println("> Loading JSON for units ...");  
   JSONUnits = loadJSONObject("data/units.json");
+  println("< Success\n");
 }
 
 void enterState(State newState) {
@@ -55,14 +75,30 @@ String getSoundUrl(String fileName, String fileExt) {
 
 int getAssetIndex(String name) {
 
-  // Renvoie l'index du tableau assets correspondant au nom d'une unité
+  // Renvoie l'index du tableau contenant les images correspondant au nom d'une unité
   
-  if ( name.equals("Matelot") ) {
+  if ( name.equals("Clone") ) {
     return 0;
   }
   
-  else if ( name.equals("Cuisinier") ) {
+  else if ( name.equals("Gun") ) {
     return 1;
+  }
+  
+  else if ( name.equals("Radio") ) {
+    return 2;
+  }
+  
+  else if ( name.equals("Medic") ) {
+    return 3;
+  }
+  
+  else if ( name.equals("Admiral") ) {
+    return 4;
+  }
+  
+  else if ( name.equals("Flame Gun") ) {
+    return 5;
   }
   
   // Ajouter les nouvelles unités ici

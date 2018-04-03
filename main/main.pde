@@ -6,6 +6,7 @@ void setup() {
   size(512, 640);
   
   // Loads
+  loadAssets();
   loadUnits();
   
   // Définir le State actuel

@@ -1,14 +1,38 @@
 {
 
-  "Matelot" : {
+  "Clone" : {
     "lives": 10,
     "damages": 5,
     "moves": 1,
   },
 
-  "Cuisinier" : {
+  "Gun" : {
     "lives": 20,
     "damages": 10,
+    "moves": 1,
+  },
+
+  "Radio" : {
+    "lives": 5,
+    "damages": 1,
+    "moves": 3,
+  },
+
+  "Medic" : {
+    "lives": 15,
+    "damages": 5,
+    "moves": 2,
+  },
+
+  "Admiral" : {
+    "lives": 25,
+    "damages": 5,
+    "moves": 0,
+  },
+
+  "Flame Gun" : {
+    "lives": 20,
+    "damages": 15,
     "moves": 1,
   },
 

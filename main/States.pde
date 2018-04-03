@@ -27,10 +27,10 @@ class State {
     println("> Loading datas for state '" + this.name + "'...");
     try {
       this.data = loadJSONObject(getStateUrl(this.name));
-      println("> Successfully loaded\n");
+      println("< Success\n");
     } 
     catch(Exception e) {
-      println("> Error loading datas for state '" + this.name + "'", e + "\n");
+      println("< Error loading datas for state '" + this.name + "'", e + "\n");
       stop();
     }
   }
@@ -44,7 +44,7 @@ class State {
       return this.data.getString(field);
     } 
     catch(Exception e) {
-      println("> Could'nt get field '" + field + "' in datas", e + "\n");
+      println("< Could'nt get field '" + field + "' in datas", e + "\n");
     }
     return "undefined";
   }
@@ -58,7 +58,7 @@ class State {
       return this.data.getInt(field);
     } 
     catch(Exception e) {
-      println("> Could'nt get field '" + field + "' in datas", e + "\n");
+      println("< Could'nt get field '" + field + "' in datas", e + "\n");
     }
     return 0;
   }
