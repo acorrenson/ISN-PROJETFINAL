@@ -102,7 +102,7 @@ String getSoundUrl(String fileName, String fileExt) {
 
 int gai(String name, int faction, int side) {
 
-  // Renvoie l'index du tableau contenant les images correspondant au nom d'une unité
+  // Renvoie l'index d'une image, contenue dans "assets", et determiné par le nom d'une unité
   
   /*  
     - index = place de la première image d'une doublette ( une image de face, une image de dos )
