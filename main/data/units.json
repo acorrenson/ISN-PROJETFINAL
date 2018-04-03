@@ -4,24 +4,12 @@
     "lives": 10,
     "damages": 5,
     "moves": 1,
-    "textures" : [
-      {
-        "top"    : 0,
-        "bottom" : 1
-      }
-    ]
   },
 
   "Cuisinier" : {
     "lives": 20,
     "damages": 10,
     "moves": 1,
-    "textures" : [
-      {
-        "top"    : 2,
-        "bottom" : 3
-      }
-    ]
   },
 
 }
