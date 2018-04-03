@@ -5,6 +5,8 @@
 
 int sqrSize = 64;
 
+int cardWidth = 68;
+int cardHeight = 120;
 
 /*
   Fonctions utiles

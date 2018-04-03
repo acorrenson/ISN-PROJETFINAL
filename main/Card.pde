@@ -22,8 +22,8 @@ class Card {
     this.y = this.initY;
     this.unit = unit;
 
-    this.w = 68;
-    this.h = 120;
+    this.w = cardWidth;
+    this.h = cardHeight;
   }
 
   void select() {

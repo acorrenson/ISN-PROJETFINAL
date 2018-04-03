@@ -50,7 +50,7 @@ class Combat extends State {
   void createCards() {
     // remplire les cartes
     for(int i = 0; i < this.cards.length; i++) {
-      this.cards[i] = new Card(i * 60 + 50, 500, 0);
+      this.cards[i] = new Card(i * (cardWidth + cardWidth/5) + 100, 500, 0);
     }
   }
 
