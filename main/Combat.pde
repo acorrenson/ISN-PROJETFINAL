@@ -17,8 +17,6 @@ class Combat extends State {
   }
 
   void load() {
-    // toutes les opérations nécessaire au fonctionnement
-    // du combat sont à effectuer ICI
     this.loadData();    // charger le json
     this.createCards(); // créer les cartes
   }
@@ -26,20 +24,21 @@ class Combat extends State {
   boolean createUnit(String name, int side, int x, int y) {
     // Simplifie la création d'une unité
     if (!this.isOccuped(x, y)) {
-      // si la case ciblée n'est pas déjà occupéecréer une unité dedans
       Unit NewUnit = new Unit(side, name); 
       this.map[y][x] = NewUnit;
       return true;
     } else {
       println(x, y, "est déjà occupée\n");
     }
+    // return false si l'unité
+    // n'a pas été créée
     return false;
   }
 
   void createCards() {
     // créer le tableau de cartes
     this.cards = new Card[4];
-    // remplire les cartes
+    // remplire le tableau de cartes
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
@@ -48,23 +47,17 @@ class Combat extends State {
   }
 
   void renderCards() {
-    // afficher toutes les cartes du tableau
-    // this.cards
+    // afficher toutes les cartes
     for(int i = 0; i < this.cards.length; i++) {
       if(this.cards[i] != null) this.cards[i].render();
     }
   }
 
   void renderUnit() {
-    // afficher toutes les untités du tableau
-    // this.units
+    // afficher toutes les untités
     for (int i = 0; i < this.map.length; ++i) {
       for (int j = 0; j < this.map[0].length; ++j) {
         if(this.isOccuped(j, i)) {
-          //fill(255, 0, 0);
-          //rect(128 + j * 64, 128  + i * 64, 64, 64);
-          //fill(255);
-          //text(this.map[i][j].name, 128 + j * 64 + 20, 128  + i * 64 + 20);
           int[] newPos = this.returnPos(j, i);
           this.map[i][j].render(newPos[0], newPos[1]);
         }
@@ -78,8 +71,10 @@ class Combat extends State {
       Card c = this.cards[i];
       // si la carte existe et que le clique est dedans :
       if(c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
-        this.selectedCard = i; // stocker l'index de la carte séléctionnée
-        c.select(); // selectionner la carte
+        // stocker l'index de la carte séléctionnée
+        this.selectedCard = i;
+        // selectionner la carte
+        c.select(); 
       }
     }
   }
@@ -87,8 +82,8 @@ class Combat extends State {
   void unselectCard() {
     // lorsque la carte est déposée
     
-    // newPos[0] = x
-    // newPos[1] = y
+    // newPos[0] <=> x
+    // newPos[1] <=> y
     int[] newPos = this.returnIndex();
     
     // si la carte est lachée dans la zonne autorisée
