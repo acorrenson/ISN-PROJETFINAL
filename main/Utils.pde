@@ -19,15 +19,21 @@ void loadAssets() {
   
   println("> Loading assets ...");
   
-  PImage tmp;
-  for (int i = 0; i <= 5; i ++) {
+  PImage unitsSS = loadImage("data/images/unitsSpritesheet.png");
   
-    tmp = loadImage("data/images/units/ally_" + str(i) + ".png");
-    assets.add( tmp );
-    tmp = loadImage("data/images/units/enemy_" + str(i) + ".png");
-    assets.add( tmp );
+  PImage tmp;
+  for (int j = 0; j < unitsSS.height / 32; j ++ ) {
+  
+    for (int i = 0; i < unitsSS.width / 32; i ++) {
     
+      tmp = unitsSS.get(i * 32, j * 32, 32, 32);
+      assets.add( tmp );
+    
+    }
+  
   }
+  
+  // Ajouter les autres images ici
   
   println("< Success");
 
@@ -73,38 +79,34 @@ String getSoundUrl(String fileName, String fileExt) {
   return "data/sounds/" + fileName + "." + fileExt;
 }
 
-int getAssetIndex(String name) {
+int gai(String name, int faction, int side) {
 
   // Renvoie l'index du tableau contenant les images correspondant au nom d'une unité
   
-  if ( name.equals("Clone") ) {
-    return 0;
-  }
+  /*  
+    - index = place de la première image d'une doublette ( une image de face, une image de dos )
+    - side = si l'image est de face (0) ou de dos (1)
+    - 12 * faction = si l'unité est ennemie (donc faction = 1) on se décale de 12, car il y a 12 images par camps  
+  */
   
-  else if ( name.equals("Gun") ) {
-    return 1;
-  }
+  int index;
   
-  else if ( name.equals("Radio") ) {
-    return 2;
-  }
+  if ( name.equals("Clone") ) index = 0;
   
-  else if ( name.equals("Medic") ) {
-    return 3;
-  }
+  else if ( name.equals("Gun") ) index = 2;
   
-  else if ( name.equals("Admiral") ) {
-    return 4;
-  }
+  else if ( name.equals("Radio") ) index = 4;
   
-  else if ( name.equals("Flame Gun") ) {
-    return 5;
-  }
+  else if ( name.equals("Medic") ) index = 6;
   
-  // Ajouter les nouvelles unités ici
+  else if ( name.equals("Admiral") ) index = 8;
+  
+  else if ( name.equals("Flame Gun") ) index = 10;
   
   else {
-    return -1;
+    index = -1;
   }
+  
+  return ( index + side + 12 * faction );
   
 }

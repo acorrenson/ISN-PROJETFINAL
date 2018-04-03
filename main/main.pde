@@ -4,6 +4,7 @@ State actualState;
 
 void setup() {
   size(512, 640);
+  noSmooth();
   
   // Loads
   loadAssets();
