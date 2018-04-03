@@ -42,7 +42,7 @@ class Combat extends State {
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
-      this.cards[i] = new Card(x, y, "Matelot");
+      this.cards[i] = new Card(x, y, "Clone");
     }
   }
 
@@ -89,7 +89,10 @@ class Combat extends State {
     // si la carte est lachée dans la zonne autorisée
     // essayer de créer une unité
     // si la création échoue, réinitiliser la carte
-    if(newPos[0] >= 0 && this.createUnit("Matelot", 0, newPos[0], newPos[1])) {
+    int i = this.selectedCard;
+    Card c = this.cards[i];
+
+    if(newPos[0] >= 0 && this.createUnit(c.name, 0, newPos[0], newPos[1])) {
       this.cards[this.selectedCard] = null;
       this.selectedCard = -1; // aucune carte sélectionnée
     } else {

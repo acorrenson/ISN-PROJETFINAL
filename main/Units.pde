@@ -26,7 +26,6 @@ class Unit {
     this.lives = this.maxLives;
     this.damages = data.getInt("damages");
     this.moves = data.getInt("moves");
-    //this.textures = data.getJSONArray("textures").getJSONObject(this.faction);
   }
   
   void render(int x, int y) {
