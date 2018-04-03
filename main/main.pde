@@ -1,4 +1,5 @@
 
+// L'etat actuel du jeu
 State actualState;
 
 void setup() {

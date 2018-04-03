@@ -8,6 +8,9 @@ int sqrSize = 64;
 int cardWidth = 68;
 int cardHeight = 120;
 
+// Liste contenant toutes les images du jeu
+ArrayList<PImage> assets;
+
 /*
   Fonctions utiles
 */
@@ -16,7 +19,6 @@ void loadUnits() {
   // Charge les différents types d'unités (JSON)
   JSONUnits = loadJSONObject("data/units.json");
 }
-
 
 void enterState(State newState) {
   // Changement d'état
@@ -49,4 +51,24 @@ String getImageUrl(String fileName) {
 String getSoundUrl(String fileName, String fileExt) {
   // Renvoie l'url d'un fichier son
   return "data/sounds/" + fileName + "." + fileExt;
+}
+
+int getAssetIndex(String name) {
+
+  // Renvoie l'index du tableau assets correspondant au nom d'une unité
+  
+  if ( name.equals("Matelot") ) {
+    return 0;
+  }
+  
+  else if ( name.equals("Cuisinier") ) {
+    return 1;
+  }
+  
+  // Ajouter les nouvelles unités ici
+  
+  else {
+    return -1;
+  }
+  
 }
