@@ -7,11 +7,8 @@ void setup() {
   // Loads
   loadUnits();
   
-  // Nouveau State
-  actualState = new Combat("combat_1");
-  
   // Définir le State actuel
-  enterState(actualState);
+  enterState(new Combat("combat_1"));
   
 }
 

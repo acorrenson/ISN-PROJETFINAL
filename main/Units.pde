@@ -18,13 +18,21 @@ class Unit {
   int lives, maxLives, damages, moves, faction;
   JSONObject textures;
   
-  Unit(JSONObject unitDatas, int faction, String name) {
+  Unit(int faction, String name) {
+    JSONObject data = JSONUnits.getJSONObject(name);
     this.name = name;
     this.faction = faction;
-    this.maxLives = unitDatas.getInt("lives");
+    this.maxLives = data.getInt("lives");
     this.lives = this.maxLives;
-    this.damages = unitDatas.getInt("damages");
-    this.moves = unitDatas.getInt("moves");
-    this.textures = unitDatas.getJSONArray("textures").getJSONObject(this.faction);
+    this.damages = data.getInt("damages");
+    this.moves = data.getInt("moves");
+    //this.textures = data.getJSONArray("textures").getJSONObject(this.faction);
+  }
+  
+  void render(int x, int y) {
+    fill(255, 0, 0);
+    rect(x, y, sqrSize, sqrSize);
+    fill(255);
+    text(this.name, x, y);
   }
 }

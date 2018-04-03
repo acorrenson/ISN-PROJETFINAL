@@ -7,7 +7,7 @@ class Card {
   int y;
   int w;
   int h;
-  int unit;
+  String name;
 
   boolean selected; // carte séléctionnée ou non
 
@@ -15,12 +15,12 @@ class Card {
   int clickH;
 
   // constructor
-  Card(int x, int y, int unit) {
+  Card(int x, int y, String name) {
     this.initX = x;
     this.initY = y;
     this.x = this.initX;
     this.y = this.initY;
-    this.unit = unit;
+    this.name = name;
 
     this.w = cardWidth;
     this.h = cardHeight;

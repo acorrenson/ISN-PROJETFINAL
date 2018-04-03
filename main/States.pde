@@ -31,20 +31,9 @@ class State {
     } 
     catch(Exception e) {
       println("> Error loading datas for state '" + this.name + "'", e + "\n");
+      stop();
     }
   }
-
-  //void saveData() {
-    // Sauvegarde des données du State (en JSON)
-    //println("> Saving datas for state '" + this.name + "'...");
-    //try {
-      //saveJSONObject(this.data, getSaveUrl(this.name));
-      //println("> Successfully saved\n");
-    //} 
-    //catch (Exception e) {
-      //println("> Error saving datas for state" + this.name, e + "\n");
-    //}
-  //}
   
   String getAString(String field) {
     /*
@@ -72,34 +61,6 @@ class State {
       println("> Could'nt get field '" + field + "' in datas", e + "\n");
     }
     return 0;
-  }
-
-  void setAString(String field, String toSet) {
-    /*
-      Sauvegarder une donnée (String)
-      - filed : id de la donnée (String)
-      - toSet : nouveau contenu (String)
-    */
-    try {
-      this.data.setString(field, toSet);
-    } 
-    catch(Exception e) {
-      println("> Could'nt set field '" + field + "' in datas", e + "\n");
-    }
-  }
-
-  void setAInt(String field, int toSet) {
-    /*
-      Sauvegarder une donnée (Int)
-      - filed : id de la donnée (String)
-      - toSet : nouveau contenu (Int)
-    */
-    try {
-      this.data.setInt(field, toSet);
-    } 
-    catch(Exception e) {
-      println("> Could'nt set field '" + field + "' in datas", e + "\n");
-    }
   }
 
   void update() {
