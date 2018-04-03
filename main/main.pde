@@ -1,11 +1,13 @@
 
-// L'etat actuel du jeu
+// L'etat (la scène) actuel du jeu
 State actualState;
 
 void setup() {
   size(512, 640);
+  noSmooth();
   
   // Loads
+  loadAssets();
   loadUnits();
   
   // Définir le State actuel
