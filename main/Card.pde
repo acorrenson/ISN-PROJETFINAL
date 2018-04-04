@@ -7,7 +7,7 @@ class Card {
     - w (h) --------- : indique les dimensions d'une carte
     - name ---------- : indique le nom de l'unité correspondant à cette carte (pour récupérer l'image, les points de vie, etc ...)
     - selected ------ : si la carte est séléctionnée
-    - clickW (clickH) : position de la souris sur la carte (lors d'un click)
+    - clickW (clickH) : position de la souris sur la carte (lors d'un clic)
   */
 
   int initX;
@@ -69,7 +69,7 @@ class Card {
         Si elle n'est pas séléctionnée
           - on trace un rectangle depuis (x;y) (point en haut à gauche) jusqu'à (x + w; y+ h) (point en bas à droite)
         Si elle est séléctionnée
-          - idem sauf que le point en HG est déterimée par la position x (y) de la souris, moins le x (y) où la carte a était clickée
+          - idem sauf que le point en HG est déterimée par la position x (y) de la souris, moins le x (y) où la carte a était cliquée
     */
     
     fill(255);
