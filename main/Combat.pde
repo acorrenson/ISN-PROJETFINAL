@@ -20,7 +20,7 @@ class Combat extends State {
     // Constructeur de la classe
     
     super(name);
-    this.map = new Unit[6][4];
+    this.map = new Unit[4][6];
     this.selectedCard = -1; // -1 = aucune carte séléctionnée
   }
 
@@ -43,7 +43,7 @@ class Combat extends State {
     
     if (!this.isOccuped(x, y)) {
       Unit NewUnit = new Unit(side, name); 
-      this.map[y][x] = NewUnit;
+      this.map[x][y] = NewUnit;
       return true;
     } else {
       println(x, y, "est déjà occupée\n");
@@ -95,8 +95,8 @@ class Combat extends State {
     for (int i = 0; i < this.map.length; i ++) {
       for (int j = 0; j < this.map[0].length; j ++) {
         
-        if(this.isOccuped(j, i)) {
-          int[] newPos = this.returnPos(j, i);
+        if(this.isOccuped(i, j)) {
+          int[] newPos = this.returnPos(i, j);
           this.map[i][j].render(newPos[0], newPos[1]);
         }
         
@@ -164,7 +164,7 @@ class Combat extends State {
   boolean isOccuped(int x, int y) {
     // retourne true si this.map[y][x] est
     // occupée par une unité
-    if (this.map[y][x] == null) {
+    if (this.map[x][y] == null) {
       return false;
     }
     return true;
