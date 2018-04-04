@@ -23,8 +23,10 @@ class Card {
   int clickW;
   int clickH;
 
-  // constructor
   Card(int x, int y, String name) {
+    
+    // Constructeur de la classe
+    
     this.initX = x;
     this.initY = y;
     this.x = this.initX;

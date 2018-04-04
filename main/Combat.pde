@@ -1,28 +1,46 @@
+
 /*
   Class combat dérivée de State
 */
 
 class Combat extends State {
 
-  // Contenue du plateau
+  /*
+    map -------- : tableau (en 2D) contenant les unités présentent sur le plateau
+    cards ------ : tableau contenant les cartes du joueurs
+    selectedCard : index du tableau cards de la carte actuellement séléctionnée
+  */
+  
   Unit[][] map;
   Card[] cards;
   int selectedCard;
 
   Combat(String name) {
+    
+    // Constructeur de la classe
+    
     super(name);
     this.map = new Unit[6][4];
-    // -1 = pas de carte séléctionnée
-    this.selectedCard = -1;
+    this.selectedCard = -1; // -1 = aucune carte séléctionnée
   }
 
   void load() {
-    this.loadData();    // charger le json
-    this.createCards(); // créer les cartes
+    
+    /*
+      Charge les données du combat (ex : les cartes de l'IA ...)
+      Génère les cartes du joueur
+    */
+    
+    this.loadData();
+    this.createCards();
   }
 
   boolean createUnit(String name, int side, int x, int y) {
-    // Simplifie la création d'une unité
+    
+    /*
+      Simplifie la création d'une unité et renvoie true si l'unité est bien créée
+    */
+    
     if (!this.isOccuped(x, y)) {
       Unit NewUnit = new Unit(side, name); 
       this.map[y][x] = NewUnit;
@@ -30,15 +48,23 @@ class Combat extends State {
     } else {
       println(x, y, "est déjà occupée\n");
     }
-    // return false si l'unité
-    // n'a pas été créée
+    
+    // Renvoie false si l'unité n'a pas été créée
     return false;
   }
 
   void createCards() {
-    // créer le tableau de cartes
+    
+    // FONCTION DE TEST !
+    
+    /*
+      Génération des cartes du joueur
+        - initialise le tableau contenant les cartes
+        - le remplie grâce à une boucle for
+    */
+    
     this.cards = new Card[4];
-    // remplire le tableau de cartes
+    
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
@@ -47,20 +73,33 @@ class Combat extends State {
   }
 
   void renderCards() {
-    // afficher toutes les cartes
+    
+    /*
+      Affichage des cartes
+        - parcourt le tableau "cards"
+        - appelle la méthode "render" de chaque carte
+    */
+    
     for(int i = 0; i < this.cards.length; i++) {
       if(this.cards[i] != null) this.cards[i].render();
     }
   }
 
   void renderUnit() {
-    // afficher toutes les untités
-    for (int i = 0; i < this.map.length; ++i) {
-      for (int j = 0; j < this.map[0].length; ++j) {
+    
+    /*
+      Affichage des untités
+        - parcourt le tableau "map"
+    */
+    
+    for (int i = 0; i < this.map.length; i ++) {
+      for (int j = 0; j < this.map[0].length; j ++) {
+        
         if(this.isOccuped(j, i)) {
           int[] newPos = this.returnPos(j, i);
           this.map[i][j].render(newPos[0], newPos[1]);
         }
+        
       }
     }
   }
