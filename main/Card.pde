@@ -1,8 +1,12 @@
-// UNE CARTE
+
+/*
+  Class représentant une carte
+*/
+
 class Card {
   
   /*
-    - initX (initY) - : indique la position d'orginie en px) de la carte (pour pouvoir la replacer si elle n'est pas sur le plateau)
+    - initX (initY) - : indique la position d'orginie (en px) de la carte (pour pouvoir la replacer si elle n'est pas sur le plateau)
     - x (y) --------- : indique la position actuelle (en px) de la carte
     - w (h) --------- : indique les dimensions d'une carte
     - name ---------- : indique le nom de l'unité correspondant à cette carte (pour récupérer l'image, les points de vie, etc ...)
