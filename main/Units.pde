@@ -1,31 +1,36 @@
 
-// Objet référançant tous les types d'unités (JSON)
+/*
+  Classe représentant une unité
+*/
+
 JSONObject JSONUnits;
 
-// TODO : Ajouter les positions de l'unité !
 class Unit {
 
   /*
-    - lives : points de vie restants
-    - maxLives : points de vie maximums
-    - damages : points de dégât
-    - moves : déplacement (en nombre de cases)
-    - faction : camp de l'unité (1 : alliée, 2 : ennemie)
-    - textures : objet indiquant les index des textures de l'unité dans le tableau des images
+    - lives ---- : points de vie restants
+    - maxLives - : points de vie maximums
+    - damages -- : points de dégât
+    - step ----- : déplacement (en nombre de cases)
+    - faction -- : camp de l'unité (0 : alliée, 1 : ennemie)
+    - idSprite - : index de "assets" de l'image de l'unité
   */
   
   String name;
-  int lives, maxLives, damages, moves, faction;
-  JSONObject textures;
+  int lives, maxLives, damages, step, faction, idSprite;
   
   Unit(int faction, String name) {
+    
+    // Constructeur de la classe
+    
     JSONObject data = JSONUnits.getJSONObject(name);
     this.name = name;
     this.faction = faction;
     this.maxLives = data.getInt("lives");
     this.lives = this.maxLives;
     this.damages = data.getInt("damages");
-    this.moves = data.getInt("moves");
+    this.step = data.getInt("step");
+    this.idSprite = gai(name, faction, 1);
   }
   
   void render(int x, int y) {
