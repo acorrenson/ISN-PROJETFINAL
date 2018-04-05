@@ -34,6 +34,11 @@ class Unit {
   }
   
   void render(int x, int y) {
+    
+    /*
+      Affichage d'une unité
+    */
+    
     fill(255, 0, 0);
     rect(x, y, sqrSize, sqrSize);
     fill(255);
