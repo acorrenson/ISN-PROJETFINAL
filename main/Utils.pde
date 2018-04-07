@@ -1,6 +1,9 @@
 
 /*
   Variables utiles
+    - sqrSize -------------- : taille d'une case du plateau
+    - cardWidth (cardHeight) : tailles d'une carte
+    - assets --------------- : liste contenant toutes les images du jeu
 */
 
 int sqrSize = 64;
@@ -8,7 +11,6 @@ int sqrSize = 64;
 int cardWidth = 68;
 int cardHeight = 120;
 
-// Liste contenant toutes les images du jeu
 ArrayList<PImage> assets = new ArrayList<PImage>();
 
 /*
@@ -17,13 +19,15 @@ ArrayList<PImage> assets = new ArrayList<PImage>();
 
 void loadAssets() {
   
-  // Charge toutes les images nécessaire au jeu
+  /*
+    Charge toutes les images nécessaire au jeu
+      - unitsSS : grande image contenant toutes les images (ci après "sprite sheet")
+  */
   
   println("> Loading assets ...");
   
   /* Les unités */
   
-  // Grande image contenant toutes les images (ci après "sprite sheet")
   PImage unitsSS = loadImage("data/images/unitsSpritesheet.png");
   
   // Deux boucles for qui parcourent la sprite sheet pour extraire les images et les placer dans la list "assets"
@@ -47,7 +51,9 @@ void loadAssets() {
 
 void loadUnits() {
   
-  // Charge les différents types d'unités (JSON)
+  /*
+    Charge les différents types d'unités (JSON)
+  */
   
   println("> Loading JSON for units ...");  
   JSONUnits = loadJSONObject("data/units.json");
@@ -56,7 +62,9 @@ void loadUnits() {
 
 void enterState(State newState) {
   
-  // Changement d'état
+  /*
+    Change l'état actuel du jeu en modifiant "actualState" et en appelant la méthode "load" du nouvel état
+  */
   
   actualState = newState;
   actualState.load();
@@ -64,7 +72,10 @@ void enterState(State newState) {
 
 boolean collide(int x, int y, int x2, int y2, int w, int h) {
   
-  // Fonction basique, testant si deux éléments se supperposent (grace à leurs coordonnées et leurs tailles)
+  /*
+    Fonction basique, testant si deux éléments se supperposent (grace à leurs coordonnées et leurs tailles)
+      Renvoie true si collision
+  */
   
   if( x >= x2 && x <= (x2 + w) && y >= y2 && y <= (y2 + h)) {
     return true;
@@ -74,35 +85,27 @@ boolean collide(int x, int y, int x2, int y2, int w, int h) {
 
 String getStateUrl(String fileName) {
   
-  // Renvoie l'url d'un fichier contenant les données d'un State (JSON)
-  return "data/states/" + fileName + ".json";
+  /*
+    Renvoie l'url d'un fichier contenant les données d'un State (JSON)
+  */
   
+  return "data/states/" + fileName + ".json";  
 }
 
 String getSaveUrl() {
   
-  // Renvoie l'url du fichier de sauvegarde (JSON)
+  /*
+    Renvoie l'url du fichier de sauvegarde (JSON)
+  */
   
   return "data/save.json";
 }
 
-String getImageUrl(String fileName) {
-  
-  // Renvoie l'url d'un fichier image
-  
-  return "data/images/" + fileName + ".png";
-}
-
-String getSoundUrl(String fileName, String fileExt) {
-  
-  // Renvoie l'url d'un fichier son
-  
-  return "data/sounds/" + fileName + "." + fileExt;
-}
-
 int gai(String name, int faction, int side) {
 
-  // Renvoie l'index du tableau contenant les images correspondant au nom d'une unité
+  /*
+    Renvoie l'index d'une image, contenue dans "assets", et determiné par le nom d'une unité
+  */
   
   /*  
     - index = place de la première image d'une doublette ( une image de face, une image de dos )
