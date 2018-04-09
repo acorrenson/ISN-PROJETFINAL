@@ -41,6 +41,7 @@ class Unit {
     
     fill(255, 0, 0);
     rect(x, y, sqrSize, sqrSize);
+    image(assets.get(this.idSprite), x, y, 64, 64);
     fill(255);
     text(this.name, x, y);
   }
