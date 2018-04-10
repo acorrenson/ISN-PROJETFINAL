@@ -169,15 +169,15 @@ class Combat extends State {
         for (int y = 0; y < map[x].length; y ++ ) {
           
           if ( map[x][y] != null && map[x][y].faction == 0 ) {
-          
+            
             int step = map[x][y].step;
             for ( int i = (y - 1); i >= (y - step) ; i -- ) {
               println(i);
-            
+              
               if ( i >= 0) {
 
                 if ( map[x][i] == null ) {
-                  
+
                   map[x][i] = map[x][y];
                   map[x][y] = null;
                   
