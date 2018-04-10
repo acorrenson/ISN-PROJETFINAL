@@ -35,14 +35,14 @@ class Combat extends State {
     this.createCards();
   }
 
-  boolean createUnit(String name, int side, int x, int y) {
+  boolean createUnit(String name, int faction, int side, int x, int y) {
     
     /*
       Simplifie la création d'une unité et renvoie true si l'unité est bien créée
     */
     
-    if (!this.isOccuped(x, y)) {
-      Unit NewUnit = new Unit(side, name); 
+    if (x >= 0 && !this.isOccuped(x, y)) {
+      Unit NewUnit = new Unit(name, faction, side); 
       this.map[x][y] = NewUnit;
       return true;
     } else {
@@ -67,7 +67,7 @@ class Combat extends State {
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
-      this.cards[i] = new Card(x, y, "Clone");
+      this.cards[i] = new Card(x, y, "Flame Gun");
     }
   }
 
@@ -140,7 +140,7 @@ class Combat extends State {
     int i = this.selectedCard;
     Card c = this.cards[i];
 
-    if(newPos[0] >= 0 && this.createUnit(c.name, 0, newPos[0], newPos[1])) {
+    if(this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
       this.cards[this.selectedCard] = null;
       this.selectedCard = -1;
     } else {

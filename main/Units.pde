@@ -17,20 +17,20 @@ class Unit {
   */
   
   String name;
-  int lives, maxLives, damages, step, faction, idSprite;
+  int lives, maxLives, damages, step, faction, side, idSprite;
   
-  Unit(int faction, String name) {
+  Unit(String name, int faction, int side) {
     
     // Constructeur de la classe
     
     JSONObject data = JSONUnits.getJSONObject(name);
     this.name = name;
-    this.faction = faction;
+    this.faction = faction; this.side = side;
     this.maxLives = data.getInt("lives");
     this.lives = this.maxLives;
     this.damages = data.getInt("damages");
     this.step = data.getInt("step");
-    this.idSprite = gai(name, faction, 1);
+    this.idSprite = gai(name, faction, side);
   }
   
   void render(int x, int y) {
@@ -41,7 +41,7 @@ class Unit {
     
     fill(255, 0, 0);
     rect(x, y, sqrSize, sqrSize);
-    image(assets.get(this.idSprite), x, y, 64, 64);
+    image(assets[this.idSprite], x, y, 64, 64);
     fill(255);
     text(this.name, x, y);
   }

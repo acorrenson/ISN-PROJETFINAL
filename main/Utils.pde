@@ -11,12 +11,15 @@ int sqrSize = 64;
 int cardWidth = 68;
 int cardHeight = 120;
 
+int ALLY  = 0, ENY  = 1;
+int FRONT = 0, BACK = 1;
+
 /*
   24 = nombre d'unités
-  1  = élément(s) du plateau de jeu
   2  = menu pause
+  1  = élément(s) du plateau de jeu
 */
-PImage[] assets = new PImage[24 + 1 + 2];
+PImage[] assets = new PImage[24 + 2 + 1];
 
 /*
   Fonctions utiles
@@ -37,25 +40,27 @@ void loadAssets() {
   
   // Deux boucles for qui parcourent la sprite sheet pour extraire les images et les placer dans la list "assets"
   PImage tmp;
+  int count = 0;
   for (int j = 0; j < unitsSS.height / 32; j ++ ) {
   
     for (int i = 0; i < unitsSS.width / 32; i ++) {
     
       tmp = unitsSS.get(i * 32, j * 32, 32, 32);
-      assets[i + j] = tmp;
-    
+      assets[count] = tmp;
+      
+      count ++;    
     }
   
   }
   
-  /* Le plateau */
-  
-  assets[24] = loadImage("data/images/pont.png");
-  
   /* La pause */
   
-  assets[25] = loadImage("data/images/pause.png");
-  assets[26] = loadImage("data/images/hover.png");
+  assets[24] = loadImage("data/images/pause.png");
+  assets[25] = loadImage("data/images/hover.png");
+  
+  /* Le plateau */
+  
+  assets[26] = loadImage("data/images/pont.png");
   
   // Ajouter les autres images ici \|/
   

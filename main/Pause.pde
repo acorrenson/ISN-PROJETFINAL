@@ -19,8 +19,8 @@ class Pause extends State {
   Pause(State coated) {
     super("Pause");  
     this.coated = coated;
-    this.back = assets[25];
-    this.hover = assets[26];
+    this.back = assets[24];
+    this.hover = assets[25];
     this.paused = get(0,0, width,height);
     this.x = (width / 2) - (back.width / 2);
     this.y = (height / 2) - (back.height / 2);
