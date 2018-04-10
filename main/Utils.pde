@@ -11,7 +11,12 @@ int sqrSize = 64;
 int cardWidth = 68;
 int cardHeight = 120;
 
-ArrayList<PImage> assets = new ArrayList<PImage>();
+/*
+  24 = nombre d'unités
+  1  = élément(s) du plateau de jeu
+  2  = menu pause
+*/
+PImage[] assets = new PImage[24 + 1 + 2];
 
 /*
   Fonctions utiles
@@ -37,15 +42,24 @@ void loadAssets() {
     for (int i = 0; i < unitsSS.width / 32; i ++) {
     
       tmp = unitsSS.get(i * 32, j * 32, 32, 32);
-      assets.add( tmp );
+      assets[i + j] = tmp;
     
     }
   
   }
   
+  /* Le plateau */
+  
+  assets[24] = loadImage("data/images/pont.png");
+  
+  /* La pause */
+  
+  assets[25] = loadImage("data/images/pause.png");
+  assets[26] = loadImage("data/images/hover.png");
+  
   // Ajouter les autres images ici \|/
   
-  println("< Success");
+  println("< Success\n");
 
 }
 

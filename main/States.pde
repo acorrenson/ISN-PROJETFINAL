@@ -102,4 +102,6 @@ class State {
     */
     
   }
+  
+  void keyDown(int k) {}
 }

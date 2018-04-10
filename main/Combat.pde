@@ -164,6 +164,7 @@ class Combat extends State {
     } else if (!mousePressed && this.selectedCard != -1) {
       this.unselectCard();
     }
+    
   }
 
   void render() {
@@ -178,6 +179,14 @@ class Combat extends State {
     rect(128, 128, 256, 384);
     this.renderUnit();
     this.renderCards();
+  }
+  
+  void keyDown(int k) {
+    
+    if (k == 27) {
+      enterState( new Pause(actualState) );
+    }
+  
   }
 
   boolean isOccuped(int x, int y) {

@@ -32,8 +32,8 @@ void setup() {
   loadAssets();
   loadUnits();
   
-  // Définir le State actuel
-  enterState(new Combat("combat_1"));
+  // Définir l'état actuel
+  enterState( new Combat("combat_1") );
   
 }
 
@@ -42,4 +42,13 @@ void draw() {
   actualState.update();
   actualState.render();
 
+}
+
+void keyPressed() {
+
+  if (keyCode == ESC) {
+    key = 0;
+    actualState.keyDown(27);
+  }
+  
 }
