@@ -1,12 +1,11 @@
 PImage fond, clone;
 int xU, yU;
-boolean select, doubleSelect, avancer;
+boolean  tourEnCours;
 int move=2;
-int caseVisee;
-int position = 1;
+int position = 4;
 int[] colonne1 = 
 {
-  0, 1, 0, 0, 0, 0, 0, 0, 0, 0
+  0, 0, 0, 0, 1, 0
 }
 ;
 
@@ -16,51 +15,53 @@ void setup() {
   clone =loadImage("clone1.png");
   xU=192;
   yU=384;
-  select=false;
-  avancer=false;
+  tourEnCours=true;
 }
 
 void draw() {
   affichage();
-  calcul();
-  selection();
   avancer();
+  selection();
 }
 
-
-void calcul() {
-  if (select==true) {
-    fill(200, 0, 0, 150);        //case en rouge
-    rect(xU, yU, 64, 64);
-
-
-    int variable = 0;                //calcul de la case visée
-    int caseCible = 0;
-    variable = (position + move);
-    // caseCible = colonne1[variable];
-
-    int caseTrouvee = 0;
-    boolean caseFind = false;
-    if (move==0) {
-      caseTrouvee = 0;
+void avancer() {
 
 
 
+  if (tourEnCours == true) {
+    //for x
+    //for y
+    //if map[x][y].faction = alliée 
 
+      for ( int i = (position - 1); i > (position - move); i-- ) {
+      if ( i >= 0) {
+        //if( map[x][i]==0) {
+        if ( colonne1[i] == 0) {
+          //map[x][i] = map[x][y];
+          //map[x][y] = null;
+          println("boucle en cours");
 
+          colonne1[i] = 1; //colonne1[position]
+          colonne1[position] = 0; //null
 
+          println(position);
+        } else if ( colonne1[i] == 0) {
+          //case occupée, arret de la boucle
 
+          return;
+        }
+      } else if ( i < 0) {
+        //degats et disparition de l'unité
 
-
-      caseVisee = caseTrouvee;
-
-      fill(0, 0, 200, 150);        //case visée en bleue
-      rect(xU, yU - (64 * caseVisee), 64, 64);
+        return;
+      }
     }
-    image(clone, xU, yU, 64, 64); //unité
+    tourEnCours = false;
   }
-}
 
+  printArray(colonne1);
+  image(clone, xU, yU, 64, 64); //unité
+}
 
 void affichage() {
   image(fond, 0, 0); //fond
@@ -69,42 +70,12 @@ void affichage() {
 
 
 
-
-
-
-void avancer() {
-
-
-
-
-
-
-  if (avancer) {
-    int variable = 0;
-    variable = position;
-    colonne1[variable] = 0;
-
-    position = (position + caseVisee);
-    colonne1[position] = 1;
-
-
-    yU = yU - (64 * caseVisee);
-    avancer=false;
-    select=false;
-    printArray(colonne1);
-  }
-}
-
 void selection() {
   if (mousePressed==true) {
-    if (select==false) {
-      select=collide(mouseX, mouseY, xU, yU, 64, 64);
-    }
-    if (select) {
-      avancer=collide(mouseX, mouseY, 30, 384, 64, 64);
-    }
+    tourEnCours=collide(mouseX, mouseY, 30, 384, 64, 64);
   }
 }
+
 
 boolean collide(int x, int y, int x2, int y2, int w, int h) {
   if ( x >= x2 && x <= (x2 + w) && y >= y2 && y <= (y2 + h)) {
