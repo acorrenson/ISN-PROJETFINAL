@@ -14,6 +14,7 @@ class Combat extends State {
   Unit[][] map;
   Card[] cards;
   int selectedCard;
+  boolean playerTour;
 
   Combat(String name) {
     
@@ -33,6 +34,7 @@ class Combat extends State {
     
     this.loadData();
     this.createCards();
+    this.playerTour = false;
   }
 
   boolean createUnit(String name, int faction, int side, int x, int y) {
@@ -44,6 +46,7 @@ class Combat extends State {
     if (x >= 0 && !this.isOccuped(x, y)) {
       Unit NewUnit = new Unit(name, faction, side); 
       this.map[x][y] = NewUnit;
+      playerTour = true;
       return true;
     } else {
       println("Can't place unit at " + x + " " + y + "\n");
@@ -67,7 +70,7 @@ class Combat extends State {
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
-      this.cards[i] = new Card(x, y, "Flame Gun");
+      this.cards[i] = new Card(x, y, "Admiral");
     }
   }
 
@@ -158,6 +161,48 @@ class Combat extends State {
         Si la souris est relachée
           - Appelle la méthode "unselectCard"
     */
+    
+    if ( playerTour ) {
+    
+      for ( int x = 0; x < map.length; x ++ ) {
+      
+        for (int y = 0; y < map[x].length; y ++ ) {
+          
+          if ( map[x][y] != null && map[x][y].faction == 0 ) {
+          
+            int step = map[x][y].step;
+            for ( int i = (y - 1); i >= (y - step) ; i -- ) {
+              println(i);
+            
+              if ( i >= 0) {
+
+                if ( map[x][i] == null ) {
+                  
+                  map[x][i] = map[x][y];
+                  map[x][y] = null;
+                  
+                } else if ( map[x][i] != null ) {
+                  println(x + " "+ y + " occuped");
+                  break;
+                }
+              
+              } else if ( i < 0 ) {
+              
+                println("Haut atteint");
+                break;
+              }
+            }
+            
+            playerTour = false;
+
+          }
+        
+        }
+      
+      }
+    
+    }
+    
     
     if(mousePressed && this.selectedCard == -1) {
       this.selectCard();
