@@ -46,7 +46,7 @@ class Combat extends State {
       this.map[x][y] = NewUnit;
       return true;
     } else {
-      println(x, y, "est déjà occupée\n");
+      println("Can't place unit at " + x + " " + y + "\n");
     }
     
     return false;
@@ -174,9 +174,7 @@ class Combat extends State {
     */
     
     background(0);
-    stroke(255);
-    noFill();
-    rect(128, 128, 256, 384);
+    image(assets[26], 128, 128);
     this.renderUnit();
     this.renderCards();
   }

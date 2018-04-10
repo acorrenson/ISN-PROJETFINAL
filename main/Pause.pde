@@ -81,7 +81,7 @@ class Pause extends State {
     
     else if ( name.equals("Options") ) println("!> Options");
     
-    else if ( name.equals("Quit") ) println("!> Quit");
+    else if ( name.equals("Quit") ) exit();
   
   }
   
