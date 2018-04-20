@@ -2,8 +2,10 @@
 /*
   Variables utiles
     - sqrSize -------------- : taille d'une case du plateau
+    - canUseSounds --------- : si l'on peut utiliser les sons (Processing > 3.0+)
     - cardWidth (cardHeight) : tailles d'une carte
-    - assets --------------- : liste contenant toutes les images du jeu
+    - assets --------------- : tableau contenant toutes les images du jeu
+    - sounds --------------- : tableau contenant tous les sons du jeu 
 */
 
 int sqrSize = 64;
@@ -14,12 +16,13 @@ int cardHeight = 120;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-/*
-  24 = nombre d'unités
-  2  = menu pause
-  1  = élément(s) du plateau de jeu
-*/
+boolean canUseSounds = true;
+
+// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu 
 PImage[] assets = new PImage[24 + 2 + 1];
+
+// Musiques d'intro, de jeu et de crédits ; Sons de victoire, défaite, clic 
+SoundFile[] sounds = new SoundFile[6];
 
 /*
   Fonctions utiles
@@ -65,6 +68,26 @@ void loadAssets() {
   // Ajouter les autres images ici \|/
   
   println("< Success\n");
+
+}
+
+void loadSounds() {
+
+  println("> Loading sounds ...");
+  
+  import processing.sound.*;
+  
+  sounds[4] = new SoundFile(this, "sounds/click.mp3");
+  sounds[4].amp(0.1);
+
+}
+
+void playSample(int id) {
+
+  sounds[id].play();
+  int wait = ceil(sounds[id].duration() * 1000);
+  delay(wait);
+  sounds[id].stop();
 
 }
 

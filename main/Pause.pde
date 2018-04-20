@@ -49,7 +49,8 @@ class Pause extends State {
       }
       
       if ( mousePressed && this.buttons[i].overflew ) {
-      
+
+        playSample(4);
         action(this.buttons[i].name);
       
       }
