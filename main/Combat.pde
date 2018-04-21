@@ -35,6 +35,9 @@ class Combat extends State {
     this.loadData();
     this.createCards();
     this.playerTour = false;
+    
+    // EXEMPLE !
+    playMusic(1);
   }
 
   boolean createUnit(String name, int faction, int side, int x, int y) {
