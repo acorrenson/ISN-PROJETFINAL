@@ -19,7 +19,7 @@ int cardHeight = 120;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-boolean canUseSounds = true;
+boolean canUseSounds = false;
 float FXVLM = 0.1, MSCVLM = 0.5;
 
 // 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu 
