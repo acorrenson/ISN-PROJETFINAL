@@ -19,6 +19,12 @@ class Pause extends State {
   Pause(State coated) {
     super("Pause");  
     this.coated = coated;
+  }
+  
+  void load() {
+    
+    println("!> Enter in pause state");
+    
     this.back = assets[24];
     this.hover = assets[25];
     this.paused = get(0,0, width,height);
@@ -30,11 +36,6 @@ class Pause extends State {
     this.buttons[1] = new Button("Play",    this.x + 44,  this.y + 146, 107, 23);
     this.buttons[2] = new Button("Options", this.x + 44,  this.y + 210, 107, 23);
     this.buttons[3] = new Button("Quit",    this.x + 44,  this.y + 274, 107, 23);
-  }
-  
-  void load() {
-    
-    println("!> Enter in pause state");
   
   }
   
@@ -49,7 +50,8 @@ class Pause extends State {
       }
       
       if ( mousePressed && this.buttons[i].overflew ) {
-      
+
+        playSample(4);
         action(this.buttons[i].name);
       
       }
@@ -60,7 +62,7 @@ class Pause extends State {
   
   void render() {
     
-    background(paused);
+    background(this.paused);
     filter(GRAY);
     filter(BLUR, 2);
     image(this.back, this.x, this.y);
@@ -96,7 +98,7 @@ class Pause extends State {
   void leave() {
   
     println("!> Leave pause state");
-    actualState = coated;
+    actualState = this.coated;
   
   }
 

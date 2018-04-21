@@ -1,9 +1,14 @@
 
 /*
   Variables utiles
-    - sqrSize -------------- : taille d'une case du plateau
-    - cardWidth (cardHeight) : tailles d'une carte
-    - assets --------------- : liste contenant toutes les images du jeu
+    - sqrSize -------------- : (int)         taille d'une case du plateau
+    - cardWidth (cardHeight) : (int)         tailles d'une carte
+    - ALLY, ENY ------------ : (int)         index d'assets représentant les alliés/les ennemis
+    - canUseSounds --------- : (boolean)     si l'on peut utiliser les sons (Processing > 3.0+)
+    - FRONT, BACK ---------- : (int)         index d'assets indiquant si l'image est de dos/de face
+    - FXVLM, MSCVLM -------- : (int)         volumes des effets/musiques
+    - assets --------------- : (PImage[])    tableau contenant toutes les images du jeu
+    - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu 
 */
 
 int sqrSize = 64;
@@ -14,12 +19,14 @@ int cardHeight = 120;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-/*
-  24 = nombre d'unités
-  2  = menu pause
-  1  = élément(s) du plateau de jeu
-*/
+boolean canUseSounds = true;
+float FXVLM = 0.1, MSCVLM = 0.5;
+
+// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu 
 PImage[] assets = new PImage[24 + 2 + 1];
+
+// Musiques d'intro, de jeu et de crédits ; Sons de victoire, défaite, clic 
+SoundFile[] sounds = new SoundFile[6];
 
 /*
   Fonctions utiles
@@ -66,6 +73,64 @@ void loadAssets() {
   
   println("< Success\n");
 
+}
+
+void loadSounds() {
+  
+  /*
+    Charge tous les sons nécessaire au jeu (si canUseSounds == true)
+  */
+
+  println("> Loading sounds ...");
+  
+  import processing.sound.*;
+  
+  sounds[1] = new SoundFile(this, "sounds/Tranquilite.mp3");
+  sounds[4] = new SoundFile(this, "sounds/click.mp3");
+  
+  println("< Success\n");
+
+}
+
+void playMusic(int id) {
+  
+  /*
+    Joue un son long (musique)
+      - (int) id : index du tableau sounds
+  */
+
+  if ( canUseSounds ) {
+    sounds[id].play();
+    sounds[id].amp(MSCVLM);
+  }
+}
+
+void stopMusic(int id) {
+  
+  /*
+    Stop une musique
+      - (int) id : index du tableau sounds      
+  */
+
+  if ( canUseSounds ) {
+    sounds[id].stop();
+  }
+}
+
+void playSample(int id) {
+  
+  /*
+    joue son court (bruitage/FX)
+      - (int) id : index du tableau sounds      
+  */
+
+  if ( canUseSounds ) {
+    sounds[id].play();
+    sounds[4].amp(FXVLM);
+    int wait = ceil(sounds[id].duration() * 1000);
+    delay(wait);
+    sounds[id].stop();
+  }
 }
 
 void loadUnits() {
