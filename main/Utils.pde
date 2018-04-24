@@ -20,7 +20,7 @@ int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
 boolean canUseSounds = true;
-float FXVLM = 0.1, MSCVLM = 0.5;
+float FXVLM = 0.1, MSCVLM = 0.3;
 
 // 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu 
 PImage[] assets = new PImage[24 + 2 + 1];
@@ -85,7 +85,8 @@ void loadSounds() {
   
   import processing.sound.*;
   
-  sounds[1] = new SoundFile(this, "sounds/Tranquilite.mp3");
+  sounds[0] = new SoundFile(this, "sounds/mystery.mp3");
+  sounds[1] = new SoundFile(this, "sounds/Tranquilite.mp3"); // Son de test !
   sounds[4] = new SoundFile(this, "sounds/click.mp3");
   
   println("< Success\n");
@@ -100,7 +101,7 @@ void playMusic(int id) {
   */
 
   if ( canUseSounds ) {
-    sounds[id].play();
+    sounds[id].loop();
     sounds[id].amp(MSCVLM);
   }
 }
