@@ -27,7 +27,7 @@ class Card {
   int clickW;
   int clickH;
 
-  Card(int x, int y, String name) {
+  Card(String name, int x, int y) {
     
     // Constructeur de la classe
     
@@ -78,9 +78,9 @@ class Card {
     
     fill(255);
     if(!this.selected) {
-      rect(this.x, this.y, this.w, this.h);
+      image( assets[27], this.x, this.y, this.w, this.h );
     } else {
-      rect(mouseX - this.clickW, mouseY - this.clickH, this.w, this.h);
+      image( assets[27], mouseX - this.clickW, mouseY - this.clickH, this.w, this.h );
     }
   }
 }

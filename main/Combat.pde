@@ -57,23 +57,22 @@ class Combat extends State {
     
     return false;
   }
-
+  
   void createCards() {
-    
-    // FONCTION DE TEST !
     
     /*
       Génération des cartes du joueur
         - initialise le tableau contenant les cartes
-        - le remplie grâce à une boucle for
     */
     
     this.cards = new Card[4];
     
+    
+    
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
-      this.cards[i] = new Card(x, y, "Admiral");
+      this.cards[i] = new Card("Admiral", x, y);
     }
   }
 
