@@ -19,11 +19,11 @@ int cardHeight = 120;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-boolean canUseSounds = true;
+boolean canUseSounds = false;
 float FXVLM = 0.1, MSCVLM = 0.3;
 
-// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu 
-PImage[] assets = new PImage[24 + 2 + 1];
+// 24 = nombre d'unités ; 2  = menu pause ; 2  = élément(s) du plateau de jeu 
+PImage[] assets = new PImage[24 + 2 + 2];
 
 // Musiques d'intro, de jeu et de crédits ; Sons de victoire, défaite, clic 
 SoundFile[] sounds = new SoundFile[6];
@@ -68,6 +68,7 @@ void loadAssets() {
   /* Le plateau */
   
   assets[26] = loadImage("data/images/pont.png");
+  assets[27] = loadImage("data/images/card.png");
   
   // Ajouter les autres images ici \|/
   
@@ -218,4 +219,8 @@ int gai(String name, int faction, int side) {
   
   return ( index + side + 12 * faction );
   
+}
+
+void screenshot() {
+  save("data/images/screenshots/" + year() + "-" + day() + "-" + month() + "_" + hour() + "-" + minute() + "-" + second() + ".png");
 }

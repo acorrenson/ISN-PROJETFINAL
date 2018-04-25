@@ -37,4 +37,7 @@ void keyPressed() {
     key = 0;
     actualState.keyDown(27);
   }
+  else if (keyCode == ENTER) {
+    screenshot();
+  }
 }
