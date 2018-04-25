@@ -22,7 +22,8 @@ void setup() {
   loadUnits();
 
   // Définir l'état actuel
-  enterState( new Combat("combat_1") );
+  // enterState( new Combat("combat_1") );
+  enterState( new Tuto("tuto") );
 }
 
 void draw() {
@@ -37,4 +38,8 @@ void keyPressed() {
     key = 0;
     actualState.keyDown(27);
   }
+}
+
+void mousePressed() {
+  actualState.mousePressed();
 }

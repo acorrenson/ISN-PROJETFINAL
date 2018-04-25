@@ -104,4 +104,6 @@ class State {
   }
   
   void keyDown(int k) {}
+
+  void mousePressed() {}
 }
