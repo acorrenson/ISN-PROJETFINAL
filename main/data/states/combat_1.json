@@ -1,3 +1,7 @@
 {
-  "test" : "hello data"
+  "Player Lives"  : 3,
+  "IA Lives"      : 3,
+  "Cards" : [
+    "Clone", "Gun", "Radio", "Medic", "Admiral", "Flame Gun"
+  ],
 }

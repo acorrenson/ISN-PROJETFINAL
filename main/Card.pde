@@ -29,12 +29,12 @@ class Card {
   int clickW;
   int clickH;
 
-  Card(String name, int x, int y) {
+  Card(String name, int... coords) {
     
     // Constructeur de la classe
     
-    this.initX = x;
-    this.initY = y;
+    this.initX = coords[0];
+    this.initY = coords[1];
     this.x = this.initX;
     this.y = this.initY;
     this.name = name;

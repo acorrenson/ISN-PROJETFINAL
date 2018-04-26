@@ -6,14 +6,19 @@
 class Combat extends State {
 
   /*
-    map -------- : tableau (en 2D) contenant les unités présentent sur le plateau
-    cards ------ : tableau contenant les cartes du joueurs
-    selectedCard : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
+    map ------------- : tableau (en 2D) contenant les unités présentent sur le plateau
+    availableUnits -- : tableau contenant les unités possibles
+    pCards ---------- : tableau contenant les cartes du joueur
+    IACards --------- : tableau contenant les cartes de l'IA
+    selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
   */
   
   Unit[][] map;
-  Card[] cards;
+  
+  String[] availableUnits;
+  Card[] pCards, IACards;
   int selectedCard;
+  
   boolean playerTour;
 
   Combat(String name) {
@@ -62,31 +67,54 @@ class Combat extends State {
     
     /*
       Génération des cartes du joueur
-        - initialise le tableau contenant les cartes
+        - recupère les unités disponibles
+        - ajoute alléatoirement des cartes aux tableaux pCards et IACards
     */
     
-    this.cards = new Card[4];
+    this.availableUnits = this.data.getJSONArray("Cards").getStringArray();
+    this.pCards = new Card[nbCards];
+    this.IACards = new Card[nbCards];
     
+    int x, y = 500;
     
+    for (int i = 0; i < nbCards; i ++ ) {
+      
+      int ran = int(random(this.availableUnits.length));
+      String name = this.availableUnits[ran];
+      x = i * (cardWidth + cardWidth/5) + 100;
     
-    for(int i = 0; i < this.cards.length; i++) {
-      int x = i * (cardWidth + cardWidth/5) + 100;
-      int y = 500;
-      this.cards[i] = new Card("Medic", x, y);
+      this.pCards[i] = new Card(name, x, y);
+      this.IACards[i] = new Card(name, -1, -1);
+      
     }
+    
   }
 
   void renderCards() {
     
     /*
       Affichage des cartes
-        - parcourt le tableau "cards"
-        - appelle la méthode "render" de chaque carte
+        - parcourt le tableau pCards
+        - appelle la méthode render de chaque carte
     */
     
-    for(int i = 0; i < this.cards.length; i++) {
-      if(this.cards[i] != null) this.cards[i].render();
+    for(int i = 0; i < this.pCards.length; i++) {
+      if(this.pCards[i] != null) this.pCards[i].render();
     }
+  }
+  
+  void addACard(int i) {
+    /*
+      Ajoute une carte au tableau pCards        
+    */
+    
+    int ran = int(random(this.availableUnits.length));
+    String name = this.availableUnits[ran];
+    int x = -1, y = 500;
+    
+    x = i * (cardWidth + cardWidth/5) + 100;
+    
+    this.pCards[i] = new Card(name, x, y);    
   }
 
   void renderUnit() {
@@ -118,9 +146,9 @@ class Combat extends State {
           - on appelle la méthode "select" de la carte
     */
     
-    for(int i = 0; i < this.cards.length; i++) {
+    for(int i = 0; i < this.pCards.length; i++) {
       
-      Card c = this.cards[i];
+      Card c = this.pCards[i];
       if(c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
         this.selectedCard = i;
         c.select();
@@ -143,13 +171,13 @@ class Combat extends State {
     int[] newPos = this.returnIndex();
     
     int i = this.selectedCard;
-    Card c = this.cards[i];
+    Card c = this.pCards[i];
 
     if(this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
-      this.cards[this.selectedCard] = null;
+      this.addACard(i); // DEBUG !!
       this.selectedCard = -1;
     } else {
-      this.cards[this.selectedCard].reset();
+      this.pCards[this.selectedCard].reset();
       this.selectedCard = -1;
     }
   }

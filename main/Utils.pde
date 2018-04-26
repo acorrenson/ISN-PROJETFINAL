@@ -2,6 +2,7 @@
 /*
   Variables utiles
     - sqrSize -------------- : (int)         taille d'une case du plateau
+    - nbCards -------------- : (int)         nombre de cartes max
     - cardWidth (cardHeight) : (int)         tailles d'une carte
     - ALLY, ENY ------------ : (int)         index d'assets représentant les alliés/les ennemis
     - canUseSounds --------- : (boolean)     si l'on peut utiliser les sons (Processing > 3.0+)
@@ -15,6 +16,7 @@ PFont pixelFont;
 
 int sqrSize = 64;
 
+int nbCards = 4;
 int cardWidth = 68;
 int cardHeight = 120;
 
