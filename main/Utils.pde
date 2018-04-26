@@ -11,6 +11,8 @@
     - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu 
 */
 
+PFont pixelFont;
+
 int sqrSize = 64;
 
 int cardWidth = 68;

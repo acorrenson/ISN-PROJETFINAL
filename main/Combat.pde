@@ -72,7 +72,7 @@ class Combat extends State {
     for(int i = 0; i < this.cards.length; i++) {
       int x = i * (cardWidth + cardWidth/5) + 100;
       int y = 500;
-      this.cards[i] = new Card("Admiral", x, y);
+      this.cards[i] = new Card("Medic", x, y);
     }
   }
 

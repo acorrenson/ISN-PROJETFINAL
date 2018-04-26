@@ -20,6 +20,7 @@ void setup() {
   loadAssets();
   if ( canUseSounds ) { loadSounds(); }
   loadUnits();
+  pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
   enterState( new Combat("combat_1") );
