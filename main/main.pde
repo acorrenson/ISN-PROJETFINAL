@@ -18,7 +18,7 @@ void setup() {
 
   // Loads
   loadAssets();
-  if ( canUseSounds ) { loadSounds(); }
+  // if ( canUseSounds ) { loadSounds(); }
   loadUnits();
 
   // Définir l'état actuel

@@ -3,11 +3,14 @@ class Tuto extends State {
 
   Button[] nav;
   int slideIndex;
-  int totalSlide;
+  int maxIndex;
 
   Tuto (String name) {
     // constructeur de la classe parente
     super(name);
+
+    // éléments d'interface
+
     // tableau des bouttons
     this.nav = new Button[2];
     // bouton 'prev' (avant)
@@ -17,7 +20,7 @@ class Tuto extends State {
 
     // gestion des diapositives
     this.slideIndex = 0;
-    this.totalSlide = 1;
+    this.maxIndex = 3;
 
   }
 
@@ -41,7 +44,7 @@ class Tuto extends State {
     /*
       passer à la diapositive suivante
     */
-    if (slideIndex < totalSlide) {
+    if (slideIndex < maxIndex) {
       slideIndex++;
       println("next : " + slideIndex);
     }
@@ -73,7 +76,7 @@ class Tuto extends State {
   void render() {
     background(0, 6, 45);
     imageMode(CENTER);
-    image(assets[27], width/2, height/2 - 60, 400, 400);
+    image(assets[27 + slideIndex], width/2, height/2 - 60, 400, 400);
     renderButtons();
   }
 
