@@ -1,20 +1,30 @@
 
 class Tuto extends State {
 
-  PImage frame;
   Button[] nav;
+  int slideIndex;
+  int totalSlide;
 
   Tuto (String name) {
+    // constructeur de la classe parente
     super(name);
-    this.frame = assets[24];
-
+    // tableau des bouttons
     this.nav = new Button[2];
-
+    // bouton 'prev' (avant)
     this.nav[0] = new Button("<", 64, 480, 50, 50);
+    // bouton 'next' (après)
     this.nav[1] = new Button(">", width - 114, 480, 50, 50);
+
+    // gestion des diapositives
+    this.slideIndex = 0;
+    this.totalSlide = 1;
+
   }
 
   void renderButtons() {
+    /*
+      dessiner les boutons (avant > arrière <)
+    */
     for (int i = 0; i < nav.length; i++) {
       noFill();
       stroke(0, 0, 255);
@@ -27,10 +37,35 @@ class Tuto extends State {
     }
   }
 
+  void nextSlide() {
+    /*
+      passer à la diapositive suivante
+    */
+    if (slideIndex < totalSlide) {
+      slideIndex++;
+      println("next : " + slideIndex);
+    }
+  }
+
+  void prevSlide() {
+    /*
+      passer à la diapo précédente
+    */
+    if (slideIndex > 0) {
+      slideIndex--;
+      println("prev : " + slideIndex);
+    }
+  }
+
   void mousePressed() {
+    /*
+      quand la souris est pressé
+      si les boutons sont ciblés => changer de diapositive
+    */
     for (int i = 0; i < nav.length; i++) {
       if (nav[i].hover()) {
-        println(i == 0 ? "prev" : "next"); 
+        if (i==0) prevSlide();
+        else nextSlide();
       }
     }
   }
