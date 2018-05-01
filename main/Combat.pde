@@ -247,25 +247,23 @@ class Combat extends State {
         //DD1 :
         for ( int x = 0; x < map.length  && placementTime == true; x ++ ) {
           if ( map[x][1] != null && map[x][1].faction == 0 ) {
-            if ( map[x][0] == null) {
-              this.createUnit("Admiral", ENY, FRONT, x, 0);
-              //placer Admiral à map[x][0];
-              placementTime = false;
-              break;
-            }
+            this.createUnit("Admiral", ENY, FRONT, x, 0);
+            //placer Admiral à map[x][0];
+            placementTime = false;
+            break;
           }
         }
 
         //DD1 :
         for ( int x = 0; x < map.length && placementTime == true; x ++ ) {
           if ( map[x][2] != null && map[x][2].faction == 0 ) {
-            if ( map[x][1] == null) {
-              this.createUnit("Admiral", ENY, FRONT, x, 1);
-              //placer Admiral à map[x][1];
-              placementTime = false;
-              break;
-            }
-          }
+            
+            this.createUnit("Admiral", ENY, FRONT, x, 1);
+            //placer Admiral à map[x][1];
+            placementTime = false;
+            break;
+           }
+          
         }
 
         //AR
