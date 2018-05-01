@@ -44,7 +44,7 @@ class Card {
     this.dmg = data.getInt("damages");
     this.step = data.getInt("step");
     
-    this.cardBack = assets[27];
+    this.cardBack = assets[35];
     this.cardUnit = assets[ gai(name, 0, 0) ];
 
     this.w = cardWidth;

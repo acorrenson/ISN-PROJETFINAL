@@ -26,8 +26,8 @@ int FRONT = 0, BACK = 1;
 boolean canUseSounds = false;
 float FXVLM = 0.1, MSCVLM = 0.3;
 
-// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto 
-PImage[] assets = new PImage[24 + 2 + 1 + 8];
+// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto  ; 1 = carte
+PImage[] assets = new PImage[24 + 2 + 1 + 8 + 1];
 
 // Musiques d'intro, de jeu et de crédits ; Sons de victoire, défaite, clic 
 SoundFile[] sounds = new SoundFile[6];
@@ -72,7 +72,6 @@ void loadAssets() {
   /* Le plateau */
   
   assets[26] = loadImage("data/images/pont.png");
-  assets[27] = loadImage("data/images/card.png");
   
   /* Le tuto */
 
@@ -84,6 +83,10 @@ void loadAssets() {
   assets[32] = loadImage("data/images/slide6.png");
   assets[33] = loadImage("data/images/slide7.png");
   assets[34] = loadImage("data/images/slide8.png");
+  
+  /* Les cartes */
+  
+  assets[35] = loadImage("data/images/card.png");
 
   // Ajouter les autres images ici \|/
   
