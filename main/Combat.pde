@@ -103,18 +103,23 @@ class Combat extends State {
     }
   }
   
-  void addACard(int i) {
+  void addACard(int faction, int i) {
     /*
-      Ajoute une carte au tableau pCards        
+      Ajoute une carte au tableau pCards    
+        - Choisi une carte aléatoirement et l'ajoute au tableau correspondant à faction (0 = pCards ; 1 = IACards)
     */
     
     int ran = int(random(this.availableUnits.length));
     String name = this.availableUnits[ran];
     int x = -1, y = 500;
     
-    x = i * (cardWidth + cardWidth/5) + 100;
+    if ( faction == 0 ) {
+      x = i * (cardWidth + cardWidth/5) + 100;    
+      this.pCards[i] = new Card(name, x, y);
+    } else {
+      this.IACards[i] = new Card(name, x, y);
+    }
     
-    this.pCards[i] = new Card(name, x, y);    
   }
 
   void renderUnit() {
@@ -174,7 +179,7 @@ class Combat extends State {
     Card c = this.pCards[i];
 
     if(this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
-      this.addACard(i); // DEBUG !!
+      this.addACard(0, i); // DEBUG !!
       this.selectedCard = -1;
     } else {
       this.pCards[this.selectedCard].reset();
