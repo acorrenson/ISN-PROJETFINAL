@@ -18,7 +18,6 @@ void setup() {
 
   // Loads
   loadAssets();
-  if ( canUseSounds ) { loadSounds(); }
   loadUnits();
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
