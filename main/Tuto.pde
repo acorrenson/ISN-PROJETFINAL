@@ -47,6 +47,8 @@ class Tuto extends State {
     if (slideIndex < maxIndex) {
       slideIndex++;
       println("next : " + slideIndex);
+    } else if (slideIndex == maxIndex) {
+      this.leave();
     }
   }
 
@@ -78,6 +80,11 @@ class Tuto extends State {
     imageMode(CENTER);
     image(assets[27 + slideIndex], width/2, height/2 - 60, 400, 400);
     renderButtons();
+    imageMode(CORNER);
+  }
+  
+  void leave() {
+    enterState( new Combat("combat_1") );
   }
 
 }

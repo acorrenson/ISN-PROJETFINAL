@@ -2,31 +2,28 @@
 /*
   Variables utiles
     - sqrSize -------------- : (int)         taille d'une case du plateau
+    - nbCards -------------- : (int)         nombre de cartes max
     - cardWidth (cardHeight) : (int)         tailles d'une carte
     - ALLY, ENY ------------ : (int)         index d'assets représentant les alliés/les ennemis
-    - canUseSounds --------- : (boolean)     si l'on peut utiliser les sons (Processing > 3.0+)
     - FRONT, BACK ---------- : (int)         index d'assets indiquant si l'image est de dos/de face
     - FXVLM, MSCVLM -------- : (int)         volumes des effets/musiques
     - assets --------------- : (PImage[])    tableau contenant toutes les images du jeu
     - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu 
 */
 
+PFont pixelFont;
+
 int sqrSize = 64;
 
+int nbCards = 4;
 int cardWidth = 68;
 int cardHeight = 120;
 
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-boolean canUseSounds = false;
-float FXVLM = 0.1, MSCVLM = 0.3;
-
-// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 3 = tuto 
-PImage[] assets = new PImage[24 + 2 + 1 + 8];
-
-// Musiques d'intro, de jeu et de crédits ; Sons de victoire, défaite, clic 
-SoundFile[] sounds = new SoundFile[6];
+// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto  ; 1 = carte
+PImage[] assets = new PImage[24 + 2 + 1 + 8 + 1];
 
 /*
   Fonctions utiles
@@ -79,70 +76,15 @@ void loadAssets() {
   assets[32] = loadImage("data/images/slide6.png");
   assets[33] = loadImage("data/images/slide7.png");
   assets[34] = loadImage("data/images/slide8.png");
+  
+  /* Les cartes */
+  
+  assets[35] = loadImage("data/images/card.png");
 
   // Ajouter les autres images ici \|/
   
   println("< Success\n");
 
-}
-
-void loadSounds() {
-  
-  /*
-    Charge tous les sons nécessaire au jeu (si canUseSounds == true)
-  */
-
-  println("> Loading sounds ...");
-  
-  import processing.sound.*;
-  
-  sounds[0] = new SoundFile(this, "sounds/mystery.mp3");
-  sounds[1] = new SoundFile(this, "sounds/Tranquilite.mp3"); // Son de test !
-  sounds[4] = new SoundFile(this, "sounds/click.mp3");
-  
-  println("< Success\n");
-
-}
-
-void playMusic(int id) {
-  
-  /*
-    Joue un son long (musique)
-      - (int) id : index du tableau sounds
-  */
-
-  if ( canUseSounds ) {
-    sounds[id].loop();
-    sounds[id].amp(MSCVLM);
-  }
-}
-
-void stopMusic(int id) {
-  
-  /*
-    Stop une musique
-      - (int) id : index du tableau sounds      
-  */
-
-  if ( canUseSounds ) {
-    sounds[id].stop();
-  }
-}
-
-void playSample(int id) {
-  
-  /*
-    joue son court (bruitage/FX)
-      - (int) id : index du tableau sounds      
-  */
-
-  if ( canUseSounds ) {
-    sounds[id].play();
-    sounds[4].amp(FXVLM);
-    int wait = ceil(sounds[id].duration() * 1000);
-    delay(wait);
-    sounds[id].stop();
-  }
 }
 
 void loadUnits() {
@@ -229,4 +171,8 @@ int gai(String name, int faction, int side) {
   
   return ( index + side + 12 * faction );
   
+}
+
+void screenshot() {
+  save("data/images/screenshots/" + year() + "-" + day() + "-" + month() + "_" + hour() + "-" + minute() + "-" + second() + ".png");
 }
