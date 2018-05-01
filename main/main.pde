@@ -18,12 +18,12 @@ void setup() {
 
   // Loads
   loadAssets();
-  // if ( canUseSounds ) { loadSounds(); }
+  if ( canUseSounds ) { loadSounds(); }
   loadUnits();
 
   // Définir l'état actuel
-  // enterState( new Combat("combat_1") );
-  enterState( new Tuto("tuto") );
+  enterState( new Combat("combat_1") );
+  // enterState( new Tuto("tuto") );
 }
 
 void draw() {
@@ -37,6 +37,8 @@ void keyPressed() {
   if (keyCode == ESC) {
     key = 0;
     actualState.keyDown(27);
+  } else {
+    actualState.keyDown(key);
   }
 }
 
