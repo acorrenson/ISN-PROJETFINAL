@@ -20,6 +20,7 @@ void setup() {
   loadAssets();
   if ( canUseSounds ) { loadSounds(); }
   loadUnits();
+  pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
   enterState( new Combat("combat_1") );
@@ -36,5 +37,8 @@ void keyPressed() {
   if (keyCode == ESC) {
     key = 0;
     actualState.keyDown(27);
+  }
+  else if (keyCode == ENTER) {
+    screenshot();
   }
 }

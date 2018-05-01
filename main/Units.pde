@@ -40,6 +40,8 @@ class Unit {
     */
     image(assets[this.idSprite], x, y, 64, 64);
     fill(255);
+    textAlign(LEFT, BASELINE);
+    textSize(5);
     text(this.name, x, y);
   }
 }
