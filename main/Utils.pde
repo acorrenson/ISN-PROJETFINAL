@@ -22,8 +22,8 @@ int cardHeight = 120;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto  ; 1 = carte
-PImage[] assets = new PImage[24 + 2 + 1 + 8 + 1];
+// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto  ; 1 = carte ; 1 = barre de vie
+PImage[] assets = new PImage[24 + 2 + 1 + 8 + 1 + 1];
 
 /*
   Fonctions utiles
@@ -80,6 +80,10 @@ void loadAssets() {
   /* Les cartes */
   
   assets[35] = loadImage("data/images/card.png");
+  
+  /* Barre de vie */
+  
+  assets[36] = loadImage("data/images/liveBar.png");
 
   // Ajouter les autres images ici \|/
   

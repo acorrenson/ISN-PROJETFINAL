@@ -19,6 +19,8 @@ class Combat extends State {
   Card[] pCards, IACards;
   int selectedCard;
   
+  int pLives, IALives;
+  
   boolean playerTour;
 
   Combat(String name) {
@@ -39,6 +41,9 @@ class Combat extends State {
     
     this.loadData();
     this.createCards();
+    
+    this.pLives = this.data.getInt("Player Lives");
+    this.IALives = this.data.getInt("IA Lives");
     this.playerTour = false;
     
   }
@@ -244,6 +249,24 @@ class Combat extends State {
     }
     
   }
+  
+  void renderLives() {
+  
+    int x = (width / 2) - (assets[36].width / 2);
+    int y = height - assets[36 ].height;
+    
+    int wP = int( (this.pLives * assets[36].width) / 3 );
+    int wIA = int( (this.IALives * assets[36].width) / 3 );
+    
+    fill(#AD0000);
+    rect(x, 0, wIA, 32);
+    image(assets[36], x, 0);
+    
+    fill(#00AD07);
+    rect(x, y, wP, 32);
+    image(assets[36], x, y);
+  
+  }
 
   void render() {
     /*
@@ -255,6 +278,7 @@ class Combat extends State {
     image(assets[26], 128, 128);
     this.renderUnit();
     this.renderCards();
+    this.renderLives();
   }
   
   void keyDown(int k) {
