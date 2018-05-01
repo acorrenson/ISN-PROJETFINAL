@@ -18,12 +18,13 @@ void setup() {
 
   // Loads
   loadAssets();
-  if ( canUseSounds ) { loadSounds(); }
+  // if ( canUseSounds ) { loadSounds(); }
   loadUnits();
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
-  enterState( new Combat("combat_1") );
+  // enterState( new Combat("combat_1") );
+  enterState( new Tuto("tuto") );
 }
 
 void draw() {
@@ -41,4 +42,8 @@ void keyPressed() {
   else if (keyCode == ENTER) {
     screenshot();
   }
+}
+
+void mousePressed() {
+  actualState.mousePressed();
 }
