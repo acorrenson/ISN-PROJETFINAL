@@ -20,7 +20,7 @@ class Tuto extends State {
 
     // gestion des diapositives
     this.slideIndex = 0;
-    this.maxIndex = 3;
+    this.maxIndex = 6;
 
   }
 

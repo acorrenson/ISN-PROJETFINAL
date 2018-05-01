@@ -23,7 +23,7 @@ boolean canUseSounds = true;
 float FXVLM = 0.1, MSCVLM = 0.3;
 
 // 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 3 = tuto 
-PImage[] assets = new PImage[24 + 2 + 1 + 4];
+PImage[] assets = new PImage[24 + 2 + 1 + 7];
 
 // Musiques d'intro, de jeu et de crédits ; Sons de victoire, défaite, clic 
 SoundFile[] sounds = new SoundFile[6];
@@ -75,6 +75,9 @@ void loadAssets() {
   assets[28] = loadImage("data/images/slide2.png");
   assets[29] = loadImage("data/images/slide3.png");
   assets[30] = loadImage("data/images/slide4.png");
+  assets[31] = loadImage("data/images/slide5.png");
+  assets[32] = loadImage("data/images/slide6.png");
+  assets[33] = loadImage("data/images/slide7.png");
 
   // Ajouter les autres images ici \|/
   
