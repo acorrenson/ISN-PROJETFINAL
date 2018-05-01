@@ -16,6 +16,13 @@ class Widget {
     this.w = w; this.h = h;
     
   }
+
+  boolean hover() {
+    if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
+      return true;
+    }
+    return false;
+  }
 }
 
 class Button extends Widget {
