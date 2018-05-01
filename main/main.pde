@@ -22,7 +22,8 @@ void setup() {
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
-  enterState( new Tuto("tuto") ); // REMPLACER PAR STATE INTRO DU JEU
+  enterState( new Combat("combat_1") );
+  // enterState( new Tuto("tuto") );
 }
 
 void draw() {
@@ -36,6 +37,8 @@ void keyPressed() {
   if (keyCode == ESC) {
     key = 0;
     actualState.keyDown(27);
+  } else {
+    actualState.keyDown(key);
   }
   else if (keyCode == ENTER) {
     screenshot();
