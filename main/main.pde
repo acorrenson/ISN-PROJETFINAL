@@ -37,11 +37,10 @@ void keyPressed() {
   if (keyCode == ESC) {
     key = 0;
     actualState.keyDown(27);
+  } else if (keyCode == ENTER) {
+    screenshot();
   } else {
     actualState.keyDown(key);
-  }
-  else if (keyCode == ENTER) {
-    screenshot();
   }
 }
 
