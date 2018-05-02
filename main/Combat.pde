@@ -265,6 +265,7 @@ class Combat extends State {
     int wP = int( (this.pLives * assets[36].width) / this.pMaxLives );
     int wIA = int( (this.IALives * assets[36].width) / this.IAMaxLives );
     
+    noStroke();
     fill(#AD0000);
     rect(x, 0, wIA, 32);
     image(assets[36], x, 0);
@@ -282,7 +283,11 @@ class Combat extends State {
         
     */
     
-      
+    int x = width - assets[37].width;
+    int y = height - assets[37].height - 16;
+    
+    image(assets[37], x, 0);
+    image(assets[37], x, y);
   }
 
   void render() {
@@ -295,6 +300,7 @@ class Combat extends State {
     
     background(0);
     image(assets[26], 128, 128);
+    this.renderShips();
     this.renderUnit();
     this.renderLives();
     this.renderCards();
