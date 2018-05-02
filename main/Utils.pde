@@ -23,7 +23,7 @@ int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
 // 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto  ; 1 = carte ; 1 = barre de vie
-PImage[] assets = new PImage[24 + 2 + 1 + 8 + 1 + 1];
+PImage[] assets;
 
 /*
   Fonctions utiles
@@ -38,21 +38,29 @@ void loadAssets() {
   
   println("> Loading assets ...");
   
+  /*
+    Méthode pour récupérer le nombre de fichiers dans un dossier
+      - folder - : désigne le chemin vers le dossier (data/images)
+      - count -- : compte le nombre de fichiers (on ajoute 22 car le fichier unitsSpritesheet.png contient plusieurs images)
+  */
+  java.io.File folder = new java.io.File(dataPath("images"));
+  String[] count = folder.list();
+  assets = new PImage[count.length + 21];
+  
   /* Les unités */
   
   PImage unitsSS = loadImage("data/images/unitsSpritesheet.png");
   
   // Deux boucles for qui parcourent la sprite sheet pour extraire les images et les placer dans la list "assets"
   PImage tmp;
-  int count = 0;
+  int step = 0;
   for (int j = 0; j < unitsSS.height / 32; j ++ ) {
   
     for (int i = 0; i < unitsSS.width / 32; i ++) {
     
       tmp = unitsSS.get(i * 32, j * 32, 32, 32);
-      assets[count] = tmp;
-      
-      count ++;    
+      assets[step] = tmp;
+      step ++;
     }
   
   }
@@ -84,6 +92,10 @@ void loadAssets() {
   /* Barre de vie */
   
   assets[36] = loadImage("data/images/liveBar.png");
+  
+  /* Vaisseaux */
+  
+  assets[37] = loadImage("data/images/ship.png");
 
   // Ajouter les autres images ici \|/
   
