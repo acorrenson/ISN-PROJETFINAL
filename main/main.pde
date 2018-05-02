@@ -13,7 +13,7 @@
 State actualState;
 
 void setup() {
-  size(512, 640);
+  size(512, 672);
   noSmooth();
 
   // Loads
@@ -22,8 +22,8 @@ void setup() {
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
+  //enterState( new Tuto("tuto") ); // REMPLACER PAR STATE INTRO DU JEU
   enterState( new Combat("combat_1") );
-  // enterState( new Tuto("tuto") );
 }
 
 void draw() {
