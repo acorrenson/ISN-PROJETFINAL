@@ -11,6 +11,7 @@ class Combat extends State {
     pCards ---------- : tableau contenant les cartes du joueur
     IACards --------- : tableau contenant les cartes de l'IA
     selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
+    pLives, IALives - : points de vie restant aux vaiseaux (pMaxLives, IAMaxLives : points de vie max) 
   */
   
   Unit[][] map;
@@ -19,7 +20,7 @@ class Combat extends State {
   Card[] pCards, IACards;
   int selectedCard;
   
-  int pLives, IALives;
+  int pLives, pMaxLives, IALives, IAMaxLives;
   
   boolean playerTour;
 
@@ -42,8 +43,10 @@ class Combat extends State {
     this.loadData();
     this.createCards();
     
-    this.pLives = this.data.getInt("Player Lives");
-    this.IALives = this.data.getInt("IA Lives");
+    this.pMaxLives = this.data.getInt("Player Lives");
+    this.pLives = this.pMaxLives;
+    this.IAMaxLives = this.data.getInt("IA Lives");
+    this.IALives = this.IAMaxLives;
     this.playerTour = false;
     
   }
@@ -251,12 +254,16 @@ class Combat extends State {
   }
   
   void renderLives() {
+    
+    /*
+      
+    */
   
     int x = (width / 2) - (assets[36].width / 2);
-    int y = height - assets[36 ].height;
+    int y = height - assets[36].height;
     
-    int wP = int( (this.pLives * assets[36].width) / 3 );
-    int wIA = int( (this.IALives * assets[36].width) / 3 );
+    int wP = int( (this.pLives * assets[36].width) / this.pMaxLives );
+    int wIA = int( (this.IALives * assets[36].width) / this.IAMaxLives );
     
     fill(#AD0000);
     rect(x, 0, wIA, 32);
@@ -267,18 +274,30 @@ class Combat extends State {
     image(assets[36], x, y);
   
   }
+  
+  void renderShips() {
+  
+    /*
+      Affiche les vaisseaux
+        
+    */
+    
+      
+  }
 
   void render() {
     /*
-      Affichage de l'état
-          - LISTE DES FONCTIONS APPELLEES
+      Affiche l'état
+          - Affiches les unités (renderUnit)
+          - Affiches les points de vies des vaisseaux (renderLives)
+          - Affiches les cartes (renderCards)
     */
     
     background(0);
     image(assets[26], 128, 128);
     this.renderUnit();
-    this.renderCards();
     this.renderLives();
+    this.renderCards();
   }
   
   void keyDown(int k) {
