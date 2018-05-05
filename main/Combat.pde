@@ -50,7 +50,7 @@ class Combat extends State {
     this.playerMoveTime = false;
 
     // test
-    createUnit("Clone", ENY, FRONT, 0, 0);
+    createUnit("Radio", ENY, FRONT, 0, 0);
     
   }
 
@@ -63,8 +63,6 @@ class Combat extends State {
       this.map[x][y] = NewUnit;
       playerTour = true;
       return true;
-    } else {
-      println("Can't place unit at " + x + " " + y + "\n");
     }
     return false;
   }
@@ -185,16 +183,19 @@ class Combat extends State {
 
   void moveUnits() {
     /*
-      déplacer unités alliées
+      Déplacer unités alliées
     */
+    
     for (int x = 0; x < map.length; x++) {
       for (int y = 0; y < map[x].length; y++) {
+        
         // si la case ciblé est un allié
         if (isOccuped(x, y) && map[x][y].faction == 0) {
-          println("i can move");
+          
+          println(map[x][y].name + " can move\n");
           int step = map[x][y].step;
+          
           // avancer au maximum
-          println(y-1, y-step);
           for ( int i = (y - 1); i >= (y - step) ; i--) {
             if (i >= 0) {
               if (!isOccuped(x, i)) {
@@ -203,11 +204,15 @@ class Combat extends State {
                 break;
               }
             } else if (i < 0)  {
-              println("haut atteint");
+              println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
+              this.IALives --;
+              map[x][y] = null;
               break;
             }
           }
+          
         }
+        
       }
     }
 
@@ -222,6 +227,11 @@ class Combat extends State {
           - Appelle la méthode "unselectCard"
     */
     if (playerTour) {
+      
+      if ( this.IALives == 0 ) {
+      
+        println("Player winner\n");
+      }
 
       /* TOUR DU JOUEUR */
 
