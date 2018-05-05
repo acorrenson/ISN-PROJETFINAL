@@ -14,6 +14,7 @@ class Combat extends State {
     pLives, IALives - : points de vie restant aux vaiseaux (pMaxLives, IAMaxLives : points de vie max) 
   */
   
+  AI ennemy;
   Unit[][] map;
   
   String[] availableUnits;
@@ -24,10 +25,11 @@ class Combat extends State {
   
   boolean playerTour;
   boolean playerMoveTime;
-  AI ennemy;
 
   Combat(String name) {
+
     // Constructeur de la classe
+
     super(name);
     this.map = new Unit[4][6];
     this.selectedCard = -1;
@@ -35,10 +37,14 @@ class Combat extends State {
   }
 
   void load() {
+
     /*
-      Charge les données du combat (ex : les cartes de l'IA ...)
-      Génère les cartes du joueur
+      - Charge les données du combat (JSON, ex : les cartes de l'IA ...)
+      - Appelle la fonction "createCards"
+      - Récupère les points de vie
+      - Initialiste les variables pour les tours
     */
+
     this.loadData();
     this.createCards();
     
@@ -46,18 +52,24 @@ class Combat extends State {
     this.pLives = this.pMaxLives;
     this.IAMaxLives = this.data.getInt("IA Lives");
     this.IALives = this.IAMaxLives;
+
     this.playerTour = false;
     this.playerMoveTime = false;
 
-    // test
-    createUnit("Radio", ENY, FRONT, 0, 0);
-    
+    createUnit("Radio", ENY, FRONT, 0, 0); // DEBUG
   }
 
   boolean createUnit(String name, int faction, int side, int x, int y) {
+
     /*
       Simplifie la création d'une unité et renvoie true si l'unité est bien créée
+        - Test si la case visée est occupée
+        - Ajoute une unité dans le tableau "map" aux index x et y
+        - Passe le tour du joueur en ?
+
+      FIX => playerTour = true, normal ?
     */
+
     if (x >= 0 && !this.isOccuped(x, y)) {
       Unit NewUnit = new Unit(name, faction, side); 
       this.map[x][y] = NewUnit;
@@ -68,11 +80,15 @@ class Combat extends State {
   }
   
   void createCards() {
+
     /*
       Génération des cartes du joueur
         - recupère les unités disponibles
-        - ajoute alléatoirement des cartes aux tableaux pCards et IACards
-    */    
+        - ajoute alléatoirement des cartes au tableau "pCards"
+
+      FIX => Enlever le tableau IACards
+    */
+
     this.availableUnits = this.data.getJSONArray("Cards").getStringArray();
     this.pCards = new Card[nbCards];
     this.IACards = new Card[nbCards];
@@ -88,25 +104,29 @@ class Combat extends State {
       this.pCards[i] = new Card(name, x, y);
       this.IACards[i] = new Card(name, -1, -1);
       
-    }
-    
+    }    
   }
 
   void renderCards() {
+
     /*
-      Affichage des cartes
-        - parcourt le tableau pCards
+      Affiche les cartes
+        - parcourt le tableau "pCards"
         - appelle la méthode render de chaque carte
     */
+
     for(int i = 0; i < this.pCards.length; i++) {
       if(this.pCards[i] != null) this.pCards[i].render();
     }
   }
   
   void addACard(int faction, int i) {
+
     /*
-      Ajoute une carte au tableau pCards    
-        - Choisi une carte aléatoirement et l'ajoute au tableau correspondant à faction (0 = pCards ; 1 = IACards)
+      Ajoute une carte au tableau "pCards"
+        - Choisi une carte aléatoirement et l'ajoute au tableau "pCard"
+
+      FIX => Faction plus nécessaire
     */
     
     int ran = int(random(this.availableUnits.length));
@@ -118,16 +138,19 @@ class Combat extends State {
       this.pCards[i] = new Card(name, x, y);
     } else {
       this.IACards[i] = new Card(name, x, y);
-    }
-    
+    }   
   }
 
   void renderUnit() {
+
     /*
-      Affichage des untités
+      Affiche les untités
         - parcourt le tableau "map"
         - appelle la méthode "render" de chaque unité
+
+      FIX => newPos, nom pas approprié
     */
+
     for (int i = 0; i < this.map.length; i ++) {
       for (int j = 0; j < this.map[0].length; j ++) {
         
@@ -141,13 +164,16 @@ class Combat extends State {
   }
 
   void selectCard() {
+
     /*
       Quand une carte est séléctionnée
         Si la carte existe et que le clic est par dessus
           - on stocke l'index de la carte séléctionnée
           - on appelle la méthode "select" de la carte
     */
-    for(int i = 0; i < this.pCards.length; i++) {      
+
+    for(int i = 0; i < this.pCards.length; i++) {    
+
       Card c = this.pCards[i];
       if(c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
         this.selectedCard = i;
@@ -158,15 +184,19 @@ class Combat extends State {
   }
 
   void unselectCard() {
+
     /*
       Quand une carte est lachée
-        - Récupère l'index x (y) de la case survolée et le stock dans un tableau
+        - Récupère les index x et y de la case survolée et le stock dans un tableau
         - Récupère l'index de la carte
         Si la carte est sur le plateau
           - Appelle la méthode "createUnit"
           - Enlève la carte de "cards" et réinitialise "selectedCard"
         Sinon, replace la carte à son point d'origine
+
+      FIX => newPos nom pas approprié
     */
+
     int[] newPos = this.returnIndex();
     
     int i = this.selectedCard;
@@ -182,8 +212,10 @@ class Combat extends State {
   }
 
   void moveUnits() {
+
     /*
-      Déplacer unités alliées
+      Déplace les unités alliées
+      FIX => ...
     */
     
     for (int x = 0; x < map.length; x++) {
@@ -219,17 +251,20 @@ class Combat extends State {
   }
 
   void update() {
+
     /*
       Actualisation de l'état
         Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
           - Appelle la méthode "selectCard"
         Si la souris est relachée
           - Appelle la méthode "unselectCard"
+
+      FIX => Séparer en plusieurs fonctions
     */
+
     if (playerTour) {
       
-      if ( this.IALives == 0 ) {
-      
+      if ( this.IALives == 0 ) {      
         println("Player winner\n");
       }
 
@@ -277,7 +312,7 @@ class Combat extends State {
   void renderLives() {
     
     /*
-      
+      Affiche les points de vie restant sous forme de barre
     */
   
     int x = (width / 2) - (assets[36].width / 2);
@@ -293,15 +328,13 @@ class Combat extends State {
     
     fill(#00AD07);
     rect(x, y, wP, 32);
-    image(assets[36], x, y);
-  
+    image(assets[36], x, y);  
   }
   
   void renderShips() {
   
     /*
-      Affiche les vaisseaux
-        
+      Affiche les vaisseaux        
     */
     
     int x = width - assets[37].width;
@@ -312,12 +345,15 @@ class Combat extends State {
   }
 
   void render() {
+
     /*
       Affiche l'état
-          - Affiches les unités (renderUnit)
-          - Affiches les points de vies des vaisseaux (renderLives)
-          - Affiches les cartes (renderCards)
+        - Affiche le plateau
+        - Affiche les unités : "renderUnit"
+        - Affiche les points de vies des vaisseaux : "renderLives"
+        - Affiche les cartes : "renderCards"
     */
+
     background(0);
     image(assets[26], 128, 128);
     this.renderShips();
@@ -327,16 +363,18 @@ class Combat extends State {
   }
   
   void keyDown(int k) {
+
     /*
-      test des saisies clavier
+      Capture les événement clavier
+        - ESC - : Met le jeu en pause
+        - Z --- : DEBUG, Passe le tour du joueur (122)
     */
+
     if (k == 27) {
-      // (ESC) -> METTRE EN PAUSE
       enterState( new Pause(actualState) );
     }
 
     if (k == 122) {
-      // (Z) FIN TOUR JOUEUR
       if (playerTour && !playerMoveTime) {
         playerMoveTime = true;
       }
@@ -344,9 +382,11 @@ class Combat extends State {
   }
 
   boolean isOccuped(int x, int y) {
+
     /*
       Renvoie true si la case map[x][y] est occupée
     */
+
     if (this.map[x][y] == null) {
       return false;
     }
@@ -354,14 +394,16 @@ class Combat extends State {
   }
 
   int[] returnIndex() {
+
     /*
-      Renvoie l'index x (y) de la case survolée pars la souris sous forme d'un tableau
+      Renvoie les index x et y de la case survolée par la souris sous forme d'un tableau
       Renvoie {-1;-1} si la souris est en dehors du tableau
       
       Pour calculer l'index
         On retire à la position de la souris la position du tableau (128 px en x et y)
-        On convertit les coordonnées (en px) en index du tableau "map"
+        On convertit les coordonnées en index du tableau "map"
     */
+
     int[] result = {-1, -1};
     int newX = mouseX - 128, newY = mouseY - 128;
     
@@ -374,9 +416,11 @@ class Combat extends State {
   }
   
   int[] returnPos(int x, int y) {
+
     /*
       Renvoie un tableau avec la position (en px) d'une case de "map" à l'aide de ses index
     */
+    
     int[] result = new int[2];
     
     result[0] = 128 + sqrSize * x;
