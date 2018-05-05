@@ -59,6 +59,8 @@ class Combat extends State {
     createUnit("Radio", ENY, FRONT, 0, 0); // DEBUG
   }
 
+  /* UNITS */
+
   boolean createUnit(String name, int faction, int side, int x, int y) {
 
     /*
@@ -78,6 +80,68 @@ class Combat extends State {
     }
     return false;
   }
+
+  void renderUnit() {
+
+    /*
+      Affiche les untités
+        - parcourt le tableau "map"
+        - appelle la méthode "render" de chaque unité
+
+      FIX => newPos, nom pas approprié
+    */
+
+    for (int i = 0; i < this.map.length; i ++) {
+      for (int j = 0; j < this.map[0].length; j ++) {
+        
+        if(this.isOccuped(i, j)) {
+          int[] newPos = this.returnPos(i, j);
+          this.map[i][j].render(newPos[0], newPos[1]);
+        }
+        
+      }
+    }
+  }
+
+  void moveUnits() {
+
+    /*
+      Déplace les unités alliées
+      FIX => ...
+    */
+    
+    for (int x = 0; x < map.length; x++) {
+      for (int y = 0; y < map[x].length; y++) {
+        
+        // si la case ciblé est un allié
+        if (isOccuped(x, y) && map[x][y].faction == 0) {
+          
+          println(map[x][y].name + " can move\n");
+          int step = map[x][y].step;
+          
+          // avancer au maximum
+          for ( int i = (y - 1); i >= (y - step) ; i--) {
+            if (i >= 0) {
+              if (!isOccuped(x, i)) {
+                map[x][i] = map[x][y];
+                map[x][y] = null;
+                break;
+              }
+            } else if (i < 0)  {
+              println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
+              this.IALives --;
+              map[x][y] = null;
+              break;
+            }
+          }
+          
+        }
+        
+      }
+    }
+  }
+
+  /* CARDS */
   
   void createCards() {
 
@@ -107,19 +171,6 @@ class Combat extends State {
     }    
   }
 
-  void renderCards() {
-
-    /*
-      Affiche les cartes
-        - parcourt le tableau "pCards"
-        - appelle la méthode render de chaque carte
-    */
-
-    for(int i = 0; i < this.pCards.length; i++) {
-      if(this.pCards[i] != null) this.pCards[i].render();
-    }
-  }
-  
   void addACard(int faction, int i) {
 
     /*
@@ -139,28 +190,6 @@ class Combat extends State {
     } else {
       this.IACards[i] = new Card(name, x, y);
     }   
-  }
-
-  void renderUnit() {
-
-    /*
-      Affiche les untités
-        - parcourt le tableau "map"
-        - appelle la méthode "render" de chaque unité
-
-      FIX => newPos, nom pas approprié
-    */
-
-    for (int i = 0; i < this.map.length; i ++) {
-      for (int j = 0; j < this.map[0].length; j ++) {
-        
-        if(this.isOccuped(i, j)) {
-          int[] newPos = this.returnPos(i, j);
-          this.map[i][j].render(newPos[0], newPos[1]);
-        }
-        
-      }
-    }
   }
 
   void selectCard() {
@@ -211,103 +240,20 @@ class Combat extends State {
     }
   }
 
-  void moveUnits() {
+  void renderCards() {
 
     /*
-      Déplace les unités alliées
-      FIX => ...
-    */
-    
-    for (int x = 0; x < map.length; x++) {
-      for (int y = 0; y < map[x].length; y++) {
-        
-        // si la case ciblé est un allié
-        if (isOccuped(x, y) && map[x][y].faction == 0) {
-          
-          println(map[x][y].name + " can move\n");
-          int step = map[x][y].step;
-          
-          // avancer au maximum
-          for ( int i = (y - 1); i >= (y - step) ; i--) {
-            if (i >= 0) {
-              if (!isOccuped(x, i)) {
-                map[x][i] = map[x][y];
-                map[x][y] = null;
-                break;
-              }
-            } else if (i < 0)  {
-              println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
-              this.IALives --;
-              map[x][y] = null;
-              break;
-            }
-          }
-          
-        }
-        
-      }
-    }
-
-  }
-
-  void update() {
-
-    /*
-      Actualisation de l'état
-        Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
-          - Appelle la méthode "selectCard"
-        Si la souris est relachée
-          - Appelle la méthode "unselectCard"
-
-      FIX => Séparer en plusieurs fonctions
+      Affiche les cartes
+        - parcourt le tableau "pCards"
+        - appelle la méthode render de chaque carte
     */
 
-    if (playerTour) {
-      
-      if ( this.IALives == 0 ) {      
-        println("Player winner\n");
-      }
-
-      /* TOUR DU JOUEUR */
-
-      // Phase de placement de carte
-      if(!playerMoveTime && mousePressed && this.selectedCard == -1) {
-        
-        this.selectCard();
-      
-      } else if (!mousePressed && this.selectedCard != -1) {
-        
-        this.unselectCard();
-
-      } else if (playerMoveTime) {
-        // phase de déplacement automatique
-        moveUnits();
-        playerMoveTime = false;
-        playerTour = false;
-
-        // => AFFRONTEMENT ICI
-      }
-
-    } else {
-
-      /* TOUR DE L'IA*/
-
-      // placement d'une carte
-      if (!ennemy.dd1()) {
-        println("next ia step 1");
-      } else if (!ennemy.dd2()) {
-        println("next ia step 2");
-      }
-      
-      // déplacement unités
-      ennemy.moveUnits();
-
-      // => AFFRONTEMENT ICI
-      
-      playerTour = true;
+    for(int i = 0; i < this.pCards.length; i++) {
+      if(this.pCards[i] != null) this.pCards[i].render();
     }
-
   }
+
+  /* RENDERS */
   
   void renderLives() {
     
@@ -344,24 +290,8 @@ class Combat extends State {
     image(assets[37], x, y);
   }
 
-  void render() {
+  /* FUNCTIONS */
 
-    /*
-      Affiche l'état
-        - Affiche le plateau
-        - Affiche les unités : "renderUnit"
-        - Affiche les points de vies des vaisseaux : "renderLives"
-        - Affiche les cartes : "renderCards"
-    */
-
-    background(0);
-    image(assets[26], 128, 128);
-    this.renderShips();
-    this.renderUnit();
-    this.renderLives();
-    this.renderCards();
-  }
-  
   void keyDown(int k) {
 
     /*
@@ -420,12 +350,90 @@ class Combat extends State {
     /*
       Renvoie un tableau avec la position (en px) d'une case de "map" à l'aide de ses index
     */
-    
+
     int[] result = new int[2];
     
     result[0] = 128 + sqrSize * x;
     result[1] = 128 + sqrSize * y;
     
     return result;
+  }
+
+  /* UPDATE & RENDER */
+
+  void update() {
+
+    /*
+      Actualisation de l'état
+        Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
+          - Appelle la méthode "selectCard"
+        Si la souris est relachée
+          - Appelle la méthode "unselectCard"
+
+      FIX => Séparer en plusieurs fonctions
+    */
+
+    if (playerTour) {
+      
+      if ( this.IALives == 0 ) {      
+        println("Player winner\n");
+      }
+
+      /* TOUR DU JOUEUR */
+
+      // Phase de placement de carte
+      if(!playerMoveTime && mousePressed && this.selectedCard == -1) {
+        
+        this.selectCard();
+      
+      } else if (!mousePressed && this.selectedCard != -1) {
+        
+        this.unselectCard();
+
+      } else if (playerMoveTime) {
+        // phase de déplacement automatique
+        moveUnits();
+        playerMoveTime = false;
+        playerTour = false;
+
+        // => AFFRONTEMENT ICI
+      }
+
+    } else {
+
+      /* TOUR DE L'IA*/
+
+      // placement d'une carte
+      if (!ennemy.dd1()) {
+        println("next ia step 1");
+      } else if (!ennemy.dd2()) {
+        println("next ia step 2");
+      }
+      
+      // déplacement unités
+      ennemy.moveUnits();
+
+      // => AFFRONTEMENT ICI
+      
+      playerTour = true;
+    }
+  }
+
+  void render() {
+
+    /*
+      Affiche l'état
+        - Affiche le plateau
+        - Affiche les unités : "renderUnit"
+        - Affiche les points de vies des vaisseaux : "renderLives"
+        - Affiche les cartes : "renderCards"
+    */
+
+    background(0);
+    image(assets[26], 128, 128);
+    this.renderShips();
+    this.renderUnit();
+    this.renderLives();
+    this.renderCards();
   }
 }
