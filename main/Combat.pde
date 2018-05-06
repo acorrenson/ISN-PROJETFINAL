@@ -110,35 +110,53 @@ class Combat extends State {
       FIX => ...
     */
     
-    for (int x = 0; x < map.length; x++) {
-      for (int y = 0; y < map[x].length; y++) {
-        
-        // si la case ciblé est un allié
+    // remettre tous les compteurs de pas à 0
+    // les unités ayant atteints le camps adverse attaquent 
+    for (int x = map.length - 1; x >= 0; x--) {
+      for (int y = map[0].length - 1; y >= 0 ; y--) {
         if (isOccuped(x, y) && map[x][y].faction == 0) {
-          
-          println(map[x][y].name + " can move\n");
-          int step = map[x][y].step;
-          
-          // avancer au maximum
-          for ( int i = (y - 1); i >= (y - step) ; i--) {
-            if (i >= 0) {
-              if (!isOccuped(x, i)) {
-                map[x][i] = map[x][y];
-                map[x][y] = null;
-                break;
-              }
-            } else if (i < 0)  {
-              println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
-              this.IALives --;
-              map[x][y] = null;
-              break;
-            }
+          // compteurs à 0
+          map[x][y].steps = 0;
+          // attaque du camp adverse
+          if (y == 0) {
+            IALives --;
+            map[x][y] = null;
           }
-          
         }
-        
       }
     }
+
+    // déplacer toutes les unités alliées
+    for (int x = map.length - 1; x >= 0; x--) {
+      for (int y = map[0].length - 1; y >= 0 ; y--) {
+        if (isOccuped(x, y) && map[x][y].faction == 0 && map[x][y].steps < map[x][y].step) {
+
+          println("Ally unit in position ", x, y, "ready to move");
+
+          if ((y - 1) >= 0 && !isOccuped(x, y - 1)) {
+            
+            // déplacer l'unité de 1
+            map[x][y - 1] = map[x][y];
+            map[x][y].steps += 1;
+            map[x][y] = null;
+
+          } else if ((y - 1) >= 0 && isOccuped(x, y - 1)) {
+            
+            // l'unité est bloquée par une autre unité
+            println("Ally", map[x][y].name, "is blocked in position", x, y-1);
+            map[x][y].stop();
+          
+          } else if (y - 1 < 0) {
+            
+            // l'unité atteint le camp adverse
+            println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
+            map[x][y].stop();
+            
+          }
+        }
+      }
+    }
+
   }
 
   /* CARDS */
