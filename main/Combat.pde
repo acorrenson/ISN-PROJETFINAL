@@ -4,17 +4,17 @@
  */
 
 class Combat extends State {
-  
+
   /*
     map ------------- : tableau (en 2D) contenant les unités présentent sur le plateau
-    availableUnits -- : tableau contenant les unités possibles
-    pCards ---------- : tableau contenant les cartes du joueur
-    IACards --------- : tableau contenant les cartes de l'IA
-    selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
-  */
+   availableUnits -- : tableau contenant les unités possibles
+   pCards ---------- : tableau contenant les cartes du joueur
+   IACards --------- : tableau contenant les cartes de l'IA
+   selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
+   */
 
   Unit[][] map;
-  
+
   String[] availableUnits;
   Card[] pCards;
   int selectedCard;
@@ -30,7 +30,7 @@ class Combat extends State {
 
     // Constructeur de la classe
 
-    super(name);
+      super(name);
     this.map = new Unit[4][6];
     this.selectedCard = -1;
   }
@@ -68,58 +68,58 @@ class Combat extends State {
     return false;
   }
 
+  void deleteUnits(int x, int y) {
+    map[x][y] = null;
+  }
+
   void createCards() {
-    
+
     /*
       Génération des cartes du joueur
-        - recupère les unités disponibles
-        - ajoute alléatoirement des cartes aux tableaux pCards et IACards
-    */
-    
+     - recupère les unités disponibles
+     - ajoute alléatoirement des cartes aux tableaux pCards et IACards
+     */
+
     this.availableUnits = this.data.getJSONArray("Cards").getStringArray();
     this.pCards = new Card[nbCards];
-    
+
     int x, y = 500;
-    
+
     for (int i = 0; i < nbCards; i ++ ) {
-      
+
       int ran = int(random(this.availableUnits.length));
       String name = this.availableUnits[ran];
       x = i * (cardWidth + cardWidth/5) + 100;
-    
+
       this.pCards[i] = new Card(name, x, y);
-      
     }
-    
   }
 
   void renderCards() {
-    
+
     /*
       Affichage des cartes
-        - parcourt le tableau pCards
-        - appelle la méthode render de chaque carte
-    */
-    
-    for(int i = 0; i < this.pCards.length; i++) {
-      if(this.pCards[i] != null) this.pCards[i].render();
+     - parcourt le tableau pCards
+     - appelle la méthode render de chaque carte
+     */
+
+    for (int i = 0; i < this.pCards.length; i++) {
+      if (this.pCards[i] != null) this.pCards[i].render();
     }
-  
   }
-  
+
   void addACard(int i) {
     /*
       Ajoute une carte au tableau pCards    
-        - Choisi une carte aléatoirement et l'ajoute aux cartes du joueur
-    */
-    
+     - Choisi une carte aléatoirement et l'ajoute aux cartes du joueur
+     */
+
     int ran = int(random(this.availableUnits.length));
     String name = this.availableUnits[ran];
     int x = -1, y = 500;
-    
+
     x = i * (cardWidth + cardWidth/5) + 100;    
     this.pCards[i] = new Card(name, x, y);
-    
   }
 
   void renderUnit() {
@@ -241,6 +241,8 @@ class Combat extends State {
                 } else if ( i < 0 ) {
 
                   println("Haut atteint");
+                  deleteUnits(x, y);
+                  //vieVaisseauPlayer --
                   break;
                 }
               }
@@ -295,14 +297,15 @@ class Combat extends State {
 
         //AR
         for ( int x = 0; x < map.length && placementTime == true; x ++) {
-          for (int y = 3; y < map[x].length && placementTime == true; y ++ ) {
+          for (int y = 0; y < map[x].length && placementTime == true; y ++ ) {
             if ( map[x][y] != null) {
               x = x + 1;
-              y = 3;
+              y = 0;
             }
             if ( y == 5) {
               int hasard = int(random(0, 4));
               if (hasard <= 3) {
+                println("tat");
                 this.createUnit("Clone", ENY, FRONT, x, 0);
                 //placer Clone à map[x][0];
                 placementTime = false;
@@ -481,18 +484,19 @@ class Combat extends State {
       }
 
       if (placementTime == false) {                   //déplacement des unités
-        for ( int x = 0; x < map.length && iaTour == true; x ++ ) {
+        for ( int x = map.length - 1; x >= 0 && iaTour == true; x -- ) {
 
-          for (int y = 0; y < map[x].length && iaTour == true; y ++ ) {
+          for (int y = map[x].length - 1; y >= 0  && iaTour == true; y -- ) {
 
             if ( map[x][y] != null && map[x][y].faction == 1 ) {
 
               int step = map[x][y].step;
 
+              int limite = y;
               for ( int i = (y + 1); i <= (y + step); i ++ ) {
 
-                if ( i <= 5) {
-
+                if ( i <= 5 && i <= (y + step)) {
+                  println(y);
                   if ( map[x][i] == null ) {
 
                     map[x][i] = map[x][y];
@@ -504,9 +508,12 @@ class Combat extends State {
                     affrontement = true;                              //debut de l'affrontement
                     break;
                   }
-                } else if ( i < 5 ) {
+                } else if ( i > 5 ) {
 
                   println("Bas atteint");
+                  deleteUnits(x, y);
+                  //vieVaisseauPlayer --
+
                   nbTour = nbTour + 1;                              //on entame le tour suivant
                   iaTour = false;                                   //fin du tour du joueur
                   affrontement = true;                              //debut de l'affrontement
@@ -539,6 +546,22 @@ class Combat extends State {
           }
         }
       }
+
+
+      for ( int x = 0; x < map.length; x ++ ) {
+
+        for (int y = 1; y < map[x].length; y ++ ) {
+
+          if ( map[x][y] != null && map[x][y].lives == 0 ) {
+            deleteUnits(x, y);
+          }
+        }
+      }
+
+
+
+
+
 
       if (nbTour % 2 == 0) {                          //si le tour est pair, tour du joueur
         playerTour = true;
