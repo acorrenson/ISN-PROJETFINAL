@@ -129,9 +129,9 @@ class Combat extends State {
     // déplacer toutes les unités alliées
     for (int x = map.length - 1; x >= 0; x--) {
       for (int y = map[0].length - 1; y >= 0 ; y--) {
-        if (isOccuped(x, y) && map[x][y].faction == 0 && map[x][y].steps < map[x][y].step) {
+        if (isOccuped(x, y) && map[x][y].faction == 0 && map[x][y].canMove()) {
 
-          println("Ally unit in position ", x, y, "ready to move");
+          println("Ally unit in position ", x, y, "ready to move \n");
 
           if ((y - 1) >= 0 && !isOccuped(x, y - 1)) {
             
@@ -143,13 +143,13 @@ class Combat extends State {
           } else if ((y - 1) >= 0 && isOccuped(x, y - 1)) {
             
             // l'unité est bloquée par une autre unité
-            println("Ally", map[x][y].name, "is blocked in position", x, y-1);
+            println("Ally", map[x][y].name, "is blocked in position", x, y-1, "\n");
             map[x][y].stop();
           
           } else if (y - 1 < 0) {
             
             // l'unité atteint le camp adverse
-            println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
+            println("Ally", map[x][y].name + " reached the top in position", x, y, "\n");
             map[x][y].stop();
             
           }

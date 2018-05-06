@@ -40,6 +40,10 @@ class Unit {
     this.steps = this.step;
   }
   
+  boolean canMove() {
+    return this.steps < this.step;
+  }
+
   void render(int x, int y) {
     
     /*
