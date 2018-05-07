@@ -247,9 +247,9 @@ class AI {
 
         if ( map[x][y] == null) {
 
-          int hasard = int(random(1, 7));
+          int hasard = int(random(1, 101));
 
-          if (hasard == 1) {
+          if (hasard >= 91) {
             if ( map[x][1] == null) {
               this.combat.createUnit("Flame Gun", ENY, FRONT, x, 1);
               //placer Flame Gun à map[x][1];
@@ -259,7 +259,7 @@ class AI {
               //placer Flame Gun à map[x][0];
               return true;
             }
-          } else if (hasard == 2) {
+          } else if (hasard >= 36 && hasard <= 60) {
             if ( map[x][1] == null) {
               this.combat.createUnit("Medic", ENY, FRONT, x, 1);
               //placer Medic à map[x][1];
@@ -269,7 +269,7 @@ class AI {
               //placer Medic à map[x][0];
               return true;
             }
-          } else if (hasard == 3) {
+          } else if (hasard >= 11 && hasard <= 35) {
             if ( map[x][1] == null) {
               this.combat.createUnit("Clone", ENY, FRONT, x, 1);
               //placer Clone à map[x][1];
@@ -279,7 +279,7 @@ class AI {
               //placer Clone à map[x][0];
               return true;
             }
-          } else if (hasard == 4) {
+          } else if (hasard >= 61 && hasard <= 80) {
             if ( map[x][1] == null) {
               this.combat.createUnit("Gun", ENY, FRONT, x, 1);
               //placer Gun à map[x][1];
@@ -289,7 +289,7 @@ class AI {
               //placer Gun à map[x][0];
               return true;
             }
-          } else if (hasard >= 5 && hasard <=7) {
+          } else if (hasard >= 1 && hasard <= 10) {
             if ( map[x][1] == null) {
               this.combat.createUnit("Radio", ENY, FRONT, x, 1);
               //placer Radio à map[x][1];
