@@ -28,6 +28,7 @@ class Combat extends State {
 
   Combat(String name) {
 
+
     // Constructeur de la classe
 
     super(name);
