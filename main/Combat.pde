@@ -80,6 +80,10 @@ class Combat extends State {
     }
     return false;
   }
+  
+   void deleteUnits(int x, int y) {
+    map[x][y] = null;
+  }
 
   void renderUnit() {
 
