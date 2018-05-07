@@ -552,7 +552,7 @@ class Combat extends State {
 
         for (int y = 1; y < map[x].length; y ++ ) {
 
-          if ( map[x][y] != null && map[x][y].lives == 0 ) {
+          if ( map[x][y] != null && map[x][y].lives <= 0 ) {
             deleteUnits(x, y);
           }
         }
