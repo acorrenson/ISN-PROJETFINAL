@@ -56,7 +56,7 @@ class Combat extends State {
     this.playerTour = false;
     this.playerMoveTime = false;
 
-    createUnit("Radio", ENY, FRONT, 0, 0); // DEBUG
+   // createUnit("Admiral", ENY, FRONT, 0, 0); // DEBUG
   }
 
   /* UNITS */
@@ -160,11 +160,11 @@ class Combat extends State {
 
   void checkLives() {
     for ( int x = 0; x < map.length; x ++ ) {
+      for (int y = 0; y < map[x].length; y ++ ) {
 
-      for (int y = 1; y < map[x].length; y ++ ) {
 
-        println(map[x][y]);
         if ( map[x][y] != null && map[x][y].lives <= 0 ) {
+          println("mort" + " " + map[x][y].lives);
           deleteUnits(x, y);
         }
       }
@@ -447,18 +447,27 @@ class Combat extends State {
 
         // => AFFRONTEMENT ICI
         fight();
-        
       }
     } else {
 
       /* TOUR DE L'IA*/
 
       // placement d'une carte
-      if (!ennemy.dd1()) {
+      if (ennemy.dd1()) {
         println("next ia step 1");
-      } else if (!ennemy.dd2()) {
+      } else if (ennemy.dd2()) {
         println("next ia step 2");
-      }
+      } else if (ennemy.ar()) {
+        println("next ia step 3");
+      } else if (ennemy.ab()) {
+        println("next ia step 4");
+      } else if (ennemy.dc()) {
+        println("next ia step 5");
+      } 
+
+
+
+
 
       // déplacement unités
       ennemy.moveUnits();
