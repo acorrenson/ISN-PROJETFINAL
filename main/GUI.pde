@@ -26,13 +26,10 @@ class Widget {
 }
 
 class Button extends Widget {
-  
-  boolean overflew;
 
   Button(String name, int x, int y, int w, int h) {
     
     super(name, x, y, w, h);
-    this.overflew = false;
     
   }
 

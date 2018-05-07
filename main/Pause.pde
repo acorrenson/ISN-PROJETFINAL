@@ -42,14 +42,8 @@ class Pause extends State {
   void update() {
     
     for (int i = 0; i < this.buttons.length; i ++ ) {
-    
-      if ( collide(mouseX, mouseY, this.buttons[i].x, this.buttons[i].y, this.buttons[i].w, this.buttons[i].h) ) {
-        this.buttons[i].overflew = true;
-      } else if ( this.buttons[i].overflew ) {
-        this.buttons[i].overflew = false;
-      }
       
-      if ( mousePressed && this.buttons[i].overflew ) {
+      if ( mousePressed && this.buttons[i].hover() ) {
 
         action(this.buttons[i].name);
       
@@ -68,7 +62,7 @@ class Pause extends State {
     
     for (int i = 0; i < this.buttons.length; i ++ ) {
     
-      if ( this.buttons[i].overflew ) {
+      if ( this.buttons[i].hover() ) {
         image(this.hover, this.buttons[i].x, this.buttons[i].y, this.buttons[i].w, this.buttons[i].h);
       }
       
