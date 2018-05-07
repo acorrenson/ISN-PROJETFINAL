@@ -134,7 +134,7 @@ class Combat extends State {
             } else if (i < 0)  {
               println(map[x][y].name + " reached the top [" + x + ";" + y + "]\n");
               this.IALives --;
-              map[x][y] = null;
+              deleteUnits(x, y);
               break;
             }
           }
