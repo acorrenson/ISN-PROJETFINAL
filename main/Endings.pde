@@ -4,7 +4,7 @@
 
 class EndScreen extends State {
   
-  Button[] buttons;
+  Button replay;
   boolean win;
   PImage back;
   String title;  
@@ -25,9 +25,13 @@ class EndScreen extends State {
       // this.back = assets[? + 1]
     }
     
-    this.buttons = new Button[2];
-    this.buttons[0] = new Button("Play", 0, height - 64, 64, 32);
-    this.buttons[1] = new Button("Quit", 0, height - 32, 64, 32);
+    this.replay = new Button("Play", 0, height - 64, 64, 32);
+  }
+  
+  void mousePressed() {
+  
+    if (this.replay.hover()) this.leave();
+    
   }
   
   void render() {
@@ -39,11 +43,53 @@ class EndScreen extends State {
     textSize(25);
     text(this.title, width / 2, height / 2);
   
-    for (int i = 0; i < this.buttons.length; i ++) {
-      if ( this.buttons[i].hover() ) {
-        image(assets[25], this.buttons[i].x, this.buttons[i].y, this.buttons[i].w, this.buttons[i].h);
-      }
+    if ( this.replay.hover() ) {
+      image(assets[25], this.replay.x, this.replay.y, this.replay.w, this.replay.h);
     }
+  }
+  
+  void leave() {  
+    enterState( new Combat("combat_1") ); // Remplacer par state intro
+  }
+
+}
+
+class Credits extends State {
+
+  Button quit;
+  String text;
+  
+  Credits() {
+    super("credits");
+  }
+  
+  void load() {
+    String[] lines = loadStrings("data/credits.txt");
+    text = join(lines, "\n");
+    
+    quit = new Button("Quit", 0, height - 32, 64, 32);
+  }
+  
+  void mousePressed() {
+  
+    if (quit.hover()) this.leave();
+    
+  }
+  
+  void render() {
+    background(0);
+    
+    if (quit.hover()) { image(assets[25], quit.x, quit.y, quit.w, quit.h); }
+    
+    fill(255);
+    textFont(pixelFont);
+    textSize(15);
+    textAlign(CENTER, CENTER);
+    text(text, 0, 0, width, height);
+  }
+  
+  void leave() {
+    enterState( new Combat("combat_1") ); // Remplacer par state intro
   }
 
 }
