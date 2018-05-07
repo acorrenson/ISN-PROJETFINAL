@@ -7,25 +7,25 @@
   },
 
   "Gun" : {
-    "lives": 20,
-    "damages": 10,
+    "lives": 5,
+    "damages": 15,
     "step": 1,
   },
 
   "Radio" : {
     "lives": 5,
-    "damages": 1,
+    "damages": 2,
     "step": 3,
   },
 
   "Medic" : {
-    "lives": 15,
-    "damages": 5,
+    "lives": 40,
+    "damages": 0,
     "step": 2,
   },
 
   "Admiral" : {
-    "lives": 25,
+    "lives": 35,
     "damages": 5,
     "step": 0,
   },
