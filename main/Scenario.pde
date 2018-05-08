@@ -2,7 +2,8 @@ class Scenario extends State {
 
   int x = 0;
   int y = 0;
-
+  println ("Début Scénario");
+  
   Scenario(String name) {
     super("Scenario");
   }
@@ -63,6 +64,7 @@ class Scenario extends State {
 
       if (mousePressed) {
         if (mouseX >= 400 && mouseX <= 500 && mouseY >= 600 && mouseY <= 625) {
+          println("Passage tuto");
           enterState( new Tuto("tuto") );
         }
       }
