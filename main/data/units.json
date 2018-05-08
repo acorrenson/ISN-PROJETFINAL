@@ -19,7 +19,7 @@
   },
 
   "Medic" : {
-    "lives": 40,
+    "lives": 30,
     "damages": 0,
     "step": 2,
   },
