@@ -2,7 +2,7 @@
 
   "Clone" : {
     "lives": 10,
-    "damages": 5,
+    "damages": 6,
     "step": 1,
   },
 
@@ -13,14 +13,14 @@
   },
 
   "Radio" : {
-    "lives": 5,
-    "damages": 2,
+    "lives": 8,
+    "damages": 5,
     "step": 3,
   },
 
   "Medic" : {
     "lives": 30,
-    "damages": 0,
+    "damages": 1,
     "step": 2,
   },
 
