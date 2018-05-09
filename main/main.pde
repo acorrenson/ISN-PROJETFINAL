@@ -23,8 +23,8 @@ void setup() {
 
   // Définir l'état actuel
   //enterState( new Tuto("tuto") ); 
-  //enterState( new Combat("combat_1") );
-  enterState( new Scenario() );
+  enterState( new Combat("combat_1") );
+  //enterState( new Scenario() );
 }
 
 void draw() {

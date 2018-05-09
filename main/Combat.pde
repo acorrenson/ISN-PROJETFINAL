@@ -18,7 +18,7 @@ class Combat extends State {
   Unit[][] map;
 
   String[] availableUnits;
-  Card[] pCards, IACards;
+  Card[] pCards;
   int selectedCard;
 
   int pLives, pMaxLives, IALives, IAMaxLives;
@@ -55,8 +55,6 @@ class Combat extends State {
 
     this.playerTour = false;
     this.playerMoveTime = false;
-
-   // createUnit("Admiral", ENY, FRONT, 0, 0); // DEBUG
   }
 
   /* UNITS */
@@ -67,15 +65,13 @@ class Combat extends State {
       Simplifie la création d'une unité et renvoie true si l'unité est bien créée
      - Test si la case visée est occupée
      - Ajoute une unité dans le tableau "map" aux index x et y
-     - Passe le tour du joueur en ?
-     
-     FIX => playerTour = true, normal ?
-     */
+    */
+    
+    if (faction == ALLY && y < 4) { return false; }
 
     if (x >= 0 && !this.isOccuped(x, y)) {
       Unit NewUnit = new Unit(name, faction, side); 
       this.map[x][y] = NewUnit;
-      playerTour = true;
       return true;
     }
     return false;
@@ -91,8 +87,6 @@ class Combat extends State {
       Affiche les untités
      - parcourt le tableau "map"
      - appelle la méthode "render" de chaque unité
-     
-     FIX => newPos, nom pas approprié
      */
 
     for (int i = 0; i < this.map.length; i ++) {
@@ -110,7 +104,6 @@ class Combat extends State {
 
     /*
       Déplace les unités alliées
-     FIX => ...
      */
 
     // remettre tous les compteurs de pas à 0
@@ -199,13 +192,10 @@ class Combat extends State {
       Génération des cartes du joueur
      - recupère les unités disponibles
      - ajoute alléatoirement des cartes au tableau "pCards"
-     
-     FIX => Enlever le tableau IACards
      */
 
     this.availableUnits = this.data.getJSONArray("Cards").getStringArray();
     this.pCards = new Card[nbCards];
-    this.IACards = new Card[nbCards];
 
     int x, y = 500;
 
@@ -216,29 +206,22 @@ class Combat extends State {
       x = i * (cardWidth + cardWidth/5) + 100;
 
       this.pCards[i] = new Card(name, x, y);
-      this.IACards[i] = new Card(name, -1, -1);
     }
   }
 
-  void addACard(int faction, int i) {
+  void addACard(int i) {
 
     /*
       Ajoute une carte au tableau "pCards"
      - Choisi une carte aléatoirement et l'ajoute au tableau "pCard"
-     
-     FIX => Faction plus nécessaire
      */
 
     int ran = int(random(this.availableUnits.length));
     String name = this.availableUnits[ran];
     int x = -1, y = 500;
 
-    if ( faction == 0 ) {
-      x = i * (cardWidth + cardWidth/5) + 100;    
-      this.pCards[i] = new Card(name, x, y);
-    } else {
-      this.IACards[i] = new Card(name, x, y);
-    }
+    x = i * (cardWidth + cardWidth/5) + 100;    
+    this.pCards[i] = new Card(name, x, y);
   }
 
   void selectCard() {
@@ -270,8 +253,6 @@ class Combat extends State {
      - Appelle la méthode "createUnit"
      - Enlève la carte de "cards" et réinitialise "selectedCard"
      Sinon, replace la carte à son point d'origine
-     
-     FIX => newPos nom pas approprié
      */
 
     int[] newPos = this.returnIndex();
@@ -280,8 +261,9 @@ class Combat extends State {
     Card c = this.pCards[i];
 
     if (this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
-      this.addACard(0, i); // DEBUG !!
+      this.addACard(i);
       this.selectedCard = -1;
+      this.playerMoveTime = true;
     } else {
       this.pCards[this.selectedCard].reset();
       this.selectedCard = -1;
@@ -314,6 +296,9 @@ class Combat extends State {
 
     int wP = int( (this.pLives * assets[36].width) / this.pMaxLives );
     int wIA = int( (this.IALives * assets[36].width) / this.IAMaxLives );
+    
+    if ( wP < 0 ) wP = 0;
+    if ( wIA < 0 ) wIA = 0;
 
     noStroke();
     fill(#AD0000);
@@ -427,8 +412,6 @@ class Combat extends State {
      - Appelle la méthode "selectCard"
      Si la souris est relachée
      - Appelle la méthode "unselectCard"
-     
-     FIX => Séparer en plusieurs fonctions
      */
 
     checkLives();
