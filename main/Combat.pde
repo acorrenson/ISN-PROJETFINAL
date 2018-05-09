@@ -188,6 +188,7 @@ class Combat extends State {
         }
       }
     }
+
   }
 
   /* CARDS */
