@@ -1,28 +1,28 @@
 
 /*
   Class combat dérivée de State
-*/
+ */
 
 class Combat extends State {
 
   /*
     map ------------- : tableau (en 2D) contenant les unités présentent sur le plateau
-    availableUnits -- : tableau contenant les unités possibles
-    pCards ---------- : tableau contenant les cartes du joueur
-    IACards --------- : tableau contenant les cartes de l'IA
-    selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
-    pLives, IALives - : points de vie restant aux vaiseaux (pMaxLives, IAMaxLives : points de vie max) 
-  */
-  
+   availableUnits -- : tableau contenant les unités possibles
+   pCards ---------- : tableau contenant les cartes du joueur
+   IACards --------- : tableau contenant les cartes de l'IA
+   selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
+   pLives, IALives - : points de vie restant aux vaiseaux (pMaxLives, IAMaxLives : points de vie max) 
+   */
+
   AI ennemy;
   Unit[][] map;
-  
+
   String[] availableUnits;
   Card[] pCards, IACards;
   int selectedCard;
-  
+
   int pLives, pMaxLives, IALives, IAMaxLives;
-  
+
   boolean playerTour;
   boolean playerMoveTime;
 
@@ -30,7 +30,7 @@ class Combat extends State {
 
     // Constructeur de la classe
 
-    super(name);
+      super(name);
     this.map = new Unit[4][6];
     this.selectedCard = -1;
     this.ennemy = new AI(this);
@@ -40,14 +40,14 @@ class Combat extends State {
 
     /*
       - Charge les données du combat (JSON, ex : les cartes de l'IA ...)
-      - Appelle la fonction "createCards"
-      - Récupère les points de vie
-      - Initialiste les variables pour les tours
-    */
+     - Appelle la fonction "createCards"
+     - Récupère les points de vie
+     - Initialiste les variables pour les tours
+     */
 
     this.loadData();
     this.createCards();
-    
+
     this.pMaxLives = this.data.getInt("Player Lives");
     this.pLives = this.pMaxLives;
     this.IAMaxLives = this.data.getInt("IA Lives");
@@ -56,7 +56,7 @@ class Combat extends State {
     this.playerTour = false;
     this.playerMoveTime = false;
 
-    createUnit("Radio", ENY, FRONT, 0, 0); // DEBUG
+   // createUnit("Admiral", ENY, FRONT, 0, 0); // DEBUG
   }
 
   /* UNITS */
@@ -65,12 +65,12 @@ class Combat extends State {
 
     /*
       Simplifie la création d'une unité et renvoie true si l'unité est bien créée
-        - Test si la case visée est occupée
-        - Ajoute une unité dans le tableau "map" aux index x et y
-        - Passe le tour du joueur en ?
-
-      FIX => playerTour = true, normal ?
-    */
+     - Test si la case visée est occupée
+     - Ajoute une unité dans le tableau "map" aux index x et y
+     - Passe le tour du joueur en ?
+     
+     FIX => playerTour = true, normal ?
+     */
 
     if (x >= 0 && !this.isOccuped(x, y)) {
       Unit NewUnit = new Unit(name, faction, side); 
@@ -81,24 +81,27 @@ class Combat extends State {
     return false;
   }
 
+  void deleteUnits(int x, int y) {
+    map[x][y] = null;
+  }
+
   void renderUnit() {
 
     /*
       Affiche les untités
-        - parcourt le tableau "map"
-        - appelle la méthode "render" de chaque unité
-
-      FIX => newPos, nom pas approprié
-    */
+     - parcourt le tableau "map"
+     - appelle la méthode "render" de chaque unité
+     
+     FIX => newPos, nom pas approprié
+     */
 
     for (int i = 0; i < this.map.length; i ++) {
       for (int j = 0; j < this.map[0].length; j ++) {
-        
-        if(this.isOccuped(i, j)) {
+
+        if (this.isOccuped(i, j)) {
           int[] newPos = this.returnPos(i, j);
           this.map[i][j].render(newPos[0], newPos[1]);
         }
-        
       }
     }
   }
@@ -107,13 +110,13 @@ class Combat extends State {
 
     /*
       Déplace les unités alliées
-      FIX => ...
-    */
-    
+     FIX => ...
+     */
+
     // remettre tous les compteurs de pas à 0
     // les unités ayant atteints le camps adverse attaquent 
     for (int x = map.length - 1; x >= 0; x--) {
-      for (int y = map[0].length - 1; y >= 0 ; y--) {
+      for (int y = map[0].length - 1; y >= 0; y--) {
         if (isOccuped(x, y) && map[x][y].faction == 0) {
           // compteurs à 0
           map[x][y].steps = 0;
@@ -128,30 +131,59 @@ class Combat extends State {
 
     // déplacer toutes les unités alliées
     for (int x = map.length - 1; x >= 0; x--) {
-      for (int y = map[0].length - 1; y >= 0 ; y--) {
+      for (int y = map[0].length - 1; y >= 0; y--) {
         if (isOccuped(x, y) && map[x][y].faction == 0 && map[x][y].canMove()) {
 
           println("Ally unit in position ", x, y, "ready to move \n");
 
           if ((y - 1) >= 0 && !isOccuped(x, y - 1)) {
-            
+
             // déplacer l'unité de 1
             map[x][y - 1] = map[x][y];
             map[x][y].steps += 1;
             map[x][y] = null;
-
           } else if ((y - 1) >= 0 && isOccuped(x, y - 1)) {
-            
+
             // l'unité est bloquée par une autre unité
             println("Ally", map[x][y].name, "is blocked in position", x, y-1, "\n");
             map[x][y].stop();
-          
           } else if (y - 1 < 0) {
-            
+
             // l'unité atteint le camp adverse
             println("Ally", map[x][y].name + " reached the top in position", x, y, "\n");
             map[x][y].stop();
-            
+          }
+        }
+      }
+    }
+  }
+
+  void checkLives() {
+    for ( int x = 0; x < map.length; x ++ ) {
+      for (int y = 0; y < map[x].length; y ++ ) {
+
+
+        if ( map[x][y] != null && map[x][y].lives <= 0 ) {
+          println("mort" + " " + map[x][y].lives);
+          deleteUnits(x, y);
+        }
+      }
+    }
+  }
+
+  void fight() {
+    for ( int x = 0; x < map.length; x ++ ) {
+
+      for (int y = 1; y < map[x].length; y ++ ) {
+
+        if ( map[x][y] != null && map[x][y].faction == 0 ) {
+
+
+          if ( map[x][y-1] != null && map[x][y-1].faction == 1 ) {
+
+            println(map[x][y-1].lives);
+            map[x][y].lives = map[x][y].lives - map[x][y-1].damages;
+            map[x][y-1].lives = map[x][y-1].lives - map[x][y].damages;
           }
         }
       }
@@ -160,73 +192,71 @@ class Combat extends State {
   }
 
   /* CARDS */
-  
+
   void createCards() {
 
     /*
       Génération des cartes du joueur
-        - recupère les unités disponibles
-        - ajoute alléatoirement des cartes au tableau "pCards"
-
-      FIX => Enlever le tableau IACards
-    */
+     - recupère les unités disponibles
+     - ajoute alléatoirement des cartes au tableau "pCards"
+     
+     FIX => Enlever le tableau IACards
+     */
 
     this.availableUnits = this.data.getJSONArray("Cards").getStringArray();
     this.pCards = new Card[nbCards];
     this.IACards = new Card[nbCards];
-    
+
     int x, y = 500;
-    
+
     for (int i = 0; i < nbCards; i ++ ) {
-      
+
       int ran = int(random(this.availableUnits.length));
       String name = this.availableUnits[ran];
       x = i * (cardWidth + cardWidth/5) + 100;
-    
+
       this.pCards[i] = new Card(name, x, y);
       this.IACards[i] = new Card(name, -1, -1);
-      
-    }    
+    }
   }
 
   void addACard(int faction, int i) {
 
     /*
       Ajoute une carte au tableau "pCards"
-        - Choisi une carte aléatoirement et l'ajoute au tableau "pCard"
+     - Choisi une carte aléatoirement et l'ajoute au tableau "pCard"
+     
+     FIX => Faction plus nécessaire
+     */
 
-      FIX => Faction plus nécessaire
-    */
-    
     int ran = int(random(this.availableUnits.length));
     String name = this.availableUnits[ran];
     int x = -1, y = 500;
-    
+
     if ( faction == 0 ) {
       x = i * (cardWidth + cardWidth/5) + 100;    
       this.pCards[i] = new Card(name, x, y);
     } else {
       this.IACards[i] = new Card(name, x, y);
-    }   
+    }
   }
 
   void selectCard() {
 
     /*
       Quand une carte est séléctionnée
-        Si la carte existe et que le clic est par dessus
-          - on stocke l'index de la carte séléctionnée
-          - on appelle la méthode "select" de la carte
-    */
+     Si la carte existe et que le clic est par dessus
+     - on stocke l'index de la carte séléctionnée
+     - on appelle la méthode "select" de la carte
+     */
 
-    for(int i = 0; i < this.pCards.length; i++) {    
+    for (int i = 0; i < this.pCards.length; i++) {    
 
       Card c = this.pCards[i];
-      if(c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
+      if (c != null && collide(mouseX, mouseY, c.x, c.y, c.w, c.h)) {
         this.selectedCard = i;
         c.select();
       }
-      
     }
   }
 
@@ -234,22 +264,22 @@ class Combat extends State {
 
     /*
       Quand une carte est lachée
-        - Récupère les index x et y de la case survolée et le stock dans un tableau
-        - Récupère l'index de la carte
-        Si la carte est sur le plateau
-          - Appelle la méthode "createUnit"
-          - Enlève la carte de "cards" et réinitialise "selectedCard"
-        Sinon, replace la carte à son point d'origine
-
-      FIX => newPos nom pas approprié
-    */
+     - Récupère les index x et y de la case survolée et le stock dans un tableau
+     - Récupère l'index de la carte
+     Si la carte est sur le plateau
+     - Appelle la méthode "createUnit"
+     - Enlève la carte de "cards" et réinitialise "selectedCard"
+     Sinon, replace la carte à son point d'origine
+     
+     FIX => newPos nom pas approprié
+     */
 
     int[] newPos = this.returnIndex();
-    
+
     int i = this.selectedCard;
     Card c = this.pCards[i];
 
-    if(this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
+    if (this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
       this.addACard(0, i); // DEBUG !!
       this.selectedCard = -1;
     } else {
@@ -262,48 +292,48 @@ class Combat extends State {
 
     /*
       Affiche les cartes
-        - parcourt le tableau "pCards"
-        - appelle la méthode render de chaque carte
-    */
+     - parcourt le tableau "pCards"
+     - appelle la méthode render de chaque carte
+     */
 
-    for(int i = 0; i < this.pCards.length; i++) {
-      if(this.pCards[i] != null) this.pCards[i].render();
+    for (int i = 0; i < this.pCards.length; i++) {
+      if (this.pCards[i] != null) this.pCards[i].render();
     }
   }
 
   /* RENDERS */
-  
+
   void renderLives() {
-    
+
     /*
       Affiche les points de vie restant sous forme de barre
-    */
-  
+     */
+
     int x = (width / 2) - (assets[36].width / 2);
     int y = height - assets[36].height;
-    
+
     int wP = int( (this.pLives * assets[36].width) / this.pMaxLives );
     int wIA = int( (this.IALives * assets[36].width) / this.IAMaxLives );
-    
+
     noStroke();
     fill(#AD0000);
     rect(x, 0, wIA, 32);
     image(assets[36], x, 0);
-    
+
     fill(#00AD07);
     rect(x, y, wP, 32);
-    image(assets[36], x, y);  
+    image(assets[36], x, y);
   }
-  
+
   void renderShips() {
-  
+
     /*
       Affiche les vaisseaux        
-    */
-    
+     */
+
     int x = width - assets[37].width;
     int y = height - assets[37].height - 16;
-    
+
     image(assets[37], x, 0);
     image(assets[37], x, y);
   }
@@ -314,9 +344,9 @@ class Combat extends State {
 
     /*
       Capture les événement clavier
-        - ESC - : Met le jeu en pause
-        - Z --- : DEBUG, Passe le tour du joueur (122)
-    */
+     - ESC - : Met le jeu en pause
+     - Z --- : DEBUG, Passe le tour du joueur (122)
+     */
 
     if (k == 27) {
       enterState( new Pause(actualState) );
@@ -341,7 +371,7 @@ class Combat extends State {
 
     /*
       Renvoie true si la case map[x][y] est occupée
-    */
+     */
 
     if (this.map[x][y] == null) {
       return false;
@@ -353,35 +383,37 @@ class Combat extends State {
 
     /*
       Renvoie les index x et y de la case survolée par la souris sous forme d'un tableau
-      Renvoie {-1;-1} si la souris est en dehors du tableau
-      
-      Pour calculer l'index
-        On retire à la position de la souris la position du tableau (128 px en x et y)
-        On convertit les coordonnées en index du tableau "map"
-    */
+     Renvoie {-1;-1} si la souris est en dehors du tableau
+     
+     Pour calculer l'index
+     On retire à la position de la souris la position du tableau (128 px en x et y)
+     On convertit les coordonnées en index du tableau "map"
+     */
 
-    int[] result = {-1, -1};
+    int[] result = {
+      -1, -1
+    };
     int newX = mouseX - 128, newY = mouseY - 128;
-    
+
     if ( newX >= 0 && newX <= 255 && newY >= 0 && newY <= 384 ) {
       result[0] = int( newX / sqrSize );
       result[1] = int( newY / sqrSize );
     }
-    
-    return result; 
+
+    return result;
   }
-  
+
   int[] returnPos(int x, int y) {
 
     /*
       Renvoie un tableau avec la position (en px) d'une case de "map" à l'aide de ses index
-    */
+     */
 
     int[] result = new int[2];
-    
+
     result[0] = 128 + sqrSize * x;
     result[1] = 128 + sqrSize * y;
-    
+
     return result;
   }
 
@@ -391,13 +423,15 @@ class Combat extends State {
 
     /*
       Actualisation de l'état
-        Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
-          - Appelle la méthode "selectCard"
-        Si la souris est relachée
-          - Appelle la méthode "unselectCard"
+     Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
+     - Appelle la méthode "selectCard"
+     Si la souris est relachée
+     - Appelle la méthode "unselectCard"
+     
+     FIX => Séparer en plusieurs fonctions
+     */
 
-      FIX => Séparer en plusieurs fonctions
-    */
+    checkLives();
 
     if (playerTour) {
       
@@ -410,14 +444,12 @@ class Combat extends State {
       /* TOUR DU JOUEUR */
 
       // Phase de placement de carte
-      if(!playerMoveTime && mousePressed && this.selectedCard == -1) {
-        
-        this.selectCard();
-      
-      } else if (!mousePressed && this.selectedCard != -1) {
-        
-        this.unselectCard();
+      if (!playerMoveTime && mousePressed && this.selectedCard == -1) {
 
+        this.selectCard();
+      } else if (!mousePressed && this.selectedCard != -1) {
+
+        this.unselectCard();
       } else if (playerMoveTime) {
         // phase de déplacement automatique
         moveUnits();
@@ -425,24 +457,34 @@ class Combat extends State {
         playerTour = false;
 
         // => AFFRONTEMENT ICI
+        fight();
       }
-
     } else {
 
       /* TOUR DE L'IA*/
 
       // placement d'une carte
-      if (!ennemy.dd1()) {
+      if (ennemy.dd1()) {
         println("next ia step 1");
-      } else if (!ennemy.dd2()) {
+      } else if (ennemy.dd2()) {
         println("next ia step 2");
-      }
-      
+      } else if (ennemy.ar()) {
+        println("next ia step 3");
+      } else if (ennemy.ab()) {
+        println("next ia step 4");
+      } else if (ennemy.dc()) {
+        println("next ia step 5");
+      } 
+
+
+
+
+
       // déplacement unités
       ennemy.moveUnits();
 
       // => AFFRONTEMENT ICI
-      
+
       playerTour = true;
     }
   }
@@ -451,11 +493,11 @@ class Combat extends State {
 
     /*
       Affiche l'état
-        - Affiche le plateau
-        - Affiche les unités : "renderUnit"
-        - Affiche les points de vies des vaisseaux : "renderLives"
-        - Affiche les cartes : "renderCards"
-    */
+     - Affiche le plateau
+     - Affiche les unités : "renderUnit"
+     - Affiche les points de vies des vaisseaux : "renderLives"
+     - Affiche les cartes : "renderCards"
+     */
 
     background(0);
     image(assets[26], 128, 128);

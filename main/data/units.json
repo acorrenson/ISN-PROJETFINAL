@@ -2,30 +2,30 @@
 
   "Clone" : {
     "lives": 10,
-    "damages": 5,
+    "damages": 6,
     "step": 1,
   },
 
   "Gun" : {
-    "lives": 20,
-    "damages": 10,
+    "lives": 5,
+    "damages": 15,
     "step": 1,
   },
 
   "Radio" : {
-    "lives": 5,
-    "damages": 1,
+    "lives": 8,
+    "damages": 5,
     "step": 3,
   },
 
   "Medic" : {
-    "lives": 15,
-    "damages": 5,
+    "lives": 30,
+    "damages": 1,
     "step": 2,
   },
 
   "Admiral" : {
-    "lives": 25,
+    "lives": 35,
     "damages": 5,
     "step": 0,
   },
