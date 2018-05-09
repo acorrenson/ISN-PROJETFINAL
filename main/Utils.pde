@@ -96,6 +96,10 @@ void loadAssets() {
   /* Vaisseaux */
   
   assets[37] = loadImage("data/images/ship.png");
+  
+  /* Scénario */
+  
+  assets[38] = loadImage("images/pageScenario.png");
 
   // Ajouter les autres images ici \|/
   

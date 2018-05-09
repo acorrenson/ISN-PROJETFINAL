@@ -2,22 +2,19 @@ class Scenario extends State {
 
   int x = 0;
   int y = 0;
-  println ("Début Scénario");
   
-  Scenario(String name) {
-    super("Scenario");
+  Scenario() {
+    super("scenario");
   }
 
 
   void update() {
 
-    PImage scenario;
-    scenario = loadImage("images/pageScenario.png"); //Relier valeur et image
     y = int(checkMouse(y));
 
 
     background(255);
-    image(scenario, x, y);
+    image(assets[38], x, y);
 
     boutonSortie(y);
   }
@@ -69,9 +66,5 @@ class Scenario extends State {
         }
       }
     }
-  }
-
-
-  void render() {
   }
 }

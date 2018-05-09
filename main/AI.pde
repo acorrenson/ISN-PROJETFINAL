@@ -12,7 +12,7 @@ class AI {
 
   void moveUnits() {
     /*
-      deplacement unités
+      Déplace les unités
      */
 
     for (int x = 0; x < map.length; x++) {
@@ -56,36 +56,29 @@ class AI {
 
     for (int x = 0; x < map.length; x++) {
       for (int y = 0; y < map[0].length; y++) {
-        
+
         if (combat.isOccuped(x, y) && map[x][y].faction == ENY && map[x][y].canMove()) {
-          
+
           println("Ennemy unit in position ", x, y, "ready to move\n");
 
           if (y + 1 < map[0].length && !combat.isOccuped(x, y + 1)) {
             map[x][y + 1] = map[x][y];
             map[x][y + 1].steps += 1;
             map[x][y] = null;
-          
           } else if (y + 1 < map[0].length && combat.isOccuped(x, y + 1)) {
 
             // l'unité est bloquée par une autre unité
             println("Ennemy", map[x][y].name, "is blocked in position", x, y + 1, "\n");
             map[x][y].stop();
-          
           } else if (y + 1 >= map[0].length) {
 
             // l'unité atteint le camp adverse
             println("ennemy", map[x][y].name, " reached the bottom in position", x, y, "\n");
             map[x][y].stop();
-
           }
-
-
         }
-      
       }
     }
-
   }
 
   //début des calculs
@@ -213,138 +206,137 @@ class AI {
           }
 
 
-int hasard = int(random(1, 101));
+          int hasard = int(random(1, 101));
 
-            if (hasard >= 91) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Flame Gun", ENY, FRONT, x, 1);
-                //placer Flame Gun à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Flame Gun", ENY, FRONT, x, 0);
-                //placer Flame Gun à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 36 && hasard <= 60) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Medic", ENY, FRONT, x, 1);
-                //placer Medic à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Medic", ENY, FRONT, x, 0);
-                //placer Medic à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 81 && hasard <= 90) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Admiral", ENY, FRONT, x, 1);
-                //placer Admiral à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Admiral", ENY, FRONT, x, 0);
-                //placer Admiral à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 11 && hasard <= 35) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Clone", ENY, FRONT, x, 1);
-                //placer Clone à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Clone", ENY, FRONT, x, 0);
-                //placer Clone à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 61 && hasard <= 80) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Gun", ENY, FRONT, x, 1);
-                //placer Gun à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Gun", ENY, FRONT, x, 0);
-                //placer Gun à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 1 && hasard <= 10) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Radio", ENY, FRONT, x, 1);
-                //placer Radio à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Radio", ENY, FRONT, x, 0);
-                //placer Radio à map[x][0];
-                return true;
-              }
+          if (hasard >= 91) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Flame Gun", ENY, FRONT, x, 1);
+              //placer Flame Gun à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Flame Gun", ENY, FRONT, x, 0);
+              //placer Flame Gun à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 36 && hasard <= 60) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Medic", ENY, FRONT, x, 1);
+              //placer Medic à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Medic", ENY, FRONT, x, 0);
+              //placer Medic à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 81 && hasard <= 90) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Admiral", ENY, FRONT, x, 1);
+              //placer Admiral à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Admiral", ENY, FRONT, x, 0);
+              //placer Admiral à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 11 && hasard <= 35) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Clone", ENY, FRONT, x, 1);
+              //placer Clone à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Clone", ENY, FRONT, x, 0);
+              //placer Clone à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 61 && hasard <= 80) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Gun", ENY, FRONT, x, 1);
+              //placer Gun à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Gun", ENY, FRONT, x, 0);
+              //placer Gun à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 1 && hasard <= 10) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Radio", ENY, FRONT, x, 1);
+              //placer Radio à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Radio", ENY, FRONT, x, 0);
+              //placer Radio à map[x][0];
+              return true;
             }
           }
         }
       }
-      return false;
     }
-
-    boolean dc() {
-      for ( int x = 0; x < 3; x ++) {
-        for (int y = 0; y < 1; y ++ ) {
-
-          if ( map[x][y] == null) {
-
-            int hasard = int(random(1, 101));
-
-            if (hasard >= 91) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Flame Gun", ENY, FRONT, x, 1);
-                //placer Flame Gun à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Flame Gun", ENY, FRONT, x, 0);
-                //placer Flame Gun à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 36 && hasard <= 60) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Medic", ENY, FRONT, x, 1);
-                //placer Medic à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Medic", ENY, FRONT, x, 0);
-                //placer Medic à map[x][0];
-                return true;
-              }
-
-            } else if (hasard >= 11 && hasard <= 35) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Clone", ENY, FRONT, x, 1);
-                //placer Clone à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Clone", ENY, FRONT, x, 0);
-                //placer Clone à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 61 && hasard <= 80) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Gun", ENY, FRONT, x, 1);
-                //placer Gun à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Gun", ENY, FRONT, x, 0);
-                //placer Gun à map[x][0];
-                return true;
-              }
-            } else if (hasard >= 1 && hasard <= 10) {
-              if ( map[x][1] == null) {
-                this.combat.createUnit("Radio", ENY, FRONT, x, 1);
-                //placer Radio à map[x][1];
-                return true;
-              } else if ( map[x][0] == null) {
-                this.combat.createUnit("Radio", ENY, FRONT, x, 0);
-                //placer Radio à map[x][0];
-                return true;
-              }
-            }
-          }
-        }
-      }
-      return false;
-    }
+    return false;
   }
+
+  boolean dc() {
+    for ( int x = 0; x < 3; x ++) {
+      for (int y = 0; y < 1; y ++ ) {
+
+        if ( map[x][y] == null) {
+
+          int hasard = int(random(1, 101));
+
+          if (hasard >= 91) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Flame Gun", ENY, FRONT, x, 1);
+              //placer Flame Gun à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Flame Gun", ENY, FRONT, x, 0);
+              //placer Flame Gun à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 36 && hasard <= 60) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Medic", ENY, FRONT, x, 1);
+              //placer Medic à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Medic", ENY, FRONT, x, 0);
+              //placer Medic à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 11 && hasard <= 35) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Clone", ENY, FRONT, x, 1);
+              //placer Clone à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Clone", ENY, FRONT, x, 0);
+              //placer Clone à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 61 && hasard <= 80) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Gun", ENY, FRONT, x, 1);
+              //placer Gun à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Gun", ENY, FRONT, x, 0);
+              //placer Gun à map[x][0];
+              return true;
+            }
+          } else if (hasard >= 1 && hasard <= 10) {
+            if ( map[x][1] == null) {
+              this.combat.createUnit("Radio", ENY, FRONT, x, 1);
+              //placer Radio à map[x][1];
+              return true;
+            } else if ( map[x][0] == null) {
+              this.combat.createUnit("Radio", ENY, FRONT, x, 0);
+              //placer Radio à map[x][0];
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+}
