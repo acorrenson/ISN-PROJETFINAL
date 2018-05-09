@@ -1,6 +1,6 @@
 {
-  "Player Lives"  : 3,
-  "IA Lives"      : 3,
+  "Player Lives"  : 5,
+  "IA Lives"      : 5,
   "Cards" : [
     "Clone", "Gun", "Radio", "Medic", "Admiral", "Flame Gun"
   ],
