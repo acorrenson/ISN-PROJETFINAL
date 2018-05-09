@@ -22,8 +22,9 @@ void setup() {
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
-  //enterState( new Tuto("tuto") ); // REMPLACER PAR STATE INTRO DU JEU
-  enterState( new Combat("combat_1") );
+  //enterState( new Tuto("tuto") ); 
+  //enterState( new Combat("combat_1") );
+    enterState( new Scenario("Scenario") );
 }
 
 void draw() {
