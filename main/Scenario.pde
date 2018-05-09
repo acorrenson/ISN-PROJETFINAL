@@ -60,7 +60,7 @@ class Scenario extends State {
       text("Poursuivre", 415, 615);
 
       if (mousePressed) {
-        if (mouseX >= 400 && mouseX <= 500 && mouseY >= 600 && mouseY <= 625) {
+          if (mouseX >= 350 && mouseX <= 550 && mouseY >= 550 && mouseY <= 645) {
           println("Passage tuto");
           enterState( new Tuto("tuto") );
         }
