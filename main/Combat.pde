@@ -352,10 +352,18 @@ class Combat extends State {
       enterState( new Pause(actualState) );
     }
 
-    if (k == 122) {
+    else if (k == 122) {
       if (playerTour && !playerMoveTime) {
         playerMoveTime = true;
       }
+    }
+    
+    else if (k == 101) {
+      this.pLives -= 1;
+    }
+    
+    else {
+      println(k);
     }
   }
 
@@ -426,9 +434,11 @@ class Combat extends State {
     checkLives();
 
     if (playerTour) {
-
-      if ( this.IALives == 0 ) {      
-        println("Player winner\n");
+      
+      if ( this.IALives <= 0 ) {      
+        enterState( new EndScreen(true) );
+      } else if ( this.pLives <= 0 ) {
+        enterState( new EndScreen(false) );
       }
 
       /* TOUR DU JOUEUR */
