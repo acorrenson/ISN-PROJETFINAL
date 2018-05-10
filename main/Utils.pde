@@ -91,19 +91,20 @@ void loadAssets() {
   
   /* Barre de vie */
   
-  assets[36] = loadImage("data/images/liveBar.png");
+  assets[36] = loadImage("data/images/liveSlot.png");
+  assets[37] = loadImage("data/images/liveBarBorder.png");
   
   /* Vaisseaux */
   
-  assets[37] = loadImage("data/images/ship.png");
+  assets[38] = loadImage("data/images/ship.png");
   
   /* Scénario */
   
-  assets[38] = loadImage("images/pageScenario.png");
+  assets[39] = loadImage("images/pageScenario.png");
   
   /* Fond */
   
-  assets[39] = loadImage("images/space.png");
+  assets[40] = loadImage("images/space.png");
 
   // Ajouter les autres images ici \|/
   
