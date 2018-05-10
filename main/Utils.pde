@@ -100,6 +100,10 @@ void loadAssets() {
   /* Scénario */
   
   assets[38] = loadImage("images/pageScenario.png");
+  
+  /* Fond */
+  
+  assets[39] = loadImage("images/space.png");
 
   // Ajouter les autres images ici \|/
   

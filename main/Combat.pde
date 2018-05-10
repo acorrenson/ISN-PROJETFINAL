@@ -482,7 +482,7 @@ class Combat extends State {
      - Affiche les cartes : "renderCards"
      */
 
-    background(0);
+    background(assets[39]);
     image(assets[26], 128, 128);
     this.renderShips();
     this.renderUnit();
