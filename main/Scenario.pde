@@ -14,7 +14,7 @@ class Scenario extends State {
 
 
     background(255);
-    image(assets[38], x, y);
+    image(assets[39], x, y);
 
     boutonSortie(y);
   }

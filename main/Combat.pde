@@ -290,24 +290,37 @@ class Combat extends State {
     /*
       Affiche les points de vie restant sous forme de barre
      */
-
-    int x = (width / 2) - (assets[36].width / 2);
-    int y = height - assets[36].height;
-
-    int wP = int( (this.pLives * assets[36].width) / this.pMaxLives );
-    int wIA = int( (this.IALives * assets[36].width) / this.IAMaxLives );
+     
+    int wP = int( this.pLives * assets[36].width );
+    int wIA = int( this.IALives * assets[36].width );
+    int wMaxP = int( this.pMaxLives * assets[36].width );
+    int wMaxIA = int( this.IAMaxLives * assets[36].width );
+     
+    int yP = height - assets[36].height;    
+    int xP = int( (width / 2) - wMaxP / 2 );
+    int xIA = int( (width / 2) - wMaxIA / 2);
     
     if ( wP < 0 ) wP = 0;
     if ( wIA < 0 ) wIA = 0;
 
     noStroke();
     fill(#AD0000);
-    rect(x, 0, wIA, 32);
-    image(assets[36], x, 0);
+    rect(xIA, 0, wIA, 32);
 
     fill(#00AD07);
-    rect(x, y, wP, 32);
-    image(assets[36], x, y);
+    rect(xP, yP, wP, 32);
+    
+    for (int i = 0; i < this.pMaxLives; i ++) {
+      image(assets[36], (i * 32) + xP, yP);
+    }
+    for (int i = 0; i < this.IAMaxLives; i ++) {
+      image(assets[36], (i * 32) + xIA, 0);
+    }
+    
+    image(assets[37].get(0,0, 13, 32), xP - assets[37].width / 2, yP);
+    image(assets[37].get(0,0, 13, 32), xIA - assets[37].width / 2, 0);
+    image(assets[37].get(13,0, 26, 32), xP + wMaxP, yP);
+    image(assets[37].get(13,0, 26, 32), xIA + wMaxIA, 0);
   }
 
   void renderShips() {
@@ -316,11 +329,11 @@ class Combat extends State {
       Affiche les vaisseaux        
      */
 
-    int x = width - assets[37].width;
-    int y = height - assets[37].height - 16;
+    int x = width - assets[38].width;
+    int y = height - assets[38].height - 16;
 
-    image(assets[37], x, 0);
-    image(assets[37], x, y);
+    image(assets[38], x, 0);
+    image(assets[38], x, y);
   }
 
   /* FUNCTIONS */
@@ -482,7 +495,7 @@ class Combat extends State {
      - Affiche les cartes : "renderCards"
      */
 
-    background(assets[39]);
+    background(assets[40]);
     image(assets[26], 128, 128);
     this.renderShips();
     this.renderUnit();
