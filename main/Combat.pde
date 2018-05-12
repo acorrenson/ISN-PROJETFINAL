@@ -26,11 +26,13 @@ class Combat extends State {
   boolean playerTour;
   boolean playerMoveTime;
 
+  Button validTurn;
+
   Combat(String name) {
 
     // Constructeur de la classe
 
-      super(name);
+    super(name);
     this.map = new Unit[4][6];
     this.selectedCard = -1;
     this.ennemy = new AI(this);
@@ -55,6 +57,10 @@ class Combat extends State {
 
     this.playerTour = false;
     this.playerMoveTime = false;
+
+    // Bouton de validation du tour
+    this.validTurn = new Button("valider", 0, 0, 100, 30);
+
   }
 
   /* UNITS */
@@ -184,6 +190,12 @@ class Combat extends State {
 
   }
 
+  void checkValidTurn() {
+    if (this.playerTour && !this.playerMoveTime && this.validTurn.hover()) {
+      this.playerMoveTime = true;
+    }
+  }
+
   /* CARDS */
 
   void createCards() {
@@ -263,7 +275,7 @@ class Combat extends State {
     if (this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
       this.addACard(i);
       this.selectedCard = -1;
-      this.playerMoveTime = true;
+      // this.playerMoveTime = true;
     } else {
       this.pCards[this.selectedCard].reset();
       this.selectedCard = -1;
@@ -337,6 +349,15 @@ class Combat extends State {
   }
 
   /* FUNCTIONS */
+
+  void mousePressed() {
+    /*
+      Capture les cliques souris
+    */
+
+    // attendre une clique sur le bouton Valider Tour
+    this.checkValidTurn();
+  }
 
   void keyDown(int k) {
 
@@ -501,5 +522,6 @@ class Combat extends State {
     this.renderUnit();
     this.renderLives();
     this.renderCards();
+    this.validTurn.render();
   }
 }
