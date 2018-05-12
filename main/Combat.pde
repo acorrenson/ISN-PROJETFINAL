@@ -449,9 +449,8 @@ class Combat extends State {
      - Appelle la méthode "unselectCard"
      */
 
-    // checkLives();
-
     if (playerTour) {
+      
       if ( this.IALives <= 0 ) {      
         enterState( new EndScreen(true) );
       } else if ( this.pLives <= 0 ) {
