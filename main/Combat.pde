@@ -26,11 +26,14 @@ class Combat extends State {
   boolean playerTour;
   boolean playerMoveTime;
 
+  Button validTurn;
+  boolean wait;
+
   Combat(String name) {
 
     // Constructeur de la classe
 
-      super(name);
+    super(name);
     this.map = new Unit[4][6];
     this.selectedCard = -1;
     this.ennemy = new AI(this);
@@ -55,6 +58,11 @@ class Combat extends State {
 
     this.playerTour = false;
     this.playerMoveTime = false;
+
+    // Bouton de validation du tour
+    this.validTurn = new Button("valider", 10, 400, 100, 30);
+    this.wait = false;
+
   }
 
   /* UNITS */
@@ -184,6 +192,12 @@ class Combat extends State {
 
   }
 
+  void checkValidTurn() {
+    if (this.playerTour && !this.playerMoveTime && this.validTurn.hover()) {
+      this.playerMoveTime = true;
+    }
+  }
+
   /* CARDS */
 
   void createCards() {
@@ -263,7 +277,7 @@ class Combat extends State {
     if (this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
       this.addACard(i);
       this.selectedCard = -1;
-      this.playerMoveTime = true;
+      // this.playerMoveTime = true;
     } else {
       this.pCards[this.selectedCard].reset();
       this.selectedCard = -1;
@@ -337,6 +351,15 @@ class Combat extends State {
   }
 
   /* FUNCTIONS */
+
+  void mousePressed() {
+    /*
+      Capture les cliques souris
+    */
+
+    // attendre une clique sur le bouton Valider Tour
+    this.checkValidTurn();
+  }
 
   void keyDown(int k) {
 
@@ -418,7 +441,6 @@ class Combat extends State {
   /* UPDATE & RENDER */
 
   void update() {
-
     /*
       Actualisation de l'état
      Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
@@ -426,8 +448,6 @@ class Combat extends State {
      Si la souris est relachée
      - Appelle la méthode "unselectCard"
      */
-
-    checkLives();
 
     if (playerTour) {
       
@@ -454,10 +474,12 @@ class Combat extends State {
 
         // => AFFRONTEMENT ICI
         fight();
+        checkLives();
       }
     } else {
 
       /* TOUR DE L'IA*/
+      delay(750);
 
       // placement d'une carte
       if (ennemy.dd1()) {
@@ -470,11 +492,7 @@ class Combat extends State {
         println("next ia step 4");
       } else if (ennemy.dc()) {
         println("next ia step 5");
-      } 
-
-
-
-
+      }
 
       // déplacement unités
       ennemy.moveUnits();
@@ -486,7 +504,6 @@ class Combat extends State {
   }
 
   void render() {
-
     /*
       Affiche l'état
      - Affiche le plateau
@@ -494,12 +511,13 @@ class Combat extends State {
      - Affiche les points de vies des vaisseaux : "renderLives"
      - Affiche les cartes : "renderCards"
      */
-
     background(assets[40]);
     image(assets[26], 128, 128);
     this.renderShips();
     this.renderUnit();
     this.renderLives();
     this.renderCards();
+    this.validTurn.render();
+   
   }
 }

@@ -27,10 +27,34 @@ class Widget {
 
 class Button extends Widget {
 
+  PImage back;
+  boolean hasImage;
+
   Button(String name, int x, int y, int w, int h) {
     
     super(name, x, y, w, h);
+    this.hasImage = false;
+  }
+
+  Button(String name, int x, int y, int w, int h, PImage back) {
     
+    super(name, x, y, w, h);
+    this.back = back;
+    this.hasImage = true;
+  
+  }
+
+  void render() {
+    if (hasImage) {
+      image(this.back, this.x, this.y, this.w, this.h);
+    } else {
+      rect(x, y, w, h);
+    }
+
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text(this.name, this.x + this.w/2, this.y + this.h/2);
+    fill(255);
   }
 
 }
