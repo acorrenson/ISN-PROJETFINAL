@@ -27,6 +27,7 @@ class Combat extends State {
   boolean playerMoveTime;
 
   Button validTurn;
+  boolean wait;
 
   Combat(String name) {
 
@@ -60,6 +61,7 @@ class Combat extends State {
 
     // Bouton de validation du tour
     this.validTurn = new Button("valider", 10, 400, 100, 30);
+    this.wait = false;
 
   }
 
@@ -439,7 +441,6 @@ class Combat extends State {
   /* UPDATE & RENDER */
 
   void update() {
-
     /*
       Actualisation de l'état
      Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
@@ -448,10 +449,9 @@ class Combat extends State {
      - Appelle la méthode "unselectCard"
      */
 
-    checkLives();
+    // checkLives();
 
     if (playerTour) {
-      
       if ( this.IALives <= 0 ) {      
         enterState( new EndScreen(true) );
       } else if ( this.pLives <= 0 ) {
@@ -475,10 +475,12 @@ class Combat extends State {
 
         // => AFFRONTEMENT ICI
         fight();
+        checkLives();
       }
     } else {
 
       /* TOUR DE L'IA*/
+      delay(750);
 
       // placement d'une carte
       if (ennemy.dd1()) {
@@ -491,11 +493,7 @@ class Combat extends State {
         println("next ia step 4");
       } else if (ennemy.dc()) {
         println("next ia step 5");
-      } 
-
-
-
-
+      }
 
       // déplacement unités
       ennemy.moveUnits();
@@ -507,7 +505,6 @@ class Combat extends State {
   }
 
   void render() {
-
     /*
       Affiche l'état
      - Affiche le plateau
@@ -515,7 +512,6 @@ class Combat extends State {
      - Affiche les points de vies des vaisseaux : "renderLives"
      - Affiche les cartes : "renderCards"
      */
-
     background(assets[40]);
     image(assets[26], 128, 128);
     this.renderShips();
@@ -523,5 +519,6 @@ class Combat extends State {
     this.renderLives();
     this.renderCards();
     this.validTurn.render();
+   
   }
 }
