@@ -23,8 +23,7 @@ class Combat extends State {
 
   int pLives, pMaxLives, IALives, IAMaxLives;
 
-  boolean playerTour;
-  boolean playerMoveTime;
+  boolean playerTour, playerMoveTime, playerCanPose;
 
   Button validTurn;
 
@@ -57,9 +56,10 @@ class Combat extends State {
 
     this.playerTour = false;
     this.playerMoveTime = false;
+    this.playerCanPose = false;
 
     // Bouton de validation du tour
-    this.validTurn = new Button("valider", 10, 400, 100, 30);
+    this.validTurn = new Button("Passer", 10, 400, 100, 30);
 
   }
 
@@ -275,7 +275,7 @@ class Combat extends State {
     if (this.createUnit(c.name, ALLY, BACK, newPos[0], newPos[1])) {
       this.addACard(i);
       this.selectedCard = -1;
-      // this.playerMoveTime = true;
+      this.playerCanPose = false;
     } else {
       this.pCards[this.selectedCard].reset();
       this.selectedCard = -1;
@@ -291,7 +291,7 @@ class Combat extends State {
      */
 
     for (int i = 0; i < this.pCards.length; i++) {
-      if (this.pCards[i] != null) this.pCards[i].render();
+      if (this.pCards[i] != null) this.pCards[i].render(playerCanPose);
     }
   }
 
@@ -461,7 +461,7 @@ class Combat extends State {
       /* TOUR DU JOUEUR */
 
       // Phase de placement de carte
-      if (!playerMoveTime && mousePressed && this.selectedCard == -1) {
+      if (!playerMoveTime && playerCanPose && mousePressed && this.selectedCard == -1) {
 
         this.selectCard();
       } else if (!mousePressed && this.selectedCard != -1) {
@@ -503,6 +503,7 @@ class Combat extends State {
       // => AFFRONTEMENT ICI
 
       playerTour = true;
+      playerCanPose = true;
     }
   }
 
