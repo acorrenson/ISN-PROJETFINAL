@@ -26,7 +26,6 @@ void setup() {
 }
 
 void draw() {
-
   actualState.update();
   actualState.render();
 }
