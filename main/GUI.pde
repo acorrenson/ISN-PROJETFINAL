@@ -50,6 +50,11 @@ class Button extends Widget {
     } else {
       rect(x, y, w, h);
     }
+
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text(this.name, this.x + this.w/2, this.y + this.h/2);
+    fill(255);
   }
 
 }

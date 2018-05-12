@@ -59,7 +59,7 @@ class Combat extends State {
     this.playerMoveTime = false;
 
     // Bouton de validation du tour
-    this.validTurn = new Button("valider", 0, 0, 100, 30);
+    this.validTurn = new Button("valider", 10, 400, 100, 30);
 
   }
 
