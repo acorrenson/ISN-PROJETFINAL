@@ -55,14 +55,16 @@ class Scenario extends State {
       fill(255);
       rect(400, 600, 100, 25);
 
-      textSize(12);
+      textSize(5);
       fill(255, 0, 0);
+      textAlign(LEFT);
+      textFont(pixelFont);
       text("Poursuivre", 415, 615);
 
       if (mousePressed) {
           if (mouseX >= 350 && mouseX <= 550 && mouseY >= 550 && mouseY <= 645) {
           println("Passage tuto");
-          enterState( new Tuto("tuto") );
+          enterState( new Tuto() );
         }
       }
     }

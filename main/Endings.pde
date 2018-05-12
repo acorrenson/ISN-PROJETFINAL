@@ -83,13 +83,13 @@ class Credits extends State {
     
     fill(255);
     textFont(pixelFont);
-    textSize(15);
+    textSize(10);
     textAlign(CENTER, CENTER);
     text(text, 0, 0, width, height);
   }
   
   void leave() {
-    enterState( new Combat("combat_1") ); // Remplacer par state intro
+    enterState( new Scenario() );
   }
 
 }
