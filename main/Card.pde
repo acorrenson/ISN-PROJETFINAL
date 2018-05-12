@@ -76,7 +76,7 @@ class Card {
     this.selected = false;
   }
 
-  void render() {
+  void render(boolean enable) {
     
     /*
       Affichage d'une carte
@@ -86,7 +86,7 @@ class Card {
           - idem sauf que le point en HG est déterimé par la position x (y) de la souris, moins le x (y) où la carte a été cliqué
     */
     
-    fill(255);
+    if ( !enable ) tint(100, 100, 100);
     if(!this.selected) {
       drawCard( this.x, this.y );
     } else {
@@ -106,6 +106,7 @@ class Card {
     text(this.lives, drawX + 15, drawY + 83);    
     text(this.dmg, drawX + 51, drawY + 83);
     text(this.step, drawX + 33, drawY + 101);
+    noTint();
   
   }
 }

@@ -5,9 +5,9 @@ class Tuto extends State {
   int slideIndex;
   int maxIndex;
 
-  Tuto (String name) {
+  Tuto () {
     // constructeur de la classe parente
-    super(name);
+    super("tuto");
 
     // éléments d'interface
 
@@ -35,7 +35,7 @@ class Tuto extends State {
       rect(nav[i].x, nav[i].y, nav[i].w, nav[i].h);
       fill(255);
       textAlign(CENTER, BOTTOM);
-      textSize(50);
+      textSize(35);
       text(nav[i].name, nav[i].x + nav[i].w/2 , nav[i].y + nav[i].h);
     }
   }

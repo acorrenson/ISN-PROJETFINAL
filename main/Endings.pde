@@ -4,10 +4,9 @@
 
 class EndScreen extends State {
   
-  Button replay;
+  Button next;
   boolean win;
-  PImage back;
-  String title;  
+  String title;
 
   EndScreen(boolean win) {
     // Constructeur de la classe
@@ -18,19 +17,17 @@ class EndScreen extends State {
   void load() {
   
     if ( this.win ) {    
-      this.title = "VICTOIRE";
-      // this.back = assets[?]     
+      this.title = "VICTOIRE";  
     } else {
       this.title = "DEFAITE";
-      // this.back = assets[? + 1]
     }
     
-    this.replay = new Button("Play", 0, height - 64, 64, 32);
+    this.next = new Button("Continuer", 167, 495, 181, 19);
   }
   
   void mousePressed() {
   
-    if (this.replay.hover()) this.leave();
+    if (this.next.hover()) this.leave();
     
   }
   
@@ -41,22 +38,24 @@ class EndScreen extends State {
     textFont(pixelFont);
     textAlign(CENTER, CENTER);
     textSize(25);
-    text(this.title, width / 2, height / 2);
+    text(this.title, width / 2, height / 4);
+    textSize(15);
+    text(this.next.name, width / 2, (height * 3) / 4);
   
-    if ( this.replay.hover() ) {
-      image(assets[25], this.replay.x, this.replay.y, this.replay.w, this.replay.h);
+    if ( this.next.hover() ) {
+      image(assets[25], this.next.x, this.next.y, this.next.w, this.next.h);
     }
   }
   
   void leave() {  
-    enterState( new Combat("combat_1") ); // Remplacer par state intro
+    enterState( new Credits() );
   }
 
 }
 
 class Credits extends State {
 
-  Button quit;
+  Button replay;
   String text;
   
   Credits() {
@@ -67,29 +66,30 @@ class Credits extends State {
     String[] lines = loadStrings("data/credits.txt");
     text = join(lines, "\n");
     
-    quit = new Button("Quit", 0, height - 32, 64, 32);
+    replay = new Button("Rejouer", 209, 655, 94, 14);
   }
   
   void mousePressed() {
   
-    if (quit.hover()) this.leave();
+    if (replay.hover()) this.leave();
     
   }
   
   void render() {
     background(0);
     
-    if (quit.hover()) { image(assets[25], quit.x, quit.y, quit.w, quit.h); }
+    if (this.replay.hover()) { image(assets[25], this.replay.x, this.replay.y, this.replay.w, this.replay.h); }
     
     fill(255);
     textFont(pixelFont);
-    textSize(15);
+    textSize(10);
     textAlign(CENTER, CENTER);
     text(text, 0, 0, width, height);
+    text(this.replay.name, width / 2, height - 10);
   }
   
   void leave() {
-    enterState( new Combat("combat_1") ); // Remplacer par state intro
+    enterState( new Scenario() );
   }
 
 }
