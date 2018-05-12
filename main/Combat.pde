@@ -55,9 +55,9 @@ class Combat extends State {
     this.IAMaxLives = this.data.getInt("IA Lives");
     this.IALives = this.IAMaxLives;
 
-    this.playerTour = false;
+    this.playerTour = true;
     this.playerMoveTime = false;
-    this.playerCanPose = false;
+    this.playerCanPose = true;
 
     // Bouton de validation du tour
     this.validTurn = new Button("valider", 10, 400, 100, 30);
@@ -451,7 +451,7 @@ class Combat extends State {
 
     if (playerTour) {
       
-      if ( this.IALives <= 0 ) {      
+      if ( this.IALives <= 0 ) {
         enterState( new EndScreen(true) );
       } else if ( this.pLives <= 0 ) {
         enterState( new EndScreen(false) );
@@ -479,7 +479,7 @@ class Combat extends State {
     } else {
 
       /* TOUR DE L'IA*/
-      delay(750);
+      delay(300);
 
       // placement d'une carte
       if (ennemy.dd1()) {
