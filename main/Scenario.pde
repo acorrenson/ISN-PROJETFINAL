@@ -30,19 +30,19 @@ class Scenario extends State {
     }
 
     if (mouseY <= 192 && mouseY >= 64) {
-      y = y + 20;
+      y = y + 10;
     }
 
     if (mouseY <= 64 ) {
-      y = y + 30;
+      y = y + 20;
     }
 
     if (mouseY <= 576 && mouseY >= 448) {
-      y = y - 20;
+      y = y - 10;
     }
 
     if (mouseY >= 576) {
-      y = y - 30;
+      y = y - 20;
     }
     return y;
   }
