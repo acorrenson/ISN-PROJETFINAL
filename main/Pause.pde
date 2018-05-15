@@ -34,7 +34,7 @@ class Pause extends State {
     this.buttons = new Button[4];
     this.buttons[0] = new Button("Leave",   this.x + 177, this.y + 4,   14,  14);
     this.buttons[1] = new Button("Play",    this.x + 44,  this.y + 146, 107, 23);
-    this.buttons[2] = new Button("Options", this.x + 44,  this.y + 210, 107, 23);
+    this.buttons[2] = new Button("Reset", this.x + 44,  this.y + 210, 107, 23);
     this.buttons[3] = new Button("Quit",    this.x + 44,  this.y + 274, 107, 23);
   
   }
@@ -74,7 +74,7 @@ class Pause extends State {
   
     if ( name.equals("Leave") || name.equals("Play") ) leave();
     
-    else if ( name.equals("Options") ) println("!> Options");
+    else if ( name.equals("Reset") ) enterState( new Combat(this.coated.name) );
     
     else if ( name.equals("Quit") ) exit();
   

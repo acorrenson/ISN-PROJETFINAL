@@ -89,7 +89,7 @@ class Credits extends State {
   }
   
   void leave() {
-    enterState( new Scenario() );
+    enterState( new Tuto() );
   }
 
 }

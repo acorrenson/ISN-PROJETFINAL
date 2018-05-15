@@ -25,7 +25,7 @@ class Combat extends State {
 
   boolean playerTour, playerMoveTime, playerCanPose;
 
-  Button validTurn;
+  Button validTurn, pause;
   boolean wait;
 
   Combat(String name) {
@@ -61,6 +61,7 @@ class Combat extends State {
 
     // Bouton de validation du tour
     this.validTurn = new Button("valider", 10, 400, 100, 30);
+    this.pause = new Button("pause", 0, 0, 100, 25);
     this.wait = false;
 
   }
@@ -359,6 +360,7 @@ class Combat extends State {
 
     // attendre une clique sur le bouton Valider Tour
     this.checkValidTurn();
+    if ( this.pause.hover() ) enterState( new Pause(actualState) );
   }
 
   void keyDown(int k) {
@@ -518,7 +520,9 @@ class Combat extends State {
     this.renderUnit();
     this.renderLives();
     this.renderCards();
-    this.validTurn.render();
+    this.validTurn.render(255, 0);
+    textSize(10);
+    this.pause.render(0, 255);
    
   }
 }

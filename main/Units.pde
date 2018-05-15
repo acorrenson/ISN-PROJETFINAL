@@ -43,6 +43,11 @@ class Unit {
   boolean canMove() {
     return this.steps < this.step;
   }
+  
+  boolean isOver(int x, int y) {
+    if ( collide(mouseX, mouseY, x, y, 64, 64) ) return true;
+    else return false;
+  }
 
   void render(int x, int y) {
     
@@ -54,5 +59,11 @@ class Unit {
     textAlign(LEFT, BASELINE);
     textSize(5);
     text(this.name, x, y);
+    if ( isOver(x, y) ) {
+      textAlign(CENTER, CENTER);
+      textSize(25);
+      fill(255, 0, 0);
+      text(this.lives, x + 32, y + 32);
+    }
   }
 }

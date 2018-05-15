@@ -22,7 +22,7 @@ void setup() {
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 
   // Définir l'état actuel
-  enterState( new Scenario() );
+  enterState( new Combat("combat_1") );
 }
 
 void draw() {
@@ -44,4 +44,8 @@ void keyPressed() {
 
 void mousePressed() {
   actualState.mousePressed();
+}
+
+void mouseMoved() {
+  actualState.mouseMoved();
 }
