@@ -58,3 +58,21 @@ class Button extends Widget {
   }
 
 }
+
+void renderInfos() {
+  
+  if ( dispInfos ) {
+    int x = width - assets[41].width, y = height / 4;
+    image(assets[41], x, y);
+    image(assets[dispUnit], x + 5, y + 13);
+    textAlign(LEFT, TOP);
+    textSize(15);
+    fill(225, 99, 99);
+    text(dispLives, x + 215, y);
+    fill(208, 99, 225);
+    text(dispAtk, x + 215, y + 20);
+    fill(108, 99, 225);
+    text(dispStep, x + 215, y + 40);
+  }
+  dispInfos = false;
+}

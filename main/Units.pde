@@ -20,6 +20,7 @@ class Unit {
   String name;
   int lives, maxLives, damages, step, faction, side, idSprite;
   int steps;
+  boolean damaged;
   
   Unit(String name, int faction, int side) {
     
@@ -34,6 +35,7 @@ class Unit {
     this.step = data.getInt("step");
     this.steps = 0;
     this.idSprite = gai(name, faction, side);
+    this.damaged = false;
   }
 
   void stop() {
@@ -63,10 +65,15 @@ class Unit {
       dispStep = this.step;
     }
     
+    if ( this.damaged ) tint(200, 0, 0);
+    
     image(assets[this.idSprite], x, y, 64, 64);
     fill(255);
     textAlign(LEFT, BASELINE);
     textSize(5);
     text(this.name, x, y);
+    
+    noTint();
+    
   }
 }

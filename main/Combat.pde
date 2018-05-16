@@ -104,6 +104,10 @@ class Combat extends State {
         if (this.isOccuped(i, j)) {
           int[] newPos = this.returnPos(i, j);
           this.map[i][j].render(newPos[0], newPos[1]);
+          if (this.map[i][j].damaged) {
+            delay(150);
+            this.map[i][j].damaged = false;
+          }
         }
       }
     }
@@ -185,7 +189,9 @@ class Combat extends State {
 
             println(map[x][y-1].lives);
             map[x][y].lives = map[x][y].lives - map[x][y-1].damages;
+            map[x][y].damaged = true;
             map[x][y-1].lives = map[x][y-1].lives - map[x][y].damages;
+            map[x][y-1].damaged = true;
           }
         }
       }
@@ -473,12 +479,11 @@ class Combat extends State {
 
         // => AFFRONTEMENT ICI
         fight();
-        checkLives();
       }
     } else {
 
       /* TOUR DE L'IA*/
-      delay(300);
+      delay(150);
 
       // placement d'une carte
       if (ennemy.dd1()) {
@@ -510,7 +515,7 @@ class Combat extends State {
      - Affiche les unités : "renderUnit"
      - Affiche les points de vies des vaisseaux : "renderLives"
      - Affiche les cartes : "renderCards"
-    */
+    */    
     background(assets[40]);
     image(assets[26], 128, 128);
     this.renderShips();
@@ -521,19 +526,8 @@ class Combat extends State {
     this.validTurn.render(255, 0);
     textSize(10);
     this.pause.render(0, 255);
-    if ( dispInfos ) {
-      int x = width - assets[41].width, y = height / 4;
-      image(assets[41], x, y);
-      image(assets[dispUnit], x + 5, y + 13);
-      textAlign(LEFT, TOP);
-      textSize(15);
-      fill(225, 99, 99);
-      text(dispLives, x + 215, y);
-      fill(208, 99, 225);
-      text(dispAtk, x + 215, y + 20);
-      fill(108, 99, 225);
-      text(dispStep, x + 215, y + 40);
-    }
-    dispInfos = false;
+    renderInfos();
+    
+    checkLives();
   }
 }
