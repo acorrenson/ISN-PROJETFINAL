@@ -45,7 +45,7 @@ class Card {
     this.step = data.getInt("step");
     
     this.cardBack = assets[35];
-    this.cardUnit = assets[ gai(name, 0, 0) ];
+    this.cardUnit = assets[ gai(this.name, 0, 0) ];
 
     this.w = cardWidth;
     this.h = cardHeight;
@@ -75,28 +75,50 @@ class Card {
     this.y = this.initY;
     this.selected = false;
   }
+  
+  boolean isOverflown() {
+    
+    /* Teste la carte est survolée par la souris */
+    
+    if ( collide(mouseX, mouseY, this.x, this.y, this.w, this.h) ) return true;
+    else return false;
+  }
 
   void render(boolean enable) {
     
     /*
       Affichage d'une carte
+      Si la carte est survolée:
+          - modifie les variables générales à afficher dans infos
+      Si le joueur ne peut pas poser la carte (enable = false)
+          - applique un effet "tint" qui noircie la carte
         Si elle n'est pas séléctionnée
           - on trace un rectangle depuis (x;y) (point en haut à gauche) jusqu'à (x + w; y+ h) (point en bas à droite)
         Si elle est séléctionnée
           - idem sauf que le point en HG est déterimé par la position x (y) de la souris, moins le x (y) où la carte a été cliqué
     */
     
+    if ( isOverflown() ) {
+      dispInfos = true;
+      dispUnit = gai(this.name, 0, 0);
+      dispLives = this.lives;
+      dispAtk = this.dmg;
+      dispStep = this.step;
+    }
+    
     if ( !enable ) tint(100, 100, 100);
+    
     if(!this.selected) {
       drawCard( this.x, this.y );
     } else {
       drawCard( mouseX - this.clickW, mouseY - this.clickH );
     }
+    noTint();
   }
   
   void drawCard(int drawX, int drawY) {
   
-    image( cardBack, drawX, drawY );
+    image( cardBack, drawX, drawY, w, h );
     image( cardUnit, drawX + 2, drawY + 2, 64, 64 );
     
     fill(255);
@@ -106,7 +128,6 @@ class Card {
     text(this.lives, drawX + 15, drawY + 83);    
     text(this.dmg, drawX + 51, drawY + 83);
     text(this.step, drawX + 33, drawY + 101);
-    noTint();
   
   }
 }

@@ -1,14 +1,16 @@
 
 /*
   Variables utiles
+    - pixelFont ------------ : (PFont)       Police de texte utilisé dans le jeu
     - sqrSize -------------- : (int)         taille d'une case du plateau
     - nbCards -------------- : (int)         nombre de cartes max
     - cardWidth (cardHeight) : (int)         tailles d'une carte
+    - dispInfos ------------ : (boolean)     si l'on affiche les "infos" : les "infos" sont les statistiques d'une unité ou d'une carte qui est survolée par la souris
     - ALLY, ENY ------------ : (int)         index d'assets représentant les alliés/les ennemis
     - FRONT, BACK ---------- : (int)         index d'assets indiquant si l'image est de dos/de face
     - FXVLM, MSCVLM -------- : (int)         volumes des effets/musiques
     - assets --------------- : (PImage[])    tableau contenant toutes les images du jeu
-    - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu 
+    - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu
 */
 
 PFont pixelFont;
@@ -18,6 +20,9 @@ int sqrSize = 64;
 int nbCards = 4;
 int cardWidth = 68;
 int cardHeight = 120;
+
+boolean dispInfos = false;
+int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
@@ -105,6 +110,10 @@ void loadAssets() {
   /* Fond */
   
   assets[40] = loadImage("images/space.png");
+  
+  /* Infos */
+  
+  assets[41] = loadImage("images/infos.png");
 
   // Ajouter les autres images ici \|/
   

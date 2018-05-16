@@ -6,13 +6,18 @@
 class Combat extends State {
 
   /*
-    map ------------- : tableau (en 2D) contenant les unités présentent sur le plateau
+   map ------------- : tableau (en 2D) contenant les unités présentent sur le plateau
    availableUnits -- : tableau contenant les unités possibles
    pCards ---------- : tableau contenant les cartes du joueur
    IACards --------- : tableau contenant les cartes de l'IA
    selectedCard ---- : index du tableau cards de la carte actuellement séléctionnée (-1 pour aucune)
-   pLives, IALives - : points de vie restant aux vaiseaux (pMaxLives, IAMaxLives : points de vie max) 
-   */
+   pLives, IALives - : points de vie restant aux vaiseaux (pMaxLives, IAMaxLives : points de vie max)
+   validTurn ------- : bouton pour valider/passer le tour du joueur
+   pause ----------- : bouton mettant le jeu en pause (on change l'etat pour Pause)
+   playerTour ------ : si c'est le tour du joueur
+   playerMoveTime -- : si les unités du joueur doivent bouger
+   playerCanPose --- : si le joueur peut poser une unité
+  */
 
   AI ennemy;
   Unit[][] map;
@@ -25,7 +30,7 @@ class Combat extends State {
 
   boolean playerTour, playerMoveTime, playerCanPose;
 
-  Button validTurn;
+  Button validTurn, pause;
   boolean wait;
 
   Combat(String name) {
@@ -61,6 +66,7 @@ class Combat extends State {
 
     // Bouton de validation du tour
     this.validTurn = new Button("valider", 10, 400, 100, 30);
+    this.pause = new Button("pause", 0, 0, 100, 25);
     this.wait = false;
 
   }
@@ -103,6 +109,10 @@ class Combat extends State {
         if (this.isOccuped(i, j)) {
           int[] newPos = this.returnPos(i, j);
           this.map[i][j].render(newPos[0], newPos[1]);
+          if (this.map[i][j].damaged) {
+            delay(150);
+            this.map[i][j].damaged = false;
+          }
         }
       }
     }
@@ -160,9 +170,11 @@ class Combat extends State {
   }
 
   void checkLives() {
+    
+    /* Verifie les points de vie restant des unités sur le plateau, est enlève celles dont la vie <= 0 */
+    
     for ( int x = 0; x < map.length; x ++ ) {
       for (int y = 0; y < map[x].length; y ++ ) {
-
 
         if ( map[x][y] != null && map[x][y].lives <= 0 ) {
           println("mort" + " " + map[x][y].lives);
@@ -173,18 +185,22 @@ class Combat extends State {
   }
 
   void fight() {
+    
+    /* Si deux unités se font face, retire l'attaque de l'une à la vie de l'autre */
+    
     for ( int x = 0; x < map.length; x ++ ) {
 
       for (int y = 1; y < map[x].length; y ++ ) {
 
         if ( map[x][y] != null && map[x][y].faction == 0 ) {
 
-
           if ( map[x][y-1] != null && map[x][y-1].faction == 1 ) {
 
             println(map[x][y-1].lives);
             map[x][y].lives = map[x][y].lives - map[x][y-1].damages;
+            map[x][y].damaged = true;
             map[x][y-1].lives = map[x][y-1].lives - map[x][y].damages;
+            map[x][y-1].damaged = true;
           }
         }
       }
@@ -193,6 +209,9 @@ class Combat extends State {
   }
 
   void checkValidTurn() {
+    
+    /* Verifie si le bouton validTurn est cliqué */
+    
     if (this.playerTour && !this.playerMoveTime && this.validTurn.hover()) {
       this.playerMoveTime = true;
     }
@@ -227,8 +246,8 @@ class Combat extends State {
 
     /*
       Ajoute une carte au tableau "pCards"
-     - Choisi une carte aléatoirement et l'ajoute au tableau "pCard"
-     */
+       - Choisi une carte aléatoirement et l'ajoute au tableau "pCard"
+    */
 
     int ran = int(random(this.availableUnits.length));
     String name = this.availableUnits[ran];
@@ -266,8 +285,9 @@ class Combat extends State {
      Si la carte est sur le plateau
      - Appelle la méthode "createUnit"
      - Enlève la carte de "cards" et réinitialise "selectedCard"
+     - Passe playerCanPose à false (le joueur ne peut plus poser)
      Sinon, replace la carte à son point d'origine
-     */
+    */
 
     int[] newPos = this.returnIndex();
 
@@ -288,9 +308,9 @@ class Combat extends State {
 
     /*
       Affiche les cartes
-     - parcourt le tableau "pCards"
-     - appelle la méthode render de chaque carte
-     */
+        - parcourt le tableau "pCards"
+        - appelle la méthode render de chaque carte
+    */
 
     for (int i = 0; i < this.pCards.length; i++) {
       if (this.pCards[i] != null) this.pCards[i].render(playerCanPose);
@@ -303,7 +323,8 @@ class Combat extends State {
 
     /*
       Affiche les points de vie restant sous forme de barre
-     */
+    
+    */
      
     int wP = int( this.pLives * assets[36].width );
     int wIA = int( this.IALives * assets[36].width );
@@ -341,7 +362,7 @@ class Combat extends State {
 
     /*
       Affiche les vaisseaux        
-     */
+    */
 
     int x = width - assets[38].width;
     int y = height - assets[38].height - 16;
@@ -359,6 +380,7 @@ class Combat extends State {
 
     // attendre une clique sur le bouton Valider Tour
     this.checkValidTurn();
+    if ( this.pause.hover() ) enterState( new Pause(actualState) );
   }
 
   void keyDown(int k) {
@@ -366,7 +388,7 @@ class Combat extends State {
     /*
       Capture les événement clavier
      - ESC - : Met le jeu en pause
-     - Z --- : DEBUG, Passe le tour du joueur (122)
+     - Z --- : Passe le tour du joueur (122)
      */
 
     if (k == 27) {
@@ -378,21 +400,13 @@ class Combat extends State {
         playerMoveTime = true;
       }
     }
-    
-    else if (k == 101) {
-      this.pLives -= 1;
-    }
-    
-    else {
-      println(k);
-    }
   }
 
   boolean isOccuped(int x, int y) {
 
     /*
       Renvoie true si la case map[x][y] est occupée
-     */
+    */
 
     if (this.map[x][y] == null) {
       return false;
@@ -404,12 +418,12 @@ class Combat extends State {
 
     /*
       Renvoie les index x et y de la case survolée par la souris sous forme d'un tableau
-     Renvoie {-1;-1} si la souris est en dehors du tableau
-     
-     Pour calculer l'index
-     On retire à la position de la souris la position du tableau (128 px en x et y)
-     On convertit les coordonnées en index du tableau "map"
-     */
+      Renvoie {-1;-1} si la souris est en dehors du tableau
+       
+      Pour calculer l'index
+      On retire à la position de la souris la position du tableau (128 px en x et y)
+      On convertit les coordonnées en index du tableau "map"
+    */
 
     int[] result = {
       -1, -1
@@ -428,7 +442,7 @@ class Combat extends State {
 
     /*
       Renvoie un tableau avec la position (en px) d'une case de "map" à l'aide de ses index
-     */
+    */
 
     int[] result = new int[2];
 
@@ -443,11 +457,11 @@ class Combat extends State {
   void update() {
     /*
       Actualisation de l'état
-     Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
-     - Appelle la méthode "selectCard"
-     Si la souris est relachée
-     - Appelle la méthode "unselectCard"
-     */
+       Si détecte un clic de souris et qu'aucune carte n'est séléctionnée
+       - Appelle la méthode "selectCard"
+       Si la souris est relachée
+       - Appelle la méthode "unselectCard"
+    */
 
     if (playerTour) {
       
@@ -474,12 +488,11 @@ class Combat extends State {
 
         // => AFFRONTEMENT ICI
         fight();
-        checkLives();
       }
     } else {
 
       /* TOUR DE L'IA*/
-      delay(300);
+      delay(150);
 
       // placement d'une carte
       if (ennemy.dd1()) {
@@ -511,14 +524,23 @@ class Combat extends State {
      - Affiche les unités : "renderUnit"
      - Affiche les points de vies des vaisseaux : "renderLives"
      - Affiche les cartes : "renderCards"
-     */
+     - Affiche le bouton validTurn
+     - Affiche le bouton pause
+     - Affiche les infos
+     - Verifie les vies des unités sur le plateau
+    */    
     background(assets[40]);
     image(assets[26], 128, 128);
     this.renderShips();
     this.renderUnit();
     this.renderLives();
     this.renderCards();
-    this.validTurn.render();
-   
+    textSize(5);
+    this.validTurn.render(255, 0);
+    textSize(10);
+    this.pause.render(0, 255);
+    renderInfos();
+    
+    checkLives();
   }
 }

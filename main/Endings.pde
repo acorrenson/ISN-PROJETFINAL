@@ -4,6 +4,12 @@
 
 class EndScreen extends State {
   
+  /*
+    next -- : bouton pour passer à l'écran suivant (credits)
+    win --- : si la partie est gagnée
+    title - : si win = true, title = "VICTOIRE", sinon, title = "DEFAITE"
+  */
+  
   Button next;
   boolean win;
   String title;
@@ -54,6 +60,11 @@ class EndScreen extends State {
 }
 
 class Credits extends State {
+  
+  /*
+    replay - : bouton qui renvoit au tuto (pour rejouer)
+    text --- : texte des crédits
+  */
 
   Button replay;
   String text;
@@ -89,7 +100,7 @@ class Credits extends State {
   }
   
   void leave() {
-    enterState( new Scenario() );
+    enterState( new Tuto() );
   }
 
 }
