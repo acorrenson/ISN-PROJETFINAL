@@ -19,8 +19,8 @@ int nbCards = 4;
 int cardWidth = 68;
 int cardHeight = 120;
 
-boolean dispInfos = true;
-int dispLives = 0, dispAtk = 0, dispStep = 0, dispUnit = 0;
+boolean dispInfos = false;
+int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 String infos = "Points de vie : " + dispLives + "\nAttaque : " + dispAtk + "\nPas : " + dispStep; 
 
 int ALLY  = 0, ENY  = 1;
@@ -109,6 +109,10 @@ void loadAssets() {
   /* Fond */
   
   assets[40] = loadImage("images/space.png");
+  
+  /* Infos */
+  
+  assets[41] = loadImage("images/infos.png");
 
   // Ajouter les autres images ici \|/
   

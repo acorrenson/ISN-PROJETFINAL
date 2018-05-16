@@ -45,7 +45,7 @@ class Card {
     this.step = data.getInt("step");
     
     this.cardBack = assets[35];
-    this.cardUnit = assets[ gai(name, 0, 0) ];
+    this.cardUnit = assets[ gai(this.name, 0, 0) ];
 
     this.w = cardWidth;
     this.h = cardHeight;
@@ -90,6 +90,14 @@ class Card {
         Si elle est séléctionnée
           - idem sauf que le point en HG est déterimé par la position x (y) de la souris, moins le x (y) où la carte a été cliqué
     */
+    
+    if ( isOverflown() ) {
+      dispInfos = true;
+      dispUnit = gai(this.name, 0, 0);
+      dispLives = this.lives;
+      dispAtk = this.dmg;
+      dispStep = this.step;
+    }
     
     if ( !enable ) tint(100, 100, 100);
     if(!this.selected) {

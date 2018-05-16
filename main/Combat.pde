@@ -382,11 +382,8 @@ class Combat extends State {
     }
     
     else if (k == 101) {
+      dispLives += 1;
       this.pLives -= 1;
-    }
-    
-    else {
-      println(k);
     }
   }
 
@@ -525,17 +522,18 @@ class Combat extends State {
     textSize(10);
     this.pause.render(0, 255);
     if ( dispInfos ) {
-      fill(0, 0, 0, 150);
-      stroke(255);
-      strokeWeight(1);
-      rectMode(CORNER);
-      int w = 2 * width / 4, x = width - w, y = height / 4;
-      rect(x, y, w, 60);
-      fill(255);
+      int x = width - assets[41].width, y = height / 4;
+      image(assets[41], x, y);
+      image(assets[dispUnit], x + 5, y + 13);
       textAlign(LEFT, TOP);
-      textSize(10);
-      text(infos, x + 5, y + 5, w, 60);
-      image(assets[dispUnit], width - 32, y + 5);
+      textSize(15);
+      fill(225, 99, 99);
+      text(dispLives, x + 215, y);
+      fill(208, 99, 225);
+      text(dispAtk, x + 215, y + 20);
+      fill(108, 99, 225);
+      text(dispStep, x + 215, y + 40);
     }
+    dispInfos = false;
   }
 }

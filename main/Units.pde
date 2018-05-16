@@ -54,16 +54,19 @@ class Unit {
     /*
       Affichage d'une unité
     */
+    
+    if ( isOverflown(x, y) ) {
+      dispInfos = true;
+      dispUnit = gai(this.name, this.faction, 0);
+      dispLives = this.lives;
+      dispAtk = this.damages;
+      dispStep = this.step;
+    }
+    
     image(assets[this.idSprite], x, y, 64, 64);
     fill(255);
     textAlign(LEFT, BASELINE);
     textSize(5);
     text(this.name, x, y);
-    if ( isOverflown(x, y) ) {
-      textAlign(CENTER, CENTER);
-      textSize(25);
-      fill(255, 0, 0);
-      text(this.lives, x + 32, y + 32);
-    }
   }
 }
