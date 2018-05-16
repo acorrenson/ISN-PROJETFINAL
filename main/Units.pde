@@ -44,7 +44,7 @@ class Unit {
     return this.steps < this.step;
   }
   
-  boolean isOver(int x, int y) {
+  boolean isOverflown(int x, int y) {
     if ( collide(mouseX, mouseY, x, y, 64, 64) ) return true;
     else return false;
   }
@@ -59,7 +59,7 @@ class Unit {
     textAlign(LEFT, BASELINE);
     textSize(5);
     text(this.name, x, y);
-    if ( isOver(x, y) ) {
+    if ( isOverflown(x, y) ) {
       textAlign(CENTER, CENTER);
       textSize(25);
       fill(255, 0, 0);

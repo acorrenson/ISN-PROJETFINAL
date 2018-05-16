@@ -75,6 +75,11 @@ class Card {
     this.y = this.initY;
     this.selected = false;
   }
+  
+  boolean isOverflown() {
+    if ( collide(mouseX, mouseY, this.x, this.y, this.w, this.h) ) return true;
+    else return false;
+  }
 
   void render(boolean enable) {
     
@@ -92,11 +97,12 @@ class Card {
     } else {
       drawCard( mouseX - this.clickW, mouseY - this.clickH );
     }
+    noTint();
   }
   
   void drawCard(int drawX, int drawY) {
   
-    image( cardBack, drawX, drawY );
+    image( cardBack, drawX, drawY, w, h );
     image( cardUnit, drawX + 2, drawY + 2, 64, 64 );
     
     fill(255);
@@ -106,7 +112,6 @@ class Card {
     text(this.lives, drawX + 15, drawY + 83);    
     text(this.dmg, drawX + 51, drawY + 83);
     text(this.step, drawX + 33, drawY + 101);
-    noTint();
   
   }
 }

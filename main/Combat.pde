@@ -513,16 +513,29 @@ class Combat extends State {
      - Affiche les unités : "renderUnit"
      - Affiche les points de vies des vaisseaux : "renderLives"
      - Affiche les cartes : "renderCards"
-     */
+    */
     background(assets[40]);
     image(assets[26], 128, 128);
     this.renderShips();
     this.renderUnit();
     this.renderLives();
     this.renderCards();
+    textSize(5);
     this.validTurn.render(255, 0);
     textSize(10);
     this.pause.render(0, 255);
-   
+    if ( dispInfos ) {
+      fill(0, 0, 0, 150);
+      stroke(255);
+      strokeWeight(1);
+      rectMode(CORNER);
+      int w = 2 * width / 4, x = width - w, y = height / 4;
+      rect(x, y, w, 60);
+      fill(255);
+      textAlign(LEFT, TOP);
+      textSize(10);
+      text(infos, x + 5, y + 5, w, 60);
+      image(assets[dispUnit], width - 32, y + 5);
+    }
   }
 }
