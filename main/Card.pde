@@ -77,6 +77,9 @@ class Card {
   }
   
   boolean isOverflown() {
+    
+    /* Teste la carte est survolée par la souris */
+    
     if ( collide(mouseX, mouseY, this.x, this.y, this.w, this.h) ) return true;
     else return false;
   }
@@ -85,6 +88,10 @@ class Card {
     
     /*
       Affichage d'une carte
+      Si la carte est survolée:
+          - modifie les variables générales à afficher dans infos
+      Si le joueur ne peut pas poser la carte (enable = false)
+          - applique un effet "tint" qui noircie la carte
         Si elle n'est pas séléctionnée
           - on trace un rectangle depuis (x;y) (point en haut à gauche) jusqu'à (x + w; y+ h) (point en bas à droite)
         Si elle est séléctionnée
@@ -100,6 +107,7 @@ class Card {
     }
     
     if ( !enable ) tint(100, 100, 100);
+    
     if(!this.selected) {
       drawCard( this.x, this.y );
     } else {

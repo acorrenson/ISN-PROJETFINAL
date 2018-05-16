@@ -6,6 +6,11 @@
 
 class Widget {
   
+  /*
+    name ------- : nom du widget (peut être affiché)
+    x, y, w, h - : respectivement les coordonnées et les dimensions du widget (en px)
+  */
+  
   String name;
   int x, y, w, h;
 
@@ -18,6 +23,9 @@ class Widget {
   }
 
   boolean hover() {
+    
+    /* Renvoie true si le widget est survolé */
+    
     if (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h) {
       return true;
     }
@@ -26,9 +34,16 @@ class Widget {
 }
 
 class Button extends Widget {
+  
+  /*
+    hasImage - : si le bouton possède une image
+    back ----- : image à afficher
+  */
 
-  PImage back;
   boolean hasImage;
+  PImage back;
+  
+  // Nous utilisons deux constructeurs : il s'agit d'une astuce java qui nous permet d'initialiser un bouton avec ou sans image de fond (paramètre PImage back)
 
   Button(String name, int x, int y, int w, int h) {
     
@@ -60,6 +75,8 @@ class Button extends Widget {
 }
 
 void renderInfos() {
+  
+  /* Affiche les informations (si dispInfos = true) de l'unité ou de la carte survolée */ 
   
   if ( dispInfos ) {
     int x = width - assets[41].width, y = height / 4;

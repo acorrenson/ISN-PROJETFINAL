@@ -6,9 +6,10 @@
 class Pause extends State {
   
   /*
-    coated : l'état du jeu, avant la mise en pause
-    paused : l'affichage du jeu avant la mise en pause
-    back   : l'image du menu
+    coated - : l'état du jeu, avant la mise en pause
+    paused - : l'affichage du jeu avant la mise en pause
+    back --- : l'image du menu
+    x, y --- : position du menu pause (en px)
   */
   
   State coated;
@@ -71,6 +72,8 @@ class Pause extends State {
   }
   
   void action(String name) {
+    
+    /* Appelle la fonction correspondant au bouton cliqué */
   
     if ( name.equals("Leave") || name.equals("Play") ) leave();
     

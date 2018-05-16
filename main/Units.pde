@@ -15,6 +15,7 @@ class Unit {
     - steps ---- : pas déjà fait durant le tour
     - faction -- : camp de l'unité (0 : alliée, 1 : ennemie)
     - idSprite - : index de "assets" de l'image de l'unité
+    - damaged -- : si l'unité subit des domages
   */
   
   String name;
@@ -39,14 +40,23 @@ class Unit {
   }
 
   void stop() {
+    
+    /* Réinitialise les pas de l'unité */
+    
     this.steps = this.step;
   }
   
   boolean canMove() {
+    
+    /* Renvoie true si l'unité peut se déplacer */
+    
     return this.steps < this.step;
   }
   
   boolean isOverflown(int x, int y) {
+    
+    /* Renvoie true si l'unité est survolée */
+    
     if ( collide(mouseX, mouseY, x, y, 64, 64) ) return true;
     else return false;
   }
@@ -55,6 +65,10 @@ class Unit {
     
     /*
       Affichage d'une unité
+        Si elle est survolée:
+          - Modifie les variables générales à afficher dans infos
+        Si l'unité subit des domages (damaged = true)
+          - Applique un effet "tint" rouge
     */
     
     if ( isOverflown(x, y) ) {
