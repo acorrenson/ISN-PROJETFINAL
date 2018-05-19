@@ -22,7 +22,7 @@ int nbCards = 4;
 int cardWidth = 68;
 int cardHeight = 120;
 
-boolean dispInfos = false;
+boolean dispInfos = true;
 int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 
 int ALLY  = 0, ENY  = 1;
