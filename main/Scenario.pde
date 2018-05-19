@@ -5,6 +5,7 @@ class Scenario extends State {
   
   Scenario() {
     super("scenario");
+    playMusic(1);
   }
 
 

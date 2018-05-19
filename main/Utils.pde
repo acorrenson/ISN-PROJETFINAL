@@ -8,6 +8,7 @@
     - dispInfos ------------ : (boolean)     si l'on affiche les "infos" : les "infos" sont les statistiques d'une unité ou d'une carte qui est survolée par la souris
     - ALLY, ENY ------------ : (int)         index d'assets représentant les alliés/les ennemis
     - FRONT, BACK ---------- : (int)         index d'assets indiquant si l'image est de dos/de face
+    - canPlaySound --------- : (boolean)     si on peut jouer les sons
     - FXVLM, MSCVLM -------- : (float)       volumes des effets/musiques
     - assets --------------- : (PImage[])    tableau contenant toutes les images du jeu
     - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu
@@ -27,7 +28,8 @@ int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-float FXVLM = 0.5, MSCVLM = 0.3;
+boolean canPlaySound= true;
+float FXVLM = 0.6, MSCVLM = 0.5;
 
 PImage[] assets;
 SoundFile[] sounds;
@@ -161,34 +163,45 @@ void enterState(State newState) {
 }
 
 void playSample(int id) {
+  
+  if ( canPlaySound ) {
 
-  sounds[id].play();
-  sounds[id].amp(FXVLM);
-  int wait = ceil(sounds[id].duration() * 1000);
-  delay(wait);
-  sounds[id].stop();
+    sounds[id].play();
+    sounds[id].amp(FXVLM);
+    int wait = ceil(sounds[id].duration() * 1000);
+    delay(wait);
+    sounds[id].stop();
+  }
   
 }
 
 void stopMusic(int id) {
   
-  sounds[id].stop();
+  if ( canPlaySound ) sounds[id].stop();
   
 }
 
 void stopMusic() {
+  
+  if ( canPlaySound ) {
 
-  for (int i = 0; i < sounds.length; i ++ ) {
-    sounds[i].stop();
+    for (int i = 0; i < sounds.length; i ++ ) {
+      sounds[i].stop();
+    }
+    
   }
 
 }
 
 void playMusic(int id) {
+  
+  if ( canPlaySound ) {
 
-  stopMusic();
-  sounds[id].loop();
-  sounds[id].amp(MSCVLM);
+    stopMusic();
+    sounds[id].loop();
+    sounds[id].amp(MSCVLM);
+    
+  }
 
 }
 
