@@ -28,7 +28,7 @@ int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-boolean canPlaySound= true;
+boolean canPlaySound= false;
 float FXVLM = 0.6, MSCVLM = 0.5;
 
 PImage[] assets;
@@ -118,6 +118,10 @@ void loadAssets() {
   /* Infos */
   
   assets[41] = loadImage("images/infos.png");
+  
+  /* Can Play Sounds */
+  
+  assets[42] = loadImage("images/sounds.png");
 
   // Ajouter les autres images ici \|/
   
