@@ -47,7 +47,7 @@ class Pause extends State {
       
       if ( mousePressed && this.buttons[i].hover() ) {
 
-        playSample(2);
+        playSample(1);
         action(this.buttons[i].name);
       
       }

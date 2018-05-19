@@ -383,7 +383,7 @@ class Combat extends State {
     // attendre une clique sur le bouton Valider Tour
     this.checkValidTurn();
     if ( this.pause.hover() ) {
-      playSample(2);
+      playSample(1);
       enterState( new Pause(actualState) );
     }
   }

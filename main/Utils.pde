@@ -28,7 +28,7 @@ int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-boolean canPlaySound= false;
+boolean canPlaySound= true;
 float FXVLM = 0.6, MSCVLM = 0.5;
 
 PImage[] assets;
@@ -138,8 +138,7 @@ void loadSounds() {
   sounds = new SoundFile[count.length - 1];
   
   sounds[0] = new SoundFile(this, "sounds/theme.mp3");
-  sounds[1] = new SoundFile(this, "sounds/mystery.mp3");
-  sounds[2] = new SoundFile(this, "sounds/click.mp3");
+  sounds[1] = new SoundFile(this, "sounds/click.mp3");
   
   println("< Success\n");
   
