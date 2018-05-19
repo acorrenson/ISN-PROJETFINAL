@@ -9,6 +9,8 @@
  *
 \*************************************************************************/
 
+import processing.sound.*;
+
 // L'état actuel du jeu
 State actualState;
 
@@ -18,6 +20,7 @@ void setup() {
 
   // Loads
   loadAssets();
+  loadSounds();
   loadUnits();
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
 

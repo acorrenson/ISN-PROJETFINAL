@@ -29,6 +29,7 @@ class EndScreen extends State {
     }
     
     this.next = new Button("Continuer", 167, 495, 181, 19);
+    stopMusic();
   }
   
   void mousePressed() {

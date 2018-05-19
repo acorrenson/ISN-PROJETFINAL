@@ -8,7 +8,7 @@
     - dispInfos ------------ : (boolean)     si l'on affiche les "infos" : les "infos" sont les statistiques d'une unité ou d'une carte qui est survolée par la souris
     - ALLY, ENY ------------ : (int)         index d'assets représentant les alliés/les ennemis
     - FRONT, BACK ---------- : (int)         index d'assets indiquant si l'image est de dos/de face
-    - FXVLM, MSCVLM -------- : (int)         volumes des effets/musiques
+    - FXVLM, MSCVLM -------- : (float)       volumes des effets/musiques
     - assets --------------- : (PImage[])    tableau contenant toutes les images du jeu
     - sounds --------------- : (SoundFile[]) tableau contenant tous les sons du jeu
 */
@@ -27,8 +27,10 @@ int dispLives = 10, dispAtk = 0, dispStep = 0, dispUnit = 0;
 int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
-// 24 = nombre d'unités ; 2  = menu pause ; 1  = élément(s) du plateau de jeu; 8 = tuto  ; 1 = carte ; 1 = barre de vie
+float FXVLM = 0.5, MSCVLM = 0.3;
+
 PImage[] assets;
+SoundFile[] sounds;
 
 /*
   Fonctions utiles
@@ -121,6 +123,22 @@ void loadAssets() {
 
 }
 
+void loadSounds() {
+  
+  println("> Loading sounds ...");
+
+  java.io.File folder = new java.io.File(dataPath("sounds"));
+  String[] count = folder.list();
+  sounds = new SoundFile[count.length - 1];
+  
+  sounds[0] = new SoundFile(this, "sounds/theme.mp3");
+  sounds[1] = new SoundFile(this, "sounds/mystery.mp3");
+  sounds[2] = new SoundFile(this, "sounds/click.mp3");
+  
+  println("< Success\n");
+  
+}
+
 void loadUnits() {
   
   /*
@@ -140,6 +158,38 @@ void enterState(State newState) {
   
   actualState = newState;
   actualState.load();
+}
+
+void playSample(int id) {
+
+  sounds[id].play();
+  sounds[id].amp(FXVLM);
+  int wait = ceil(sounds[id].duration() * 1000);
+  delay(wait);
+  sounds[id].stop();
+  
+}
+
+void stopMusic(int id) {
+  
+  sounds[id].stop();
+  
+}
+
+void stopMusic() {
+
+  for (int i = 0; i < sounds.length; i ++ ) {
+    sounds[i].stop();
+  }
+
+}
+
+void playMusic(int id) {
+
+  stopMusic();
+  sounds[id].loop();
+  sounds[id].amp(MSCVLM);
+
 }
 
 boolean collide(int x, int y, int x2, int y2, int w, int h) {
