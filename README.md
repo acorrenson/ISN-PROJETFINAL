@@ -77,9 +77,9 @@ Utiliser `new State()` pour créer une nouvelle scène de jeu.
 
 Méthode contenant les taches impliquant le chargement de données (images, fichiers JSON, etc)
 
-+ paramètres:
+**paramètres:**
   + *void*
-+ valeur retournée:
+**valeur retournée:**
   + *void*
 
 ##### State.leave()
@@ -107,9 +107,9 @@ C'est généralement ici que l'on code la logique de la scène de jeu (actualisa
 Méthode appellée environ 60 fois par seconde (à chaque actualisation de l'écran).
 C'est généralement ici que l'on appelle les fonctions d'affichage et de dessin.
 
-+ paramètres:
+**paramètres:**
   + *void*
-+ valeur retournée:
+**valeur retournée:**
   + *void*
 
 ##### State.loadData()
