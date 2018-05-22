@@ -12,7 +12,7 @@ Pour permetter à chacun de comprendre la manière dont le jeu est codé, voici 
 ## Les classes
 
 
-### State
+### CLASSE State
 
 La classe State permet la création de scène de jeu. Chaque scène disposant de ses propres méthodes d'actualisation, de chargement de données, et d'affichage.
 
@@ -87,9 +87,9 @@ Méthode contenant les taches impliquant le chargement de données (images, fich
 Méthode appellée à la sortie de la scène. On peut y définir les tâches à faire avant de quitter la scène
 (sauvegarder un score, afficher un message etc)
 
-+ paramètres:
+**paramètres:**
   + *void*
-+ valeur retournée:
+**valeur retournée:**
   + *void*
 
 ##### State.update()
@@ -97,9 +97,9 @@ Méthode appellée à la sortie de la scène. On peut y définir les tâches à 
 Méthode appellée environ 60 fois par seconde (avant chaque actualisation de l'écran).
 C'est généralement ici que l'on code la logique de la scène de jeu (actualisation des positions, de l'état du joueurs et de son environnement etc).
 
-+ paramètres:
+**paramètres**
   + *void*
-+ valeur retournée:
+**valeur retournée:**
   + *void*
 
 ##### State.render()
