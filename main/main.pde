@@ -23,6 +23,9 @@ void setup() {
   loadSounds();
   loadUnits();
   pixelFont = createFont("data/font/BoCSFont.ttf", 5);
+  
+  surface.setIcon( assets[0].get(0, 0, 32, 32) );
+  surface.setTitle("Agraar");
 
   // Définir l'état actuel
   enterState( new Scenario() );

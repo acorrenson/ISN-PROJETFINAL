@@ -29,7 +29,7 @@ int ALLY  = 0, ENY  = 1;
 int FRONT = 0, BACK = 1;
 
 boolean canPlaySound= true;
-float FXVLM = 0.6, MSCVLM = 0.5;
+float FXVLM = 0.3, MSCVLM = 0.4;
 
 PImage[] assets;
 SoundFile[] sounds;
